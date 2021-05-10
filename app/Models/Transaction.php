@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Admin extends Model
+class Transaction extends Model
 {
   use HasFactory;
   /**
@@ -14,11 +14,12 @@ class Admin extends Model
    * @var array
    */
   protected $fillable = [
-    'first_name',
-    'last_name',
-    'email',
-    'password',
+    'user_id',
+    'deposit_id',
+    'reference',
+    'amount',
     'status',
+    'completed_at',
   ];
 
 
@@ -27,14 +28,14 @@ class Admin extends Model
    *
    * @var array
    */
-  protected $hidden = [
-    'password',
-  ];
+  protected $hidden = [];
 
   /**
    * The attributes that should be cast to native types.
    *
    * @var array
    */
-  protected $casts = [];
+  protected $casts = [
+    'completed_at' => 'datetime',
+  ];
 }
