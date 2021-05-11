@@ -23,6 +23,17 @@ class Withdrawal extends Model
 
 
   /**
+   * The properties for short code generation
+   *
+   * @var array
+   */
+  protected $shortCodeConfig = [
+    'column'=>'code',
+    'salt'=>'WDR',
+    'length'=>8,
+  ];
+
+  /**
    * The attributes that should be hidden for arrays.
    *
    * @var array

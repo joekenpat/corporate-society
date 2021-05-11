@@ -15,10 +15,11 @@ class CreateUsersTable extends Migration
   {
     Schema::create('users', function (Blueprint $table) {
       $table->id();
-      $table->string('code', 7)->unique();
-      $table->unsignedBigInteger('membership_package_id')->nullable()->default(null);
+      $table->string('code', 8)->unique();
       $table->unsignedBigInteger('state_id')->nullable()->default(null);
       $table->unsignedBigInteger('lga_id')->nullable()->default(null);
+      $table->decimal('available_balance', 14, 2)->default(0);
+      $table->decimal('investment_balance', 14, 2)->default(0);
       $table->string('phone', 11)->unique();
       $table->enum('gender', ['M', "F"])->nullable()->default(null);
       $table->string('status')->default('pending');

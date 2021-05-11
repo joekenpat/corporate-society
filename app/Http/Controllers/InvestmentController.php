@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Investment;
+use App\Models\InvestmentPackage;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -20,8 +21,10 @@ class InvestmentController extends Controller
       'package_name',
       'amount',
       'roi',
+      'created_at',
       'completed_at',
-    ])->whereUserId(auth()->user()->id)->paginate(10);
+    ])->whereUserId(auth()->user()->id)
+      ->paginate(10);
     $response['status'] = "success";
     $response['investments'] = $packages;
     return response()->json($response, Response::HTTP_OK);
@@ -39,9 +42,9 @@ class InvestmentController extends Controller
       'package_name',
       'amount',
       'roi',
+      'created_at',
       'completed_at',
     ])->with(['user:id,code,first_name,last_name,email,avatar'])
-      ->whereUserId(auth()->user()->id)
       ->paginate(10);
     $response['status'] = "success";
     $response['investments'] = $packages;
@@ -49,7 +52,7 @@ class InvestmentController extends Controller
   }
 
   /**
-   * Store a newly created resource in storage.
+   * Store a new investment resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
@@ -59,43 +62,18 @@ class InvestmentController extends Controller
     $this->validate($request, [
       'investment_package_id' => 'required|integer|exists:investment_packages,id',
       'amount' => 'nullable|integer|min:100000|max:200000',
-      'duration' => 'nullable|integer|between:7,360',
     ]);
 
-    
-  }
-
-  /**
-   * Display the specified resource.
-   *
-   * @param  \App\Models\Investment  $investment
-   * @return \Illuminate\Http\Response
-   */
-  public function show(Investment $investment)
-  {
-    //
-  }
-
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  \App\Models\Investment  $investment
-   * @return \Illuminate\Http\Response
-   */
-  public function update(Request $request, Investment $investment)
-  {
-    //
-  }
-
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  \App\Models\Investment  $investment
-   * @return \Illuminate\Http\Response
-   */
-  public function destroy(Investment $investment)
-  {
-    //
+    $investmentPackage = InvestmentPackage::whereId($request->investment_package_id)->firstOrFail();
+    Investment::create([
+      'user_id' => auth()->user()->id,
+      'package_name' => $investmentPackage->name,
+      'amount' => $request->amount,
+      'roi' => $request->amount * $investmentPackage->roi_percent,
+      'completed_at' => now()->addMonths($investmentPackage->duration),
+    ]);
+    $response['status'] = "success";
+    $response['message'] = "Your investment of #{$request->amount} has been placed in {$investmentPackage->name}";
+    return response()->json($response, Response::HTTP_OK);
   }
 }

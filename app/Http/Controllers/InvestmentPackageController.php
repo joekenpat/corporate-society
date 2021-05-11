@@ -21,6 +21,7 @@ class InvestmentPackageController extends Controller
       'min_amount',
       'max_amount',
       'duration',
+      'roi_percent'
     ])
       ->whereActive(true)
       ->get();
@@ -57,7 +58,8 @@ class InvestmentPackageController extends Controller
       'name' => 'required|string|between:5,200',
       'min_amount' => 'required|integer|min:100000|max:200000',
       'max_amount' => 'required|integer|min:100000|max:200000',
-      'duration' => 'required|integer|between:7,360'
+      'duration' => 'required|integer|between:1,36',
+      'roi_percent'=>'required|numeric|between:1,99',
     ]);
 
     InvestmentPackage::create([
@@ -68,7 +70,7 @@ class InvestmentPackageController extends Controller
       'active' => true
     ]);
     $response['status'] = "success";
-    $response['message'] = "Invesment Package Created Successfully!";
+    $response['message'] = "Investment Package Created Successfully!";
     return response()->json($response, Response::HTTP_OK);
   }
 
@@ -81,12 +83,13 @@ class InvestmentPackageController extends Controller
   public function adminUpdateInvestmentPackage(Request $request)
   {
     $this->validate($request, [
-      'investment_package_id' => 'required|integer|exists:investment_packages,id',
-      'name' => 'required|string|between:5,200',
-      'min_amount' => 'nullable|integer|min:100000|max:200000',
-      'max_amount' => 'nullable|integer|min:100000|max:200000',
-      'duration' => 'nullable|integer|between:7,360',
-      'active' => 'required|boolean',
+      'investment_package_id' => 'sometimes|nullable|integer|exists:investment_packages,id',
+      'name' => 'sometimes|nullable|string|between:5,200',
+      'min_amount' => 'sometimes|nullable|integer|min:100000|max:200000',
+      'max_amount' => 'sometimes|nullable|integer|min:100000|max:200000',
+      'duration' => 'sometimes|nullable|integer|between:1,36',
+      'roi_percent'=>'sometimes|nullable|numeric|between:1,99',
+      'active' => 'sometimes|nullable|boolean',
     ]);
 
     $updateableInvestmentPackage = InvestmentPackage::whereId($request->investment_package_id)->firstOrFail();
@@ -101,7 +104,7 @@ class InvestmentPackageController extends Controller
     if ($updateableInvestmentPackage->isDirty($updateableAttributes)) {
       $updateableInvestmentPackage->update();
       $response['status'] = "success";
-      $response['message'] = "Invesment Package was updated Successfully!";
+      $response['message'] = "Investment Package was updated Successfully!";
       return response()->json($response, Response::HTTP_OK);
     } else {
       $response['status'] = "success";

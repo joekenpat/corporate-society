@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MembershipPackage;
+use App\Models\Bank;
 use Illuminate\Http\Request;
 
-class MembershipPackageController extends Controller
+class BankController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class MembershipPackageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\MembershipPackage  $membershipPackage
+     * @param  \App\Models\Bank  $bank
      * @return \Illuminate\Http\Response
      */
-    public function show(MembershipPackage $membershipPackage)
+    public function show(Bank $bank)
     {
         //
     }
@@ -43,10 +43,10 @@ class MembershipPackageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\MembershipPackage  $membershipPackage
+     * @param  \App\Models\Bank  $bank
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MembershipPackage $membershipPackage)
+    public function update(Request $request, Bank $bank)
     {
         //
     }
@@ -54,10 +54,10 @@ class MembershipPackageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\MembershipPackage  $membershipPackage
+     * @param  \App\Models\Bank  $bank
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MembershipPackage $membershipPackage)
+    public function destroy(Bank $bank)
     {
         //
     }

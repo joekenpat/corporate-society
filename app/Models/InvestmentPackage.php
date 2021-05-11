@@ -20,6 +20,7 @@ class InvestmentPackage extends Model
     'max_amount',
     'duration',
     'active',
+    'roi_percent'
   ];
 
 

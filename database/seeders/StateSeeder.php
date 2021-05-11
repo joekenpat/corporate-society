@@ -13,7 +13,6 @@ class StateSeeder extends Seeder
    */
   public function run()
   {
-    $row = 1;
     $states_data = [
       'FC' => 'Abuja',
       'AB' => 'Abia',

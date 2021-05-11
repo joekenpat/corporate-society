@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class WithdrawalBank extends Model
 {
   use HasFactory;
+
   /**
    * The attributes that are mass assignable.
    *
@@ -15,7 +16,7 @@ class WithdrawalBank extends Model
    */
   protected $fillable = [
     'user_id',
-    'name',
+    'bank_code',
     'account_name',
     'account_number',
   ];

@@ -23,6 +23,18 @@ class Deposit extends Model
 
 
   /**
+   * The properties for short code generation
+   *
+   * @var array
+   */
+  protected $shortCodeConfig = [
+    'column'=>'code',
+    'salt'=>'DPT',
+    'length'=>8,
+  ];
+
+
+  /**
    * The attributes that should be hidden for arrays.
    *
    * @var array

@@ -20,6 +20,7 @@ class CreateInvestmentPackagesTable extends Migration
       $table->integer('max_amount')->default(2000000);
       $table->integer('duration')->default(7);
       $table->boolean('active')->default(true);
+      $table->decimal('roi_percent', 4, 2);
       $table->timestamps();
     });
   }

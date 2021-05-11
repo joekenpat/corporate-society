@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\ShortCode;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Investment extends Model
 {
-  use HasFactory;
+  use HasFactory,ShortCode;
+
   /**
    * The attributes that are mass assignable.
    *
@@ -20,6 +22,17 @@ class Investment extends Model
     'amount',
     'roi',
     'completed_at',
+  ];
+
+  /**
+   * The properties for short code generation
+   *
+   * @var array
+   */
+  protected $shortCodeConfig = [
+    'column'=>'code',
+    'salt'=>'IVM',
+    'length'=>8,
   ];
 
 

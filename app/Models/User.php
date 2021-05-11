@@ -18,6 +18,8 @@ class User extends Authenticatable
    */
   protected $fillable = [
     "code",
+    "available_balance",
+    "investment_balance",
     'first_name',
     'last_name',
     'middle_name',
@@ -34,11 +36,22 @@ class User extends Authenticatable
     'identification_type',
     'profile_image',
     'identification_image',
-    'membership_package_id',
     'email',
     'password',
     'status',
   ];
+
+  /**
+   * The properties for short code generation
+   *
+   * @var array
+   */
+  protected $shortCodeConfig = [
+    'column'=>'code',
+    'salt'=>'USR',
+    'length'=>8,
+  ];
+
 
   /**
    * The attributes that should be hidden for arrays.
@@ -50,6 +63,16 @@ class User extends Authenticatable
     'remember_token',
   ];
 
+
+  /**
+   * The computed attributes that should be appended to results
+   *
+   * @var array
+   */
+  protected $appends = [
+    "ledger_balance",
+  ];
+
   /**
    * The attributes that should be cast to native types.
    *
@@ -59,19 +82,9 @@ class User extends Authenticatable
     'email_verified_at' => 'datetime',
   ];
 
-  public function getAvailableBalanceAttribute()
+  public function ledger_balance()
   {
-    # code...
-  }
-
-  public function getInvestmentBalanceAttribute()
-  {
-    # code...
-  }
-
-  public function getLedgerBalanceAttribute()
-  {
-    # code...
+    return $this->available_balance + $this->investment_balance;
   }
 
   public function investments()
