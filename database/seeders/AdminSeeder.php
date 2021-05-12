@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace database\Seeders;
 
 use App\Models\Admin;
 use Illuminate\Database\Seeder;
@@ -19,14 +19,12 @@ class AdminSeeder extends Seeder
       'first_name' => 'Test',
       'last_name' => 'One',
       'email' => 'test1@test.com',
-      'phone' => '01234567891',
       'password' => Hash::make('1234'),
     ]);
     Admin::create([
       'first_name' => 'Test',
       'last_name' => 'Two',
       'email' => 'test2@test.com',
-      'phone' => '01234567892',
       'password' => Hash::make('1234'),
     ]);
   }

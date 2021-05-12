@@ -1,9 +1,10 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Lga;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\support\str;
 
 class LgaSeeder extends Seeder
 {
@@ -14,7 +15,6 @@ class LgaSeeder extends Seeder
    */
   public function run()
   {
-    $row = 1;
     $raw_lgas = array(
       'Abia' =>
       array(
@@ -957,13 +957,12 @@ class LgaSeeder extends Seeder
       $lga = [
         'name' => $lga_data['name'],
         'state_code' => $lga_data['state_code'],
-        'slug' => Str::slug($lga_data['name']),
       ];
       $lgas[] = $lga;
-      Lga::create($lga);
       $lga = [];
       $lgaProgressBar->advance();
     }
+    DB::table('lgas')->insert($lgas);
     $lgaProgressBar->finish();
   }
 }

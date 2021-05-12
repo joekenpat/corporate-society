@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Investment;
 use App\Models\InvestmentPackage;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -16,6 +17,7 @@ class InvestmentController extends Controller
    */
   public function userListInvestment()
   {
+    $user = User::whereId(auth()->user())->firstOrFail();
     $packages = Investment::select([
       'code',
       'package_name',
@@ -23,7 +25,7 @@ class InvestmentController extends Controller
       'roi',
       'created_at',
       'completed_at',
-    ])->whereUserId(auth()->user()->id)
+    ])->whereUserId($user->id)
       ->paginate(10);
     $response['status'] = "success";
     $response['investments'] = $packages;
@@ -64,14 +66,18 @@ class InvestmentController extends Controller
       'amount' => 'nullable|integer|min:100000|max:200000',
     ]);
 
+    $user = User::whereId(auth()->user())->firstOrFail();
     $investmentPackage = InvestmentPackage::whereId($request->investment_package_id)->firstOrFail();
     Investment::create([
-      'user_id' => auth()->user()->id,
+      'user_id' => $user->id,
       'package_name' => $investmentPackage->name,
       'amount' => $request->amount,
       'roi' => $request->amount * $investmentPackage->roi_percent,
       'completed_at' => now()->addMonths($investmentPackage->duration),
     ]);
+    $user->available_balance -= $request->amount;
+    $user->investment_balance += $request->amount;
+    $user->update();
     $response['status'] = "success";
     $response['message'] = "Your investment of #{$request->amount} has been placed in {$investmentPackage->name}";
     return response()->json($response, Response::HTTP_OK);

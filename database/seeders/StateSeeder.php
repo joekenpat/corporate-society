@@ -1,8 +1,9 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\support\str;
 
 class StateSeeder extends Seeder
 {
@@ -55,14 +56,9 @@ class StateSeeder extends Seeder
     $states_count = count($states_data);
     $stateProgressBar = $this->command->getOutput()->createProgressBar($states_count);
     foreach ($states_data as $state_code => $state_data) {
-      $time = now()->format('Y-m-d H:i:s.u');
       $state = [
         'name' => $state_data,
         'code' => $state_code,
-        'slug' => Str::slug($state_data),
-        'created_at' => $time,
-        'updated_at' => $time,
-        'deleted_at' => null,
       ];
       DB::table('states')->insert($state);
       $state = [];

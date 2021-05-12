@@ -15,85 +15,222 @@ class BankSeeder extends Seeder
   public function run()
   {
     $banks_data = [
+
       [
-        'name' => 'ACCESS BANK PLC',
-        'code' => 'ABNG'
+        'name' => 'Abbey Mortgage Bank',
+        'code' => '801',
       ],
       [
-        'name' => 'CITIBANK NIGERIA LIMITED',
-        'code' => 'CITI'
+        'name' => 'Access Bank',
+        'code' => '044',
       ],
       [
-        'name' => 'DIAMOND BANK PLC',
-        'code' => 'DBLN'
+        'name' => 'Access Bank (Diamond)',
+        'code' => '063',
       ],
       [
-        'name' => 'ECOBANK NIGERIA PLC',
-        'code' => 'ECOC'
+        'name' => 'ALAT by WEMA',
+        'code' => '035A',
       ],
       [
-        'name' => 'FIRST BANK OF NIGERIA LTD',
-        'code' => 'FBNI'
+        'name' => 'ASO Savings and Loans',
+        'code' => '401',
       ],
       [
-        'name' => 'FIRST CITY MONUMENT BANK',
-        'code' => 'FCMB'
+        'name' => 'Bowen Microfinance Bank',
+        'code' => '50931',
       ],
       [
-        'name' => 'GUARANTY TRUST BANK PLC',
-        'code' => 'GTBI'
+        'name' => 'CEMCS Microfinance Bank',
+        'code' => '50823',
       ],
       [
-        'name' => 'HERITAGE BANKING COMPANY LIMITED',
-        'code' => 'HBCL'
+        'name' => 'Citibank Nigeria',
+        'code' => '023',
       ],
       [
-        'name' => 'KEYSTONE BANK LIMITED',
-        'code' => 'PLNI'
+        'name' => 'Coronation Merchant Bank',
+        'code' => '559',
       ],
       [
-        'name' => 'SKYE BANK PLC',
-        'code' => 'PRDT'
+        'name' => 'Ecobank Nigeria',
+        'code' => '050',
       ],
       [
-        'name' => 'STANBIC IBTC BANK PLC',
-        'code' => 'SBIC'
+        'name' => 'Ekondo Microfinance Bank',
+        'code' => '562',
       ],
       [
-        'name' => 'STANDARD CHARTERED BANK NIGERIA LIMITED',
-        'code' => 'SCBL'
+        'name' => 'Eyowo',
+        'code' => '50126',
       ],
       [
-        'name' => 'STERLING BANK PLC',
-        'code' => 'SBPL'
+        'name' => 'Fidelity Bank',
+        'code' => '070',
       ],
       [
-        'name' => 'UNION BANK OF NIGERIA PLC',
-        'code' => 'UBNI'
+        'name' => 'First Bank of Nigeria',
+        'code' => '011',
       ],
       [
-        'name' => 'UNITED BANK FOR AFRICA PLC',
-        'code' => 'UNAF'
+        'name' => 'First City Monument Bank',
+        'code' => '214',
       ],
       [
-        'name' => 'UNITY BANK PLC',
-        'code' => 'ICIT'
+        'name' => 'FSDH Merchant Bank Limited',
+        'code' => '501',
       ],
       [
-        'name' => 'WEMA BANK PLC',
-        'code' => 'WEMA'
+        'name' => 'Globus Bank',
+        'code' => '00103',
       ],
       [
-        'name' => 'ZENITH BANK PLC',
-        'code' => 'ZEIB'
+        'name' => 'Guaranty Trust Bank',
+        'code' => '058',
+      ],
+      [
+        'name' => 'Hackman Microfinance Bank',
+        'code' => '51251',
+      ],
+      [
+        'name' => 'Hasal Microfinance Bank',
+        'code' => '50383',
+      ],
+      [
+        'name' => 'Heritage Bank',
+        'code' => '030',
+      ],
+      [
+        'name' => 'Ibile Microfinance Bank',
+        'code' => '51244',
+      ],
+      [
+        'name' => 'Infinity MFB',
+        'code' => '50457',
+      ],
+      [
+        'name' => 'Jaiz Bank',
+        'code' => '301',
+      ],
+      [
+        'name' => 'Keystone Bank',
+        'code' => '082',
+      ],
+      [
+        'name' => 'Kuda Bank',
+        'code' => '50211',
+      ],
+      [
+        'name' => 'Lagos Building Investment Company Plc.',
+        'code' => '90052',
+      ],
+      [
+        'name' => 'Mayfair MFB',
+        'code' => '50563',
+      ],
+      [
+        'name' => 'One Finance',
+        'code' => '565',
+      ],
+      [
+        'name' => 'PalmPay',
+        'code' => '999991',
+      ],
+      [
+        'name' => 'Parallex Bank',
+        'code' => '526',
+      ],
+      [
+        'name' => 'Parkway - ReadyCash',
+        'code' => '311',
+      ],
+      [
+        'name' => 'Paycom',
+        'code' => '999992',
+      ],
+      [
+        'name' => 'Petra Mircofinance Bank Plc',
+        'code' => '50746',
+      ],
+      [
+        'name' => 'Polaris Bank',
+        'code' => '076',
+      ],
+      [
+        'name' => 'Providus Bank',
+        'code' => '101',
+      ],
+      [
+        'name' => 'Rand Merchant Bank',
+        'code' => '502',
+      ],
+      [
+        'name' => 'Rubies MFB',
+        'code' => '125',
+      ],
+      [
+        'name' => 'Sparkle Microfinance Bank',
+        'code' => '51310',
+      ],
+      [
+        'name' => 'Stanbic IBTC Bank',
+        'code' => '221',
+      ],
+      [
+        'name' => 'Standard Chartered Bank',
+        'code' => '068',
+      ],
+      [
+        'name' => 'Sterling Bank',
+        'code' => '232',
+      ],
+      [
+        'name' => 'Suntrust Bank',
+        'code' => '100',
+      ],
+      [
+        'name' => 'TAJ Bank',
+        'code' => '302',
+      ],
+      [
+        'name' => 'TCF MFB',
+        'code' => '51211',
+      ],
+      [
+        'name' => 'Titan Bank',
+        'code' => '102',
+      ],
+      [
+        'name' => 'Union Bank of Nigeria',
+        'code' => '032',
+      ],
+      [
+        'name' => 'United Bank For Africa',
+        'code' => '033',
+      ],
+      [
+        'name' => 'Unity Bank',
+        'code' => '215',
+      ],
+      [
+        'name' => 'VFD Microfinance Bank Limited',
+        'code' => '566',
+      ], [
+        'name' => 'Wema Bank',
+        'code' => '035',
+      ],
+      [
+        'name' => 'Zenith Bank',
+        'code' => '057',
       ],
     ];
     $bank_count = count($banks_data);
     $bankProgressBar = $this->command->getOutput()->createProgressBar($bank_count);
     foreach ($banks_data as $bank) {
-      DB::table('banks')->insert($bank);
+      $bank = [];
       $bankProgressBar->advance();
     }
+    DB::table('banks')->insert($banks_data);
     $bankProgressBar->finish();
   }
 }

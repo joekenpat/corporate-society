@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Investment;
+use App\Models\User;
 use App\Models\Withdrawal;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -16,13 +17,14 @@ class WithdrawalController extends Controller
    */
   public function userListWithdrawal()
   {
+    $user = User::whereId(auth()->user())->firstOrFail();
     $withdrawals = Investment::select([
       'code',
       'amount',
       'status',
       'created_at',
       'completed_at',
-    ])->whereUserId(auth()->user()->id)
+    ])->whereUserId($user->id)
       ->paginate(10);
     $response['status'] = "success";
     $response['withdrawals'] = $withdrawals;
@@ -57,7 +59,7 @@ class WithdrawalController extends Controller
    */
   public function userStoreWithdrawal(Request $request)
   {
-    $user = auth()->user();
+    $user = User::whereId(auth()->user())->firstOrFail();
     $minAmount = 100000;
     $maxAmount = $user->available_balance;
     $this->validate($request, [
@@ -70,6 +72,8 @@ class WithdrawalController extends Controller
       'status' => 'pending',
       'completed_at' => null,
     ]);
+    $user->available_balance -= $request->amount;
+    $user->update();
     $response['status'] = "success";
     $response['message'] = "Your Withdrawal of #{$request->amount} has been placed.";
     return response()->json($response, Response::HTTP_OK);
