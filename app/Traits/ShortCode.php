@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 trait ShortCode
@@ -13,19 +14,28 @@ trait ShortCode
    */
   public static function bootShortCode()
   {
-    static::saving(function ($model) {
+    static::creating(function ($model) {
       $column = $model->shortCodeConfig['column'];
       $salt = $model->shortCodeConfig['salt'];
       $len = intval($model->shortCodeConfig['length']);
       $code = strtoupper($salt . Str::random($len - strlen($salt)));
       if (static::getSoftDeletingAttribute()) {
         if (!static::where('id', '!=', $model->id)->where($column, $code)->withTrashed()->exists()) {
-          $model->attributes[$column] = $code;
+          $model->{$column} = $code;
         } else {
           while (static::where('id', '!=', $model->id)->where($column, $code)->withTrashed()->exists()) {
             $code = strtoupper($salt . Str::random($len - strlen($salt)));
           }
-          $model->attributes[$column] = $code;
+          $model->{$column} = $code;
+        }
+      } else {
+        if (!static::where('id', '!=', $model->id)->where($column, $code)->exists()) {
+          $model->{$column} = $code;
+        } else {
+          while (static::where('id', '!=', $model->id)->where($column, $code)->exists()) {
+            $code = strtoupper($salt . Str::random($len - strlen($salt)));
+          }
+          $model->{$column} = $code;
         }
       }
     });

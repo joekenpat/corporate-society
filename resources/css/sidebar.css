@@ -1,0 +1,33 @@
+.side-bar-card {
+  height: 100vh;
+  border-radius: 0%;
+  position: fixed;
+  width: 17vw;
+  background-color: #000000;
+  z-index: inherit;
+}
+.side-card-body {
+  margin-top: 50%;
+}
+.side-link-container {
+  margin-bottom: 30px;
+  cursor: pointer;
+  padding-left: 30px;
+}
+.side-link-text {
+  font-size: 0.7em;
+  font-weight: bold;
+  color: #ffffff;
+}
+a{
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 14px;
+}
+:hover a{
+  text-decoration: none;
+  color: #ffffff;
+}
+/* :active a{
+ border-left: solid 7px rgb(47, 151, 47);
+} */

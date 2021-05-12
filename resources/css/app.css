@@ -1,3 +1,9 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+/* @import 'tailwindcss/base'; */
+/* @import 'tailwindcss/components'; */
+/* @import 'tailwindcss/utilities'; */
+
+
+@import "./global.css";
+@import "./sidebar.css";
+@import "./mobile_side_nav.css";
+@import "./dashboard_overview.css";

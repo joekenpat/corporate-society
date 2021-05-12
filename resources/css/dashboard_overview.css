@@ -1,0 +1,43 @@
+.overview-box {
+  display: flex;
+  width: 100vw;
+}
+.overview-box-1 {
+  background-color: rgb(47, 151, 47);
+}
+.overview-box-2 {
+  background-color: #ffffff;
+  width: 20vw;
+}
+.overview-box-1-investment {
+  background-color: rgb(78, 78, 255);
+}
+.overview-box-1-calendar {
+  background-color: red;
+}
+.overview-box-text-1 {
+  font-size: 0.6em;
+}
+.overview-box-text-2 {
+  font-size: 0.8em;
+  font-weight: bolder;
+}
+.overview-box-text-3 {
+  font-size: 0.6em;
+  font-weight: bold;
+}
+
+/* mobile view */
+@media screen and (max-width: 480px) {
+  .overview-box-2 {
+      background-color: #ffffff;
+      width: 65vw;
+  }
+}
+/* ipad*/
+@media screen and (max-width: 768px) {
+  .overview-box-2 {
+      background-color: #ffffff;
+      width: 65vw;
+  }
+}

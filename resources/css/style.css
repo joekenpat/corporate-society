@@ -1,0 +1,141 @@
+* {
+  box-sizing: border-box;
+  margin: 0%;
+  padding: 0%;
+  font-size: 14px;
+  outline: none !important;
+}
+
+/* ========================  S K E L E T O N  ======================= */
+a{
+  text-decoration: none !important;
+}
+html {
+  scroll-behavior: smooth;
+
+}
+body {
+  background-color: #eaefe973;
+}
+.btn {
+  box-shadow: none !important;
+  border-radius: 30px;
+}
+
+
+
+.card{
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+
+/* ========================  P R E L O A D E R  ======================= */
+#preloader {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+#preloader .progress {
+  height: 5px !important;
+  width: 400px !important;
+}
+#preloader.loaded {
+  opacity: 1;
+  z-index: 9999;
+  animation-name: fadeout;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+  animation-delay: .5s;
+}
+
+/* ========================  A M I N A T I O N  ======================= */
+@keyframes fadeout{
+  0% {
+      opacity: 1;
+      z-index: 9999;
+  }
+  100% {
+      opacity: 0;
+      z-index: -9999;
+  }
+}
+
+/* ========================   N A V B A R   ======================= */
+.navbar .navbar-brand{
+  letter-spacing: 4px;
+}
+.navbar .navbar-nav .nav-link{
+  padding: 15px 17px !important;
+  letter-spacing: 2px;
+}
+
+.navbar .navbar-nav .dropdown-menu .dropdown-item{
+  display: block;
+  padding: 15px !important;
+}
+
+
+.navbar .navbar-nav .dropdown-menu .dropdown-item:hover, .navbar .navbar-nav .dropdown-menu .dropdown-item.active, .navbar .navbar-nav .dropdown-menu .dropdown-item:active{
+  background-color: #28a745 !important;
+  color: white;
+}
+
+/* ========================   M A S T H E A D   ======================= */
+.masthead{
+  background-image: url('../img/2.jpg');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 600px;
+}
+.masthead .masthead-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 600px;
+  width: 100%;
+}
+.masthead .masthead-title h1{
+  font-size: 40px;
+  letter-spacing: 2px;
+}
+.masthead .masthead-title .col-lg-8{
+  z-index: 1;
+
+}
+.masthead .masthead-overlay{
+  position: absolute;
+  height: 600px;
+  background-color: #28a746b3;
+  width: 100%;
+  top: 0px;
+  z-index: 0;
+}
+
+/* ========================   B R I E F   ======================= */
+.section{
+  padding: 80px 0;
+}
+
+
+
+@media screen and (max-width: 991px) {
+  /* ========================   M A S T H E A D   ======================= */
+  .masthead{
+      height: 600px;
+  }
+  .masthead .masthead-title{
+      height: 600px;
+  }
+  .masthead .masthead-title h1{
+      font-size: 40px;
+  }
+  .masthead .masthead-overlay{
+      height: 600px;
+  }
+}

@@ -27,10 +27,10 @@ class CreateUsersTable extends Migration
       $table->string('first_name');
       $table->string('last_name');
       $table->string('middle_name')->nullable()->default(null);
-      $table->string('marital_status');
+      $table->string('marital_status')->nullable()->default(null);
       $table->string('disability')->default('none');
-      $table->string('identification_type');
-      $table->string('employment_status');
+      $table->string('identification_type')->nullable()->default(null);
+      $table->string('employment_status')->nullable()->default(null);
       $table->string('profileImage')->nullable()->default(null);
       $table->string('identification_image')->nullable()->default(null);
       $table->timestamp('email_verified_at')->nullable();

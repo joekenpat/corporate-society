@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ShortCode;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-  use HasFactory, Notifiable;
+  use HasFactory, Notifiable, ShortCode;
 
   /**
    * The attributes that are mass assignable.
@@ -47,9 +48,9 @@ class User extends Authenticatable
    * @var array
    */
   protected $shortCodeConfig = [
-    'column'=>'code',
-    'salt'=>'USR',
-    'length'=>8,
+    'column' => 'code',
+    'salt' => 'USR',
+    'length' => 8,
   ];
 
 
@@ -82,6 +83,11 @@ class User extends Authenticatable
     'email_verified_at' => 'datetime',
   ];
 
+  public function getFullNameAttribute()
+  {
+    return $this->last_name.' '.$this->first_name;
+  }
+
   public function ledger_balance()
   {
     return $this->available_balance + $this->investment_balance;
@@ -89,46 +95,46 @@ class User extends Authenticatable
 
   public function investments()
   {
-    # code...
+    return $this->hasMany(Investment::class);
   }
 
   public function activeInvestments()
   {
-    # code...
+    return $this->investments()->whereCompletedAt(null);
   }
 
   public function completedInvestments()
   {
-    # code...
+    return $this->investments()->where('completed_at', '<>', null);
   }
 
   public function withdrawals()
   {
-    # code...
+    return $this->hasMany(Withdrawal::class);
   }
 
   public function pendingWithdrawals()
   {
-    # code...
+    return $this->withdrawals()->whereStatus('pending');
   }
 
   public function completedWithdrawals()
   {
-    # code...
+    return $this->withdrawals()->whereStatus('completed');
   }
 
   public function deposits()
   {
-    # code...
+    return $this->hasMany(Deposit::class);
   }
 
   public function pendingDeposits()
   {
-    # code...
+    return $this->deposits()->whereStatus('pending');
   }
 
   public function completedDeposits()
   {
-    # code...
+    return $this->deposits()->whereStatus('completed');
   }
 }

@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\DepositController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WithdrawalController;
 use Illuminate\Support\Facades\Route;
-use Unicodeveloper\Paystack\Paystack;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,26 @@ Route::get('/', function () {
   return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-  return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+
+Route::group(['middleware' => ['auth']], function () {
+
+  Route::get('/dashboard', [UserController::class, 'showUserDashboard'])
+    ->name('dashboard');
+
+  Route::group(['prefix' => 'withdrawal'], function () {
+    Route::get('/create', [WithdrawalController::class, 'userListWithdrawal'])
+      ->name('withdrawal_create');
+    Route::get('/history', [WithdrawalController::class, 'userListWithdrawal'])
+      ->name('withdrawal_history');
+  });
+
+  Route::group(['prefix' => 'deposit'], function () {
+    Route::get('/create', [DepositController::class, 'userListDeposit'])
+      ->name('deposit_create');
+    Route::get('/history', [DepositController::class, 'userListDeposit'])
+      ->name('deposit_history');
+  });
+});
+
 
 require __DIR__ . '/auth.php';

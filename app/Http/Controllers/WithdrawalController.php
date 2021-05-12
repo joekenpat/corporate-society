@@ -17,7 +17,7 @@ class WithdrawalController extends Controller
    */
   public function userListWithdrawal()
   {
-    $user = User::whereId(auth()->user())->firstOrFail();
+    $user = User::whereId(auth()->user()->id)->firstOrFail();
     $withdrawals = Investment::select([
       'code',
       'amount',
@@ -26,9 +26,9 @@ class WithdrawalController extends Controller
       'completed_at',
     ])->whereUserId($user->id)
       ->paginate(10);
-    $response['status'] = "success";
-    $response['withdrawals'] = $withdrawals;
-    return response()->json($response, Response::HTTP_OK);
+    return view('withdrawal_history', [
+      'withdrawals' => $withdrawals
+    ]);
   }
 
   /**
@@ -59,7 +59,7 @@ class WithdrawalController extends Controller
    */
   public function userStoreWithdrawal(Request $request)
   {
-    $user = User::whereId(auth()->user())->firstOrFail();
+    $user = User::whereId(auth()->user()->id)->firstOrFail();
     $minAmount = 100000;
     $maxAmount = $user->available_balance;
     $this->validate($request, [
@@ -98,22 +98,23 @@ class WithdrawalController extends Controller
       ->firstOrFail();
     $updateableAttributes = $updateableWithdrawal->getFillable();
 
-    if ($updateableWithdrawal != 'approved'){
-      if($request->status == 'approved') {
-      $updateableWithdrawal->status = 'approved';
-    }elseif($request->status == 'cancelled') {
-      $updateableWithdrawal->status = 'cancelled';
-    }
+    if ($updateableWithdrawal != 'approved') {
+      if ($request->status == 'approved') {
+        $updateableWithdrawal->status = 'approved';
+      } elseif ($request->status == 'cancelled') {
+        $updateableWithdrawal->status = 'cancelled';
+      }
 
-    if ($updateableWithdrawal->isDirty($updateableAttributes)) {
-      $updateableWithdrawal->update();
-      $response['status'] = "success";
-      $response['message'] = "Withdrawal Request was updated Successfully!";
-      return response()->json($response, Response::HTTP_OK);
-    } else {
-      $response['status'] = "success";
-      $response['message'] = "No changes where made!";
-      return response()->json($response, Response::HTTP_OK);
+      if ($updateableWithdrawal->isDirty($updateableAttributes)) {
+        $updateableWithdrawal->update();
+        $response['status'] = "success";
+        $response['message'] = "Withdrawal Request was updated Successfully!";
+        return response()->json($response, Response::HTTP_OK);
+      } else {
+        $response['status'] = "success";
+        $response['message'] = "No changes where made!";
+        return response()->json($response, Response::HTTP_OK);
+      }
     }
   }
 }

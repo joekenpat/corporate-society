@@ -1,17 +1,80 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+  <div class="row pt-5">
+    @include('layouts.sideBar',[
+      'userFullName'=>auth()->user()->full_name,
+      'userEmail'=>auth()->user()->email,
+    ])
+    @include('layouts.mobileSideBar')
+    <!-- =======================================
+               DASHBOARD OVERVIEW START
+         =======================================
+    -->
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in!
+    <div class=" col-xs-12 col-lg-10">
+      <div class="container-fluid pt-3 pb-3">
+        <!-- ################################ -->
+        <span style="font-weight: bold;">Dashboard</span><span style="font-size: 0.7em;" class="ml-2">Overview</span>
+        <!-- ################################ -->
+      </div>
+      <div class="card border-0 pt-3" style="height: 20px; border-radius: 0%; background-color: #dddddb;"></div>
+      <div class="container-fluid">
+        <div class="pt-3">
+          <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-4 py-3 px-3">
+              <div class="overview-box">
+                <div class="overview-box-1">
+                  <div class="p-3">
+                    <i style="font-size: 40px; color: #ffffff;" class="mdi mdi-wallet mr-1"></i>
+                  </div>
                 </div>
+                <div class="overview-box-2">
+                  <div class="p-1 pl-3 pr-3">
+                    <p class="overview-box-text-1 pt-2 p-0 m-0">WALLET</p>
+                    <p class="overview-box-text-2 pt-1 p-0 m-0">LEDCER BALANCE</p>
+                  <P class="overview-box-text-3 pt-1 p-0 m-0">₦{{$user_available_balance}}</P>
+                  </div>
+                </div>
+              </div>
             </div>
+            <div class="col-xs-12 col-md-12 col-lg-4 py-3 px-3">
+              <div class="overview-box">
+                <div class="overview-box-1-investment">
+                  <div class="p-3">
+                    <i style="font-size: 40px; color: #ffffff;" class="mdi mdi-wallet mr-1"></i>
+                  </div>
+                </div>
+                <div class="overview-box-2">
+                  <div class="p-1 pl-3 pr-3">
+                    <p class="overview-box-text-1 pt-2 p-0 m-0">WALLET</p>
+                    <p class="overview-box-text-2 pt-1 p-0 m-0">INVESTMENT</p>
+                    <P class="overview-box-text-3 pt-1 p-0 m-0">₦{{$user_investment_balance}}</P>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-12 col-lg-4 py-3 px-3">
+              <div class="overview-box">
+                <div class="overview-box-1-calendar">
+                  <div class="p-3">
+                    <i style="font-size: 40px; color: #ffffff;" class="mdi mdi-calendar-month mr-1"></i>
+                  </div>
+                </div>
+                <div class="overview-box-2">
+                  <div class="p-1 pl-3 pr-3">
+                    <p class="overview-box-text-1 pt-2 p-0 m-0">INVESTMENT</p>
+                    <p class="overview-box-text-2 pt-1 p-0 m-0">{{$user_active_investment_count}}</p>
+                    <P class="overview-box-text-3 pt-1 p-0 m-0"></P>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+    <!-- =======================================
+               DASHBORD OVERVIEW END
+         =======================================
+    -->
+  </div>
 </x-app-layout>

@@ -1,0 +1,22 @@
+.my-card-head{
+  border-bottom: solid 3px #c5c4c4!important;
+  border-radius: 0%;
+  background-color: #ffffff;
+}
+.my-card-look{
+ border-radius: 0%;
+ border-top: solid 3px rgb(47, 151, 47)!important;
+}
+.my-card-head-text{
+  font-size: 0.8em;
+}
+.card-body-head-text{
+  font-weight: bolder;
+}
+.roi-tetx{
+  font-size: 0.8em;
+}
+.my-membarship-signup-text{
+  font-size: 0.8em;
+  font-weight: bolder;
+}
