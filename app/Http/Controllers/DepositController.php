@@ -52,15 +52,20 @@ class DepositController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function adminListDeposit()
+  public function adminListDeposit($status)
   {
+    $sortStatus = $status != 'all' ? $status : false;
     $deposits = Deposit::select([
       'code',
       'amount',
       'status',
       'created_at',
+      'user_id',
       'completed_at',
-    ])->with(['user:id,code,first_name,last_name,email,avatar'])
+    ])->with(['user:id,code,first_name,last_name,email,profileImage'])
+      ->when($sortStatus, function ($query) use ($sortStatus) {
+        return $query->where('status', $sortStatus);
+      })
       ->paginate(10);
     $response['status'] = "success";
     $response['deposits'] = $deposits;

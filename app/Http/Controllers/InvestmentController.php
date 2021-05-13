@@ -69,7 +69,7 @@ class InvestmentController extends Controller
       'created_at',
       'ends_at',
       'completed_at',
-    ])->with(['user:id,code,first_name,last_name,email,avatar'])
+    ])->with(['user:id,code,first_name,last_name,email,profileImage'])
       ->paginate(10);
     $response['status'] = "success";
     $response['investments'] = $packages;

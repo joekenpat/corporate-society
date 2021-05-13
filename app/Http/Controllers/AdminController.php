@@ -4,61 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+  // public function __construct()
+  // {
+  //   $this->middleware(['auth:admin']);
+  // }
+  public function login_admin(Request $request)
+  {
+    $this->validate($request, [
+      'email' => 'required|email|exists:admins,email',
+      'password' => 'required',
+    ]);
+
+    $admin = Admin::where('email', $request->email)->firstOrFail();
+
+    if (!$admin || !Hash::check($request->password, $admin->password)) {
+      $response['status'] = "error";
+      $response['message'] = "login Failed!";
+      $response['errors'] = [
+        'email' => ['The provided credentials are incorrect.'],
+      ];
+      return response()->json($response, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    $response['status'] = "success";
+    $response['message'] = "login successfull!";
+    $response['token'] = $admin->createToken('admin')->plainTextToken;
+    return response()->json($response, Response::HTTP_OK);
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Admin $admin)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Admin $admin)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Admin $admin)
-    {
-        //
-    }
+  public function profile()
+  {
+    $response['status'] = "success";
+    $response['profile'] = auth()->user();
+    return response()->json($response, Response::HTTP_OK);
+  }
 }

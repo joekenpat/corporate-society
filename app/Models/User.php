@@ -71,7 +71,7 @@ class User extends Authenticatable
    * @var array
    */
   protected $appends = [
-    "ledger_balance",
+    // "ledger_balance",
   ];
 
   /**
@@ -88,10 +88,10 @@ class User extends Authenticatable
     return $this->last_name.' '.$this->first_name;
   }
 
-  public function ledger_balance()
-  {
-    return $this->available_balance + $this->investment_balance;
-  }
+  // public function getLedgerBalanceAttribute()
+  // {
+  //   return $this->available_balance + $this->investment_balance;
+  // }
 
   public function investments()
   {

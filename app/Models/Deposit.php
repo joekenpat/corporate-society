@@ -29,9 +29,9 @@ class Deposit extends Model
    * @var array
    */
   protected $shortCodeConfig = [
-    'column'=>'code',
-    'salt'=>'DPT',
-    'length'=>8,
+    'column' => 'code',
+    'salt' => 'DPT',
+    'length' => 8,
   ];
 
 
@@ -50,4 +50,9 @@ class Deposit extends Model
   protected $casts = [
     'completed_at' => 'datetime',
   ];
+
+  public function user()
+  {
+    return $this->belongsTo(User::class, 'user_id');
+  }
 }
