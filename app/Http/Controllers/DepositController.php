@@ -54,7 +54,6 @@ class DepositController extends Controller
    */
   public function adminListDeposit($status)
   {
-    $sortStatus = $status != 'all' ? $status : false;
     $deposits = Deposit::select([
       'code',
       'amount',
@@ -63,9 +62,7 @@ class DepositController extends Controller
       'user_id',
       'completed_at',
     ])->with(['user:id,code,first_name,last_name,email,profileImage'])
-      ->when($sortStatus, function ($query) use ($sortStatus) {
-        return $query->where('status', $sortStatus);
-      })
+      ->where('status', $status)
       ->paginate(10);
     $response['status'] = "success";
     $response['deposits'] = $deposits;

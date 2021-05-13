@@ -59,7 +59,7 @@ class InvestmentController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function adminListInvestment()
+  public function adminListInvestment($status)
   {
     $packages = Investment::select([
       'code',
@@ -70,6 +70,13 @@ class InvestmentController extends Controller
       'ends_at',
       'completed_at',
     ])->with(['user:id,code,first_name,last_name,email,profileImage'])
+      ->when($status, function ($query) use ($status) {
+        if ($status == 'completed') {
+          return $query->where('completed_at', '<>', null);
+        } else {
+          return $query->where('completed_at', null);
+        }
+      })
       ->paginate(10);
     $response['status'] = "success";
     $response['investments'] = $packages;

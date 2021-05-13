@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Investment extends Model
 {
-  use HasFactory,ShortCode;
+  use HasFactory, ShortCode;
 
   /**
    * The attributes that are mass assignable.
@@ -31,9 +31,9 @@ class Investment extends Model
    * @var array
    */
   protected $shortCodeConfig = [
-    'column'=>'code',
-    'salt'=>'IVM',
-    'length'=>8,
+    'column' => 'code',
+    'salt' => 'IVM',
+    'length' => 8,
   ];
 
 
@@ -53,4 +53,10 @@ class Investment extends Model
     'completed_at' => 'datetime',
     'ends_at' => 'datetime',
   ];
+
+
+  public function user()
+  {
+    return $this->belongsTo(User::class, 'user_id');
+  }
 }

@@ -49,15 +49,17 @@ class WithdrawalController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function adminListWithdrawal()
+  public function adminListWithdrawal($status)
   {
     $withdrawals = Withdrawal::select([
       'code',
       'amount',
       'status',
       'created_at',
+      "user_id",
       'completed_at',
     ])->with(['user:id,code,first_name,last_name,email,profileImage'])
+      ->where('status', $status)
       ->paginate(10);
     $response['status'] = "success";
     $response['withdrawals'] = $withdrawals;
@@ -103,18 +105,18 @@ class WithdrawalController extends Controller
   {
     $this->validate($request, [
       'withdrawal_code' => 'required|alpha_num|exists:withdrawals,code',
-      'status' => 'required|alpha|in:cancelled,approved',
+      'status' => 'required|alpha|in:failed,completed',
     ]);
 
     $updateableWithdrawal = Withdrawal::whereCode($request->withdrawal_code)
       ->firstOrFail();
     $updateableAttributes = $updateableWithdrawal->getFillable();
 
-    if ($updateableWithdrawal != 'approved') {
-      if ($request->status == 'approved') {
-        $updateableWithdrawal->status = 'approved';
-      } elseif ($request->status == 'cancelled') {
-        $updateableWithdrawal->status = 'cancelled';
+    if ($updateableWithdrawal != 'completed') {
+      if ($request->status == 'completed') {
+        $updateableWithdrawal->status = 'completed';
+      } elseif ($request->status == 'failed') {
+        $updateableWithdrawal->status = 'failed';
       }
 
       if ($updateableWithdrawal->isDirty($updateableAttributes)) {
