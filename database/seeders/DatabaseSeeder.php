@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
       LgaSeeder::class,
       AdminSeeder::class,
       BankSeeder::class,
+      InvestmentPackageSeeder::class,
     ]);
   }
 }

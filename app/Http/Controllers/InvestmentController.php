@@ -10,6 +10,25 @@ use Illuminate\Http\Response;
 
 class InvestmentController extends Controller
 {
+
+  /**
+   * Create user investments
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function userCreateInvestment()
+  {
+    $maxAmount = auth()->user()->available_balance;
+    $investmentPackages = InvestmentPackage::select([
+      'id', 'name', 'min_amount', 'max_amount', 'duration', 'roi_percent'
+    ])->whereActive(true)->get();
+    return view('investment_create', [
+      'investmentPackages' => $investmentPackages,
+      'maxAmount' => $maxAmount
+    ]);
+  }
+
+
   /**
    * Display a listing of user investment.
    *
@@ -17,19 +36,22 @@ class InvestmentController extends Controller
    */
   public function userListInvestment()
   {
-    $user = User::whereId(auth()->user())->firstOrFail();
-    $packages = Investment::select([
+    $user = User::whereId(auth()->user()->id)->firstOrFail();
+    $investments = Investment::select([
       'code',
       'package_name',
       'amount',
       'roi',
       'created_at',
+      'ends_at',
       'completed_at',
     ])->whereUserId($user->id)
       ->paginate(10);
     $response['status'] = "success";
-    $response['investments'] = $packages;
-    return response()->json($response, Response::HTTP_OK);
+    $response['investments'] = $investments;
+    return view('investment_history', [
+      'investments' => $investments
+    ]);
   }
 
   /**
@@ -45,6 +67,7 @@ class InvestmentController extends Controller
       'amount',
       'roi',
       'created_at',
+      'ends_at',
       'completed_at',
     ])->with(['user:id,code,first_name,last_name,email,avatar'])
       ->paginate(10);
@@ -61,25 +84,26 @@ class InvestmentController extends Controller
    */
   public function userStoreInvestment(Request $request)
   {
+    $maxAmount = auth()->user()->available_balance;
     $this->validate($request, [
       'investment_package_id' => 'required|integer|exists:investment_packages,id',
-      'amount' => 'nullable|integer|min:100000|max:200000',
+      'amount' => 'nullable|integer|min:50000|max:' . $maxAmount,
     ]);
 
-    $user = User::whereId(auth()->user())->firstOrFail();
+    $user = User::whereId(auth()->user()->id)->firstOrFail();
     $investmentPackage = InvestmentPackage::whereId($request->investment_package_id)->firstOrFail();
     Investment::create([
       'user_id' => $user->id,
       'package_name' => $investmentPackage->name,
       'amount' => $request->amount,
       'roi' => $request->amount * $investmentPackage->roi_percent,
-      'completed_at' => now()->addMonths($investmentPackage->duration),
+      'ends_at' => now()->addMonths($investmentPackage->duration),
     ]);
     $user->available_balance -= $request->amount;
     $user->investment_balance += $request->amount;
     $user->update();
     $response['status'] = "success";
     $response['message'] = "Your investment of #{$request->amount} has been placed in {$investmentPackage->name}";
-    return response()->json($response, Response::HTTP_OK);
+    return redirect()->route('investment_history');
   }
 }

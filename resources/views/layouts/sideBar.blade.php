@@ -33,19 +33,19 @@
         </a>
       </p>
       <p class="side-link-text">
-        <a href="#">
+        <a href="{{route('withdrawal_create')}}">
           <i style="font-size: 20px;" class="mdi mdi-bank-minus mr-1"></i>
           Withdraw
         </a>
       </p>
       <p class="side-link-text">
-        <a href="{{route('withdrawal_create')}}">
+        <a href="{{route('investment_create')}}">
           <i style="font-size: 20px;" class="mdi mdi-wallet-plus mr-1"></i>
           Create Investment
         </a>
       </p>
       <p class="side-link-text">
-        <a href="/manage_investment.html">
+        <a href="{{route('investment_history')}}">
           <i style="font-size: 20px;" class="mdi mdi-chart-bar mr-1"></i>
           Manage Investment
         </a>

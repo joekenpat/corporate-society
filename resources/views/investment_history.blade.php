@@ -25,22 +25,26 @@
                       <tr>
                         <th scope="col">Code</th>
                         <th scope="col">Amount</th>
+                        <th scope="col">ROI</th>
                         <th scope="col">Status</th>
                         <th scope="col">Created At</th>
+                        <th scope="col">Ends At</th>
                       </tr>
                     </thead>
-                    @if(count($withdrawals))
-                    @foreach ($withdrawals as $withdrawal)
+                    @if(count($investments))
+                    @foreach ($investments as $investment)
                     <tr>
-                      <td>{{$withdrawal->code}}</td>
-                      <td>₦{{number_format($withdrawal->amount)}}</td>
-                      <td>{{$withdrawal->status}}</td>
-                      <td>{{$withdrawal->created_at->toDateString()}}</td>
+                      <td>{{$investment->code}}</td>
+                      <td>₦{{number_format($investment->amount)}}</td>
+                      <td>₦{{number_format($investment->roi)}}</td>
+                      <td>{{$investment->completed_at ==null?'Active':'Closed'}}</td>
+                      <td>{{$investment->created_at->toDateString()}}</td>
+                      <td>{{$investment->ends_at->toDateString()}}</td>
                     </tr>
                     @endforeach
                     @else
                     <tr>
-                      <td colspan="4" class="text-center">No Withdraw Yet</td>
+                      <td colspan="6" class="text-center">No Investment Yet</td>
                     </tr>
                     @endif
                     <tbody>
@@ -49,9 +53,9 @@
                 </div>
 
               </div>
-              @if ($withdrawals->hasPages())
+              @if ($investments->hasPages())
               <div class="card-footer p-2">
-                {!! $withdrawals->links() !!}
+                {!! $investments->links() !!}
               </div>
               @endif
             </div>

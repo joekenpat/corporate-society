@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\ShortCode;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Deposit extends Model
 {
-  use HasFactory;
+  use HasFactory, ShortCode;
   /**
    * The attributes that are mass assignable.
    *

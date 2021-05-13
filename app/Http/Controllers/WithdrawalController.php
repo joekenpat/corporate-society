@@ -10,6 +10,19 @@ use Illuminate\Http\Response;
 
 class WithdrawalController extends Controller
 {
+
+  /**
+   * Create user withdrawal
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function userCreateWithdrawal()
+  {
+    $maxAmount = auth()->user()->available_balance;
+    return view('withdrawal_create', ['maxAmount' => $maxAmount]);
+  }
+
+
   /**
    * Display a listing of user withdrawals
    *
@@ -18,7 +31,7 @@ class WithdrawalController extends Controller
   public function userListWithdrawal()
   {
     $user = User::whereId(auth()->user()->id)->firstOrFail();
-    $withdrawals = Investment::select([
+    $withdrawals = Withdrawal::select([
       'code',
       'amount',
       'status',
@@ -38,7 +51,7 @@ class WithdrawalController extends Controller
    */
   public function adminListWithdrawal()
   {
-    $withdrawals = Investment::select([
+    $withdrawals = Withdrawal::select([
       'code',
       'amount',
       'status',
@@ -60,12 +73,11 @@ class WithdrawalController extends Controller
   public function userStoreWithdrawal(Request $request)
   {
     $user = User::whereId(auth()->user()->id)->firstOrFail();
-    $minAmount = 100000;
+    $minAmount = 10000;
     $maxAmount = $user->available_balance;
     $this->validate($request, [
       'amount' => "nullable|integer|min:{$minAmount}|max:{$maxAmount}",
     ]);
-
     Withdrawal::create([
       'user_id' => $user->id,
       'amount' => $request->amount,
@@ -76,7 +88,7 @@ class WithdrawalController extends Controller
     $user->update();
     $response['status'] = "success";
     $response['message'] = "Your Withdrawal of #{$request->amount} has been placed.";
-    return response()->json($response, Response::HTTP_OK);
+    return redirect()->route('withdrawal_history');
   }
 
 

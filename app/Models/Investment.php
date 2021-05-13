@@ -21,6 +21,7 @@ class Investment extends Model
     'package_name',
     'amount',
     'roi',
+    'ends_at',
     'completed_at',
   ];
 
@@ -50,5 +51,6 @@ class Investment extends Model
    */
   protected $casts = [
     'completed_at' => 'datetime',
+    'ends_at' => 'datetime',
   ];
 }

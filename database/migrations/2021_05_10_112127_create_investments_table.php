@@ -20,6 +20,7 @@ class CreateInvestmentsTable extends Migration
       $table->string('package_name');
       $table->decimal('amount', 14, 2);
       $table->decimal('roi', 14, 2);
+      $table->timestamp('ends_at')->nullable()->default(null);
       $table->timestamp('completed_at')->nullable()->default(null);
       $table->timestamps();
     });

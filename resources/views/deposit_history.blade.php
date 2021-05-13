@@ -20,7 +20,7 @@
             <div class="card my-card-look">
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-bordered">
+                  <table class="table table-bordered mb-0">
                     <thead>
                       <tr>
                         <th scope="col">Code</th>
@@ -33,14 +33,14 @@
                     @foreach ($deposits as $deposit)
                     <tr>
                       <td>{{$deposit->code}}</td>
-                      <td>{{number_format($deposit->amount)}}</td>
-                      <td>{{$deposit->code}}</td>
-                      <td>{{$deposit->toDateString()}}</td>
+                      <td>₦{{number_format($deposit->amount)}}</td>
+                      <td>{{$deposit->status}}</td>
+                      <td>{{$deposit->created_at->toDateString()}}</td>
                     </tr>
                     @endforeach
                     @else
                     <tr>
-                      <td colspan="4"></td>
+                      <td colspan="4" class="text-center">No Deposit Yet</td>
                     </tr>
                     @endif
                     <tbody>
@@ -50,7 +50,7 @@
 
               </div>
               @if ($deposits->hasPages())
-              <div class="card-footer">
+              <div class="card-footer p-2">
                 {!! $deposits->links() !!}
               </div>
               @endif
