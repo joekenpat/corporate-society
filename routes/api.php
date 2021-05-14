@@ -33,7 +33,6 @@ Route::group(['prefix' => 'admin'], function () {
       Route::get('list/{status}', [DepositController::class, 'adminListDeposit'])->where(['status' => 'pending|completed|failed']);
     });
 
-
     Route::group(['prefix' => 'investment'], function () {
       Route::get('list/{status}', [InvestmentController::class, 'adminListInvestment'])->where(['status' => 'active|completed']);
     });

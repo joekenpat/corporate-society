@@ -24,7 +24,7 @@ class InvestmentController extends Controller
     ])->whereActive(true)->get();
     return view('investment_create', [
       'investmentPackages' => $investmentPackages,
-      'maxAmount' => $maxAmount
+      'maxAmount' => $maxAmount,
     ]);
   }
 

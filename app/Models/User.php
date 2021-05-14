@@ -114,6 +114,7 @@ class User extends Authenticatable
     return $this->hasMany(Withdrawal::class);
   }
 
+
   public function pendingWithdrawals()
   {
     return $this->withdrawals()->whereStatus('pending');
@@ -137,5 +138,10 @@ class User extends Authenticatable
   public function completedDeposits()
   {
     return $this->deposits()->whereStatus('completed');
+  }
+
+  public function withdrawalBank()
+  {
+    return $this->hasOne(WithdrawalBank::class);
   }
 }

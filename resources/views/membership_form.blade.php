@@ -1,7 +1,7 @@
 <x-app-layout>
   @push('bottomScripts')
   <script>
-    lgaList = @json($lgaList);
+    const lgaList = @json($lgaList);
     const lgaElem = document.getElementById('lga');
     const selectedLgaList = (state_code)=>{
       lgaElem.length =1

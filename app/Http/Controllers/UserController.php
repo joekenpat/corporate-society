@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bank;
 use App\Models\Lga;
 use App\Models\State;
 use Illuminate\Http\Request;
@@ -49,8 +50,25 @@ class UserController extends Controller
       'userDOB' => $user->dob->toDateString(),
       'userAddress1' => $user->address1,
       'userAddress2' => $user->address2,
-      'stateList'=>$state,
-      'lgaList'=>$lga
+      'stateList' => $state,
+      'lgaList' => $lga
+    ]);
+  }
+
+  /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function showProfileSettingForm()
+  {
+    $user = auth()->user();
+    $banks = Bank::all();
+    $withdrawalBank = $user->withdrawalBank();
+    return view('profile_setting', [
+      'bankList' => $banks,
+      'withdrawalBank' => $withdrawalBank
     ]);
   }
 

@@ -1,4 +1,14 @@
 <x-app-layout>
+  @push('bottomScripts')
+  <script>
+    const packageList = @json($investmentPackages);
+    const roiElem = document.getElementById('roi_percent');
+    const durationElem = document.getElementById('investment_duration');
+    const selectedPackageList = (investment_package_id)=>{
+      roiElem.innerHTML = packageList.find(x=>x.id ==investment_package_id).roi_percent
+      durationElem.innerHTML = packageList.find(x=>x.id ==investment_package_id).duration    }
+  </script>
+  @endpush
   <div class="row pt-5">
     @include('layouts.sideBar',[
     'userFullName'=>auth()->user()->full_name,
@@ -29,7 +39,7 @@
                     <div class="col-xs-12 col-md-6 pt-3">
                       <p class="card-body-head-text">Choose Package:</p>
                       <select class="form-control form-control-lg @error('investment_package_id') form-error @enderror"
-                        name="investment_package_id">
+                        name="investment_package_id" onchange="selectedPackageList(this.value)">
                         <option value="">Select Package</option>
                         @if(count($investmentPackages))
                         @foreach ($investmentPackages as $investmentPackage)
@@ -52,9 +62,9 @@
                   </div>
                   <div class="pt-3 pb-5">
                     <p class="card-body-head-text">ROI(%):</p>
-                    <p class="roi-tetx">10</p>
+                    <p class="roi-tetx" id="roi_percent"></p>
                     <p class="card-body-head-text">Tenure:</p>
-                    <p class="roi-tetx">Every 3 Months</p>
+                    <p class="roi-tetx"><span id="investment_duration"></span> Month(s)</p>
                     <div class="text-center">
                       <button type="submit" class="btn btn-success">Invest</button>
                       <button type="reset" class="btn btn-secondary">Cancel</button>

@@ -26,10 +26,12 @@ Route::group(['middleware' => ['auth']], function () {
 
   Route::get('/dashboard', [UserController::class, 'showUserDashboard'])
     ->name('dashboard');
+  Route::get('/profile/general', [UserController::class, 'showProfileSettingForm'])
+    ->name('profile_general');
 
   Route::group(['prefix' => 'membership'], function () {
-    Route::get('/apply', [UserController::class, 'showMembershipApplicationForm'])
-      ->name('membership_apply');
+    Route::get('/detail', [UserController::class, 'showMembershipApplicationForm'])
+      ->name('membership_detail');
   });
 
 

@@ -12,7 +12,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
   <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   @stack('topStyles')
@@ -23,21 +24,12 @@
 </head>
 
 <body style="background-color: #c5c4c4;overflow-x: hidden;">
-   <!--
-        ***********************************
-                P R E L O A D E R
-        ***********************************
-    -->
-    {{-- <div class="bg-success" id="preloader">
-      <!-- preloader -->
-      <img src="./assets/preloader/loader (2).gif" alt="">
-  </div> --}}
-    @include('layouts.appNavigation')
+  @include('layouts.appNavigation')
 
-    <!-- Page Content -->
-    <main>
-      {{ $slot }}
-    </main>
+  <!-- Page Content -->
+  <main>
+    {{ $slot }}
+  </main>
 
   <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -48,6 +40,16 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
     integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous">
+  </script>
+  <script>
+    function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+
   </script>
   @stack('bottomScripts')
 </body>

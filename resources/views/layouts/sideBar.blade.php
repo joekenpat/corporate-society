@@ -62,6 +62,12 @@
           Withdraw History
         </a>
       </p>
+      <p class="side-link-text">
+        <a href="{{route('profile_general')}}">
+          <i style="font-size: 20px;" class="mdi mdi-account mr-1"></i>
+          Profile
+        </a>
+      </p>
       @auth
       <!-- Authentication -->
       <form method="POST" action="{{ route('logout') }}">
