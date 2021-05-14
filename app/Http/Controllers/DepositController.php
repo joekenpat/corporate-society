@@ -40,6 +40,7 @@ class DepositController extends Controller
       'created_at',
       'completed_at',
     ])->whereUserId($user->id)
+      ->latest()
       ->paginate(10);
     return view('deposit_history', [
       'deposits' => $deposits
@@ -63,6 +64,7 @@ class DepositController extends Controller
       'completed_at',
     ])->with(['user:id,code,first_name,last_name,email,profileImage'])
       ->where('status', $status)
+      ->latest()
       ->paginate(10);
     $response['status'] = "success";
     $response['deposits'] = $deposits;

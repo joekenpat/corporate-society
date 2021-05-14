@@ -46,6 +46,7 @@ class InvestmentController extends Controller
       'ends_at',
       'completed_at',
     ])->whereUserId($user->id)
+      ->latest()
       ->paginate(10);
     $response['status'] = "success";
     $response['investments'] = $investments;
@@ -77,6 +78,7 @@ class InvestmentController extends Controller
           return $query->where('completed_at', null);
         }
       })
+      ->latest()
       ->paginate(10);
     $response['status'] = "success";
     $response['investments'] = $packages;

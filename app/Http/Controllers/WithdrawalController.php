@@ -38,6 +38,7 @@ class WithdrawalController extends Controller
       'created_at',
       'completed_at',
     ])->whereUserId($user->id)
+      ->latest()
       ->paginate(10);
     return view('withdrawal_history', [
       'withdrawals' => $withdrawals
@@ -60,6 +61,7 @@ class WithdrawalController extends Controller
       'completed_at',
     ])->with(['user:id,code,first_name,last_name,email,profileImage'])
       ->where('status', $status)
+      ->latest()
       ->paginate(10);
     $response['status'] = "success";
     $response['withdrawals'] = $withdrawals;
