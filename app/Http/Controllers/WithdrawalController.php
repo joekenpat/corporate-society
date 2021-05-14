@@ -117,6 +117,9 @@ class WithdrawalController extends Controller
         $updateableWithdrawal->status = 'completed';
       } elseif ($request->status == 'failed') {
         $updateableWithdrawal->status = 'failed';
+        $investor = User::whereId($updateableWithdrawal->user_id)->firstOrFail();
+        $investor->available_balance -= ($updateableWithdrawal->amount);
+        $investor->update();
       }
 
       if ($updateableWithdrawal->isDirty($updateableAttributes)) {
