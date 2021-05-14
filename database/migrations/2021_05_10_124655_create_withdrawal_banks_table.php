@@ -16,9 +16,9 @@ class CreateWithdrawalBanksTable extends Migration
     Schema::create('withdrawal_banks', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('user_id');
-      $table->string('name')->nullable()->default(null);
+      $table->string('bank_code',10)->nullable()->default(null);
       $table->string('account_name')->nullable()->default(null);
-      $table->string('account_number')->nullable()->default(null);
+      $table->string('account_number',15)->nullable()->default(null);
       $table->timestamps();
     });
   }

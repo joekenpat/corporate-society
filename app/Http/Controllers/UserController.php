@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bank;
 use App\Models\Lga;
 use App\Models\State;
+use App\Models\WithdrawalBank;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -65,7 +66,7 @@ class UserController extends Controller
   {
     $user = auth()->user();
     $banks = Bank::all();
-    $withdrawalBank = $user->withdrawalBank();
+    $withdrawalBank = $user->withdrawalBank;
     return view('profile_setting', [
       'bankList' => $banks,
       'withdrawalBank' => $withdrawalBank
@@ -82,6 +83,26 @@ class UserController extends Controller
   public function update(Request $request, $id)
   {
     //
+  }
+
+  public function userUpdateWithdrawalBank(Request $request)
+  {
+    $this->validate($request, [
+      'bank_code' => 'sometimes|nullable|alpha_num|max:10|exists:banks,code',
+      'account_name' => 'sometimes|nullable|string',
+      'account_number' => 'sometimes|nullable|digits:10',
+    ]);
+
+    WithdrawalBank::updateOrCreate(
+      ['user_id' => auth()->user()->id],
+      [
+        'bank_code' => $request->bank_code,
+        'account_name' => $request->account_name,
+        'account_number' => $request->account_number,
+      ]
+    );
+
+    return redirect()->route('profile_general');
   }
 
   /**

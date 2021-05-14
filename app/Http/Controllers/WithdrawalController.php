@@ -75,6 +75,9 @@ class WithdrawalController extends Controller
   public function userStoreWithdrawal(Request $request)
   {
     $user = User::whereId(auth()->user()->id)->firstOrFail();
+    //check for missing bank details
+    //before proceeding
+
     $minAmount = 10000;
     $maxAmount = $user->available_balance;
     $this->validate($request, [

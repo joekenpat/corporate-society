@@ -26,8 +26,15 @@ Route::group(['middleware' => ['auth']], function () {
 
   Route::get('/dashboard', [UserController::class, 'showUserDashboard'])
     ->name('dashboard');
-  Route::get('/profile/general', [UserController::class, 'showProfileSettingForm'])
-    ->name('profile_general');
+
+  Route::group(['prefix' => 'profile'], function () {
+    Route::get('general', [UserController::class, 'showProfileSettingForm'])
+      ->name('profile_general');
+
+    Route::post('update/withdrawal-bank', [UserController::class, 'userUpdateWithdrawalBank'])
+      ->name('update_profile_withdrawal_bank');
+  });
+
 
   Route::group(['prefix' => 'membership'], function () {
     Route::get('/detail', [UserController::class, 'showMembershipApplicationForm'])

@@ -81,12 +81,12 @@ class User extends Authenticatable
    */
   protected $casts = [
     'email_verified_at' => 'datetime',
-    'dob'=>'datetime',
+    'dob' => 'datetime',
   ];
 
   public function getFullNameAttribute()
   {
-    return $this->last_name.' '.$this->first_name;
+    return $this->last_name . ' ' . $this->first_name;
   }
 
   // public function getLedgerBalanceAttribute()
@@ -142,6 +142,6 @@ class User extends Authenticatable
 
   public function withdrawalBank()
   {
-    return $this->hasOne(WithdrawalBank::class);
+    return $this->hasOne(WithdrawalBank::class, 'user_id');
   }
 }
