@@ -44,6 +44,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'withdrawal'], function () {
       Route::get('list/{status}', [WithdrawalController::class, 'adminListWithdrawal'])->where(['status' => 'pending|failed|completed']);
+      Route::post('update', [WithdrawalController::class, 'adminUpdateWithdrawalRequest']);
     });
   });
 });

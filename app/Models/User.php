@@ -81,6 +81,7 @@ class User extends Authenticatable
    */
   protected $casts = [
     'email_verified_at' => 'datetime',
+    'dob'=>'datetime',
   ];
 
   public function getFullNameAttribute()

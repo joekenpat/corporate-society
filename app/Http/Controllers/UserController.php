@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lga;
+use App\Models\State;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -33,9 +35,23 @@ class UserController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show($id)
+  public function showMembershipApplicationForm()
   {
-    //
+    $user = auth()->user();
+    $state = State::all();
+    $lga = Lga::all();
+    return view('membership_form', [
+      'userFirstName' => $user->first_name,
+      'userLastName' => $user->last_name,
+      'userMiddleName' => $user->middle_name,
+      'userEmail' => $user->email,
+      'userPhone' => $user->phone,
+      'userDOB' => $user->dob->toDateString(),
+      'userAddress1' => $user->address1,
+      'userAddress2' => $user->address2,
+      'stateList'=>$state,
+      'lgaList'=>$lga
+    ]);
   }
 
   /**

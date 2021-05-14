@@ -27,6 +27,12 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/dashboard', [UserController::class, 'showUserDashboard'])
     ->name('dashboard');
 
+  Route::group(['prefix' => 'membership'], function () {
+    Route::get('/apply', [UserController::class, 'showMembershipApplicationForm'])
+      ->name('membership_apply');
+  });
+
+
   Route::group(['prefix' => 'withdrawal'], function () {
     Route::get('/create', [WithdrawalController::class, 'userCreateWithdrawal'])
       ->name('withdrawal_create');
