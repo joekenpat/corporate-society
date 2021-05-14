@@ -122,7 +122,6 @@ class DepositController extends Controller
    */
   public function handleDepositPaymentGatewayCallback(Request $request)
   {
-    return dd($request);
     $paystack_client = Http::withToken(config('paystack.secretKey'))->get("https://api.paystack.co/transaction/verify/" . $request->query('trxref'));
     $paymentDetails = $paystack_client->json();
     $valid_deposit = Deposit::where('code', $paymentDetails['data']['reference'])->firstOrFail();
