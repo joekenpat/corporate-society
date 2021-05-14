@@ -28,7 +28,40 @@
 
   <!-- Page Content -->
   <main>
-    {{ $slot }}
+    <div class="row pt-5">
+      @include('layouts.sideBar',[
+      'userFullName'=>auth()->user()->full_name,
+      'userEmail'=>auth()->user()->email,
+      ])
+      @include('layouts.mobileSideBar')
+      <div class="col-xs-12 col-lg-10 pt-3">
+        <div class="p-3">
+          @if ($message = Session::get('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {!!$message!!}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          @elseif ($message = Session::get('info'))
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {!!$message!!}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          @elseif ($message = Session::get('error'))
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {!!$message!!}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        @endif
+        {{ $slot }}
+      </div>
+    </div>
   </main>
 
   <!-- Scripts -->

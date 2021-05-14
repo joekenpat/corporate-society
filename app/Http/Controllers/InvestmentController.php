@@ -68,6 +68,7 @@ class InvestmentController extends Controller
       'amount',
       'roi',
       'created_at',
+      'user_id',
       'ends_at',
       'completed_at',
     ])->with(['user:id,code,first_name,last_name,email,profileImage'])
@@ -112,7 +113,7 @@ class InvestmentController extends Controller
     $user->investment_balance += $request->amount;
     $user->update();
     $response['status'] = "success";
-    $response['message'] = "Your investment of #{$request->amount} has been placed in {$investmentPackage->name}";
-    return redirect()->route('investment_history');
+    $response['message'] = "Your investment of ₦{$request->amount} has been placed in {$investmentPackage->name}";
+    return redirect()->route('investment_history')->with($response['status'], $response['message']);
   }
 }

@@ -27,7 +27,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/dashboard', [UserController::class, 'showUserDashboard'])
     ->name('dashboard');
 
-  Route::group(['prefix' => 'profile'], function () {
+  Route::group(['prefix' => 'profile','middleware'=>['hasPaidMembershipFee']], function () {
     Route::get('general', [UserController::class, 'showProfileSettingForm'])
       ->name('profile_general');
 
@@ -38,11 +38,20 @@ Route::group(['middleware' => ['auth']], function () {
 
   Route::group(['prefix' => 'membership'], function () {
     Route::get('/detail', [UserController::class, 'showMembershipApplicationForm'])
-      ->name('membership_detail');
+      ->name('membership_detail')->middleware('hasPaidMembershipFee');
+
+    Route::get('/pay-fee', [UserController::class, 'userPayMembershipFormFee'])
+      ->name('initiate_membership_fee');
+
+    Route::get('/validate-payment', [UserController::class, 'handleMembershipFeePaymentGatewayCallback'])
+      ->name('membership_fee_validate_payment');
+
+    Route::get('/payment-failed', [UserController::class, 'handleMembershipFeePaymentFailed'])
+      ->name('membership_fee_payment_failed');
   });
 
 
-  Route::group(['prefix' => 'withdrawal'], function () {
+  Route::group(['prefix' => 'withdrawal','middleware'=>['hasPaidMembershipFee']], function () {
     Route::get('/create', [WithdrawalController::class, 'userCreateWithdrawal'])
       ->name('withdrawal_create');
     Route::post('/initiate', [WithdrawalController::class, 'userStoreWithdrawal'])
@@ -51,7 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
       ->name('withdrawal_history');
   });
 
-  Route::group(['prefix' => 'investment'], function () {
+  Route::group(['prefix' => 'investment','middleware'=>['hasPaidMembershipFee']], function () {
     Route::get('/create', [InvestmentController::class, 'userCreateInvestment'])
       ->name('investment_create');
     Route::post('/initiate', [InvestmentController::class, 'userStoreInvestment'])
@@ -60,7 +69,7 @@ Route::group(['middleware' => ['auth']], function () {
       ->name('investment_history');
   });
 
-  Route::group(['prefix' => 'deposit'], function () {
+  Route::group(['prefix' => 'deposit','middleware'=>['hasPaidMembershipFee']], function () {
     Route::get('/create', [DepositController::class, 'userCreateDeposit'])
       ->name('deposit_create');
     Route::post('/initiate', [DepositController::class, 'userStoreDeposit'])

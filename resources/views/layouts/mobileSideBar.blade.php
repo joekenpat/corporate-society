@@ -9,7 +9,7 @@
   <a href="{{route('withdrawal_create')}}">Withdraw</a>
   <a href="{{route('investment_create')}}">Create Investment</a>
   <a href="{{route('investment_history')}}">Manage Investment</a>
-  <a href="{{route('deposit_create')}}">Deposit History</a>
+  <a href="{{route('deposit_history')}}">Deposit History</a>
   <a href="{{route('withdrawal_history')}}">Withdraw History</a>
   <a href="{{route('profile_general')}}">Profile</a>
   <!-- Authentication -->

@@ -146,38 +146,26 @@ class DepositController extends Controller
         $user->available_balance += ($paymentDetails['data']['amount'] / 100);
         $user->update();
       }
+      $response['status'] = 'success';
+      $response['message'] = "Your deposit of ₦{$valid_deposit->amount} was successfull.";
     } elseif ($paymentDetails['data']['status'] === "failed") {
       $valid_deposit->status = 'failed';
       $valid_deposit->completed_at = now();
       $valid_deposit->update();
+      $response['status'] = 'error';
+      $response['message'] = "Your deposit of ₦{$valid_deposit->amount} failed.";
     }
-    return redirect()->route('deposit_history');
+    return redirect()->route('deposit_history')->with($response['status'], $response['message']);
   }
 
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  \App\Models\Deposit  $deposit
-   * @return \Illuminate\Http\Response
-   */
-  public function update(Request $request, Deposit $deposit)
-  {
-    //
-  }
-
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  \App\Models\Deposit  $deposit
-   * @return \Illuminate\Http\Response
-   */
   public function markPendingDepositAsFailed($deposit_code)
   {
     $valid_deposit = Deposit::whereCode($deposit_code)->firstOrFail();
     $valid_deposit->status = 'failed';
     $valid_deposit->completed_at = now();
     $valid_deposit->update();
-    return redirect()->route('deposit_history');
+    $response['status'] = 'error';
+    $response['message'] = "Your deposit has failed.";
+    return redirect()->route('deposit_history')->with($response['status'], $response['message']);
   }
 }

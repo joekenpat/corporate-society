@@ -95,7 +95,7 @@ class WithdrawalController extends Controller
     $user->update();
     $response['status'] = "success";
     $response['message'] = "Your Withdrawal of #{$request->amount} has been placed.";
-    return redirect()->route('withdrawal_history');
+    return redirect()->route('withdrawal_history')->with($response['status'], $request['message']);
   }
 
 

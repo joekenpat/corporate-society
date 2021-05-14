@@ -5,30 +5,64 @@ namespace App\Http\Controllers;
 use App\Models\Bank;
 use App\Models\Lga;
 use App\Models\State;
+use App\Models\User;
 use App\Models\WithdrawalBank;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
-  /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function index()
+
+  public function userPayMembershipFormFee()
   {
-    //
+    $user = User::whereId(auth()->user()->id)->firstOrFail();
+    $paystack = Http::withToken(config('paystack.secretKey'))
+      ->post('https://api.paystack.co/transaction/initialize', [
+        'email' => $user->email,
+        'amount' => 2000 * 100,
+        'quantity' => 1,
+        'currency' => 'NGN',
+        'channels' => ['card'],
+        // 'reference' => Paystack::getTrnxref(),
+        'callback_url' => route('membership_fee_validate_payment'),
+        'metadata' => [
+          'cancel_action' => route('membership_fee_payment_failed'),
+        ]
+      ])->json();
+    return redirect()->away($paystack['data']['authorization_url']);
   }
 
+
   /**
-   * Store a newly created resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\Response
+   * Obtain Paystack payment information
+   * @return void
    */
-  public function store(Request $request)
+  public function handleMembershipFeePaymentGatewayCallback(Request $request)
   {
-    //
+    $paystack_client = Http::withToken(config('paystack.secretKey'))->get("https://api.paystack.co/transaction/verify/" . $request->query('trxref'));
+    $paymentDetails = $paystack_client->json();
+    // return dd($paymentDetails);
+    $valid_user = User::where('email', $paymentDetails['data']['customer']['email'])->firstOrFail();
+    if ($paymentDetails['data']['status'] === "success") {
+      if (($paymentDetails['data']['amount'] / 100) == 2000) {
+        $valid_user->status = 'paid';
+        $valid_user->update();
+      }
+      $response['status'] = 'success';
+      $response['message'] = "Your membership fee payment was successfull.";
+      return redirect()->route('membership_detail')->with($response['status'], $response['message']);
+    } elseif ($paymentDetails['data']['status'] === "failed") {
+      $response['status'] = 'error';
+      $response['message'] = "Your membership fee payment was not successfull.";
+      return redirect()->route('dashboard')->with($response['status'], $response['message']);
+    }
+  }
+
+  public function handleMembershipFeePaymentFailed()
+  {
+    $response['status'] = 'error';
+    $response['message'] = "Your membership fee payment was not successfull.";
+    return redirect()->route('dashboard')->with($response['status'], $response['message']);
   }
 
   /**
@@ -73,18 +107,6 @@ class UserController extends Controller
     ]);
   }
 
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function update(Request $request, $id)
-  {
-    //
-  }
-
   public function userUpdateWithdrawalBank(Request $request)
   {
     $this->validate($request, [
@@ -104,18 +126,6 @@ class UserController extends Controller
 
     return redirect()->route('profile_general');
   }
-
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function destroy($id)
-  {
-    //
-  }
-
 
   public function showUserDashboard()
   {

@@ -18,7 +18,10 @@ class HasPaidMembershipFee
   public function handle(Request $request, Closure $next)
   {
     if (Auth::check() && Auth::user()->status == 'pending') {
-      return redirect()->route('choose_reg_plan');
+      $response['status'] = "info";
+      $paymentRoute = route('initiate_membership_fee');
+      $response['message'] = "You need to pay your membership fee of ₦2,000 to activate your account, <a href='{$paymentRoute}'>Click Here To Pay Now</a>";
+      return redirect()->route('dashboard')->with($response['status'], $response['message']);
     }
     return $next($request);
   }
