@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
 
   Route::group(['prefix' => 'membership'], function () {
     Route::get('/detail', [UserController::class, 'showMembershipApplicationForm'])
-      ->name('membership_detail')->middleware('hasPaidMembershipFee');
+      ->name('membership_detail');
 
     Route::post('/update', [UserController::class, 'userUpdateMembershipDetails'])
       ->name('update_membership_details');

@@ -101,7 +101,7 @@ class UserController extends Controller
     $paystack = Http::withToken(config('paystack.secretKey'))
       ->post('https://api.paystack.co/transaction/initialize', [
         'email' => $user->email,
-        'amount' => 2000 * 100,
+        'amount' => 1500 * 100,
         'quantity' => 1,
         'currency' => 'NGN',
         'channels' => ['card'],
@@ -125,7 +125,7 @@ class UserController extends Controller
     $paymentDetails = $paystack_client->json();
     $valid_user = User::where('email', $paymentDetails['data']['customer']['email'])->firstOrFail();
     if ($paymentDetails['data']['status'] === "success") {
-      if (($paymentDetails['data']['amount'] / 100) == 2000) {
+      if (($paymentDetails['data']['amount'] / 100) == 1500) {
         $valid_user->status = 'paid';
         $valid_user->update();
       }
@@ -296,11 +296,19 @@ class UserController extends Controller
       $updateableUser->update();
       $response['status'] = "success";
       $response['message'] = "Profile was updated Successfully!";
-      return redirect()->route('membership_detail')->with($response['status'], $response['message']);
+      if ($updateableUser->status == 'pending') {
+        return redirect()->route('initiate_membership_fee');
+      } else {
+        return redirect()->route('membership_detail')->with($response['status'], $response['message']);
+      }
     } else {
       $response['status'] = "success";
       $response['message'] = "No changes where made!";
-      return redirect()->route('membership_detail')->with($response['status'], $response['message']);
+      if ($updateableUser->status == 'pending') {
+        return redirect()->route('initiate_membership_fee');
+      } else {
+        return redirect()->route('membership_detail')->with($response['status'], $response['message']);
+      }
     }
   }
 
