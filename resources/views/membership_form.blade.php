@@ -75,8 +75,8 @@
               </div>
               <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
                 <p class="my-membarship-signup-text">State</p>
-                <select class="form-control form-control-sm  @error('state') form-error @enderror"
-                  onchange="selectedLgaList(this.value)" name="state">
+                <select class="form-control form-control-sm  @error('state_code') form-error @enderror"
+                  onchange="selectedLgaList(this.value)" name="state_code">
                   <option value="">Select State</option>
                   @if(count($stateList))
                   @foreach ($stateList as $statex)
@@ -84,16 +84,16 @@
                   @endforeach
                   @endif
                 </select>
-                @error('state')
+                @error('state_code')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
               </div>
               <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
                 <p class="my-membarship-signup-text">LGA</p>
-                <select class="form-control form-control-sm  @error('lga') form-error @enderror" id="lga" name="lga">
+                <select class="form-control form-control-sm  @error('lga_id') form-error @enderror" id="lga" name="lga">
                   <option value="">Select LGA</option>
                 </select>
-                @error('lga')
+                @error('lga_id')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
               </div>

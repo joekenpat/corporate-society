@@ -333,10 +333,10 @@ class UserController extends Controller
       'address2' => 'required|string|between:5,150',
       'state_code' => 'required|alpha_num|exists:states,code',
       'lga_id' => 'required|integer|exists:lgas,id',
-      'employment_status' => 'sometime|nullable|alpha_dash|in:unemployed,employee,self-employed,worker',
-      'identification_type' => 'sometime|nullable|alpha_dash|in:international-passport,national-id,driver-license,permanent-voter-card',
-      'profile_image' => 'sometime|nullable|image|mimes:png,jpg,jpeg|max:3072',
-      'identification_image' => 'sometime|nullable|image|mimes:png,jpg,jpeg|max:3072',
+      'employment_status' => 'sometimes|nullable|alpha_dash|in:unemployed,employee,self-employed,worker',
+      'identification_type' => 'sometimes|nullable|alpha_dash|in:international-passport,national-id,driver-license,permanent-voter-card',
+      'profile_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:3072',
+      'identification_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:3072',
       'email' => 'required|email',
       'password' => 'required|string|between:4,25'
     ]);
