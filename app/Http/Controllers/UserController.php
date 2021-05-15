@@ -376,7 +376,7 @@ class UserController extends Controller
 
     $newUser->update();
     $response['status'] = "success";
-    $response['message'] = "Profile was updated Successfully!";
-    return redirect()->route('membership_detail')->with($response['status'], $response['message']);
+    $response['message'] = "New Member added Successfully!";
+    return response()->json($response, Response::HTTP_OK);
   }
 }

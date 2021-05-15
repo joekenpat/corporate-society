@@ -53,20 +53,23 @@ class AdminController extends Controller
   public function adminDashboardStatus()
   {
     $stats = [
-      'pending_member_count'=>User::where('status','paid')->count(),
-      'declined_member_count'=>User::where('status','declined')->count(),
-      'approved_member_count'=>User::where('status','approved')->count(),
+      'pending_member_count' => User::where('status', 'paid')->count(),
+      'declined_member_count' => User::where('status', 'declined')->count(),
+      'approved_member_count' => User::where('status', 'approved')->count(),
 
-      'active_investment_count'=>Investment::where('completed_at',null)->count(),
-      'completed_investment_count'=>Investment::where('completed_at','<>',null)->count(),
+      'active_investment_count' => Investment::where('completed_at', null)->count(),
+      'completed_investment_count' => Investment::where('completed_at', '<>', null)->count(),
 
-      'pending_withdrawal_count'=>Withdrawal::where('status','pending')->count(),
-      'failed_withdrawal_count'=>Withdrawal::where('status','failed')->count(),
-      'completed_withdrawal_count'=>Withdrawal::where('status','completed')->count(),
+      'pending_withdrawal_count' => Withdrawal::where('status', 'pending')->count(),
+      'failed_withdrawal_count' => Withdrawal::where('status', 'failed')->count(),
+      'completed_withdrawal_count' => Withdrawal::where('status', 'completed')->count(),
 
-      'pending_deposit_count'=>Deposit::where('status','pending')->count(),
-      'failed_deposit_count'=>Deposit::where('status','failed')->count(),
-      'completed_deposit_count'=>Deposit::where('status','completed')->count(),
-    ]
+      'pending_deposit_count' => Deposit::where('status', 'pending')->count(),
+      'failed_deposit_count' => Deposit::where('status', 'failed')->count(),
+      'completed_deposit_count' => Deposit::where('status', 'completed')->count(),
+    ];
+    $response['status'] = "success";
+    $response['table_stats'] = $stats;
+    return response()->json($response, Response::HTTP_OK);
   }
 }
