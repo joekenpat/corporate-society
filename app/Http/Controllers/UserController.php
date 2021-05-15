@@ -73,7 +73,7 @@ class UserController extends Controller
       'status' => 'required|alpha|in:declined,approved',
     ]);
 
-    $updateableUser = User::whereCode($request->withdrawal_code)
+    $updateableUser = User::whereCode($request->user_code)
       ->firstOrFail();
     $updateableAttributes = $updateableUser->getFillable();
 
