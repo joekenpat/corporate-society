@@ -245,7 +245,7 @@ class UserController extends Controller
       'lga_id' => 'sometimes|nullable|integer|exists:lgas,id',
       'employment_status' => 'sometimes|nullable|alpha_dash|in:unemployed,employee,self-employed,worker',
       'identification_type' => 'sometimes|nullable|alpha_dash|in:international-passport,national-id,driver-license,permanent-voter-card',
-      'profile_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:3072',
+      'profile_image' => 'sometimes|nullable|file|mimes:png,jpg,jpeg|max:3072',
       'identification_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:3072',
       'email' => 'sometimes|nullable|email',
     ]);
@@ -270,21 +270,23 @@ class UserController extends Controller
       $profileImage = $request->file('profile_image');
       $img_ext = $profileImage->getClientOriginalExtension();
       $img_name = sprintf("%s.%s", $updateableUser->code, $img_ext);
-      $profileImage->move(public_path("images/users/profile"), $img_name);
-      if (File::exists("images/users/profile/" . $img_name)) {
-        File::delete("images/users/profile/" . $img_name);
+      if (File::exists("images/profile/" . $img_name)) {
+        File::delete("images/profile/" . $img_name);
       }
+      $profileImage->move(public_path("images/profile"), $img_name);
       $updateableUser->profile_image = $img_name;
+      $updateableUser->update();
     }
     if ($request->hasFile('identification_image')) {
       $profileImage = $request->file('identification_image');
       $img_ext = $profileImage->getClientOriginalExtension();
       $img_name = sprintf("%s.%s", $updateableUser->code, $img_ext);
-      $profileImage->move(public_path("images/users/identification"), $img_name);
-      if (File::exists("images/users/identification/" . $img_name)) {
-        File::delete("images/users/identification/" . $img_name);
+      if (File::exists("images/identification/" . $img_name)) {
+        File::delete("images/identification/" . $img_name);
       }
+      $profileImage->move(public_path("images/identification"), $img_name);
       $updateableUser->identification_image = $img_name;
+      $updateableUser->update();
     }
     foreach ($updateableAttributes as $key) {
       if ($request->has($key) && $request->{$key} != (null || "")) {
@@ -292,24 +294,24 @@ class UserController extends Controller
       }
     }
 
-    if ($updateableUser->isDirty($updateableAttributes)) {
-      $updateableUser->update();
-      $response['status'] = "success";
-      $response['message'] = "Profile was updated Successfully!";
-      if ($updateableUser->status == 'pending') {
-        return redirect()->route('initiate_membership_fee');
-      } else {
-        return redirect()->route('membership_detail')->with($response['status'], $response['message']);
-      }
+    // if ($updateableUser->isDirty($updateableAttributes)) {
+    $updateableUser->update();
+    $response['status'] = "success";
+    $response['message'] = "Profile was updated Successfully!";
+    if ($updateableUser->status == 'pending') {
+      return redirect()->route('initiate_membership_fee');
     } else {
-      $response['status'] = "success";
-      $response['message'] = "No changes where made!";
-      if ($updateableUser->status == 'pending') {
-        return redirect()->route('initiate_membership_fee');
-      } else {
-        return redirect()->route('membership_detail')->with($response['status'], $response['message']);
-      }
+      return redirect()->route('membership_detail')->with($response['status'], $response['message']);
     }
+    // } else {
+    //   $response['status'] = "success";
+    //   $response['message'] = "No changes where made!";
+    //   if ($updateableUser->status == 'pending') {
+    //     return redirect()->route('initiate_membership_fee');
+    //   } else {
+    //     return redirect()->route('membership_detail')->with($response['status'], $response['message']);
+    //   }
+    // }
   }
 
   /**

@@ -21,8 +21,7 @@
           Overview
         </div>
         <div class="card-body">
-          <x-auth-validation-errors class="mb-4" :errors="$errors" />
-          <form action="{{route('update_membership_details')}}" method="post">
+          <form action="{{route('update_membership_details')}}" enctype="multipart/form-data" method="post">
             <div class="row">
               @csrf
               <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
@@ -132,7 +131,7 @@
               @if(Auth::user()->status != 'approved')
               <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
                 <p class="my-membarship-signup-text">upload ID</p>
-                <input type="file" accept="png,jpg,jpeg"
+                <input type="file" accept=".png, .jpg, .jpeg"
                   class="form-control-file   @error('identification_image') form-error @enderror"
                   name="identification_image">
                 @error('identification_image')
@@ -142,7 +141,7 @@
               @endif
               <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
                 <p class="my-membarship-signup-text">Upload Profile Image</p>
-                <input type="file" accept="png,jpg,jpeg"
+                <input type="file" accept=".png, .jpg, .jpeg"
                   class="form-control-file   @error('profile_image') form-error @enderror" name="profile_image">
                 @error('profile_image')
                 <span class="text-danger">{{ $message }}</span>

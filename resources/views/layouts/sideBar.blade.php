@@ -8,7 +8,9 @@
       <div class="pb-1 p-0 text-center">
         <div class="row">
           <div class="col-4">
-            <img src="{{asset('images/misc/1.jpg')}}" style="height: 60px; width: 60px; border-radius: 50px;">
+            <img
+              src="{{auth()->user()->profile_image!=(null||"")?asset('images/profile/'.auth()->user()->profile_image):asset('images/misc/default_avatar.png')}}"
+              style="height: 60px; width: 60px; border-radius: 50px;">
           </div>
           <div class="col-4 p-0">
             <p class="pt-3" style="font-weight: bold; color: #ffffff; font-size: 0.6em;">{{ $userFullName }}</p>
