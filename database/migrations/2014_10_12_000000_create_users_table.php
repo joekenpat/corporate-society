@@ -31,7 +31,7 @@ class CreateUsersTable extends Migration
       $table->string('disability')->default('none');
       $table->string('identification_type')->nullable()->default(null);
       $table->string('employment_status')->nullable()->default(null);
-      $table->string('profileImage')->nullable()->default(null);
+      $table->string('profile_image')->nullable()->default(null);
       $table->string('identification_image')->nullable()->default(null);
       $table->string('address1')->nullable()->default(null);
       $table->string('address2')->nullable()->default(null);
