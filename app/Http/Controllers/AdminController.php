@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Deposit;
+use App\Models\Investment;
+use App\Models\User;
+use App\Models\Withdrawal;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -44,5 +48,25 @@ class AdminController extends Controller
     $response['status'] = "success";
     $response['profile'] = auth()->user();
     return response()->json($response, Response::HTTP_OK);
+  }
+
+  public function adminDashboardStatus()
+  {
+    $stats = [
+      'pending_member_count'=>User::where('status','paid')->count(),
+      'declined_member_count'=>User::where('status','declined')->count(),
+      'approved_member_count'=>User::where('status','approved')->count(),
+
+      'active_investment_count'=>Investment::where('completed_at',null)->count(),
+      'completed_investment_count'=>Investment::where('completed_at','<>',null)->count(),
+
+      'pending_withdrawal_count'=>Withdrawal::where('status','pending')->count(),
+      'failed_withdrawal_count'=>Withdrawal::where('status','failed')->count(),
+      'completed_withdrawal_count'=>Withdrawal::where('status','completed')->count(),
+
+      'pending_deposit_count'=>Deposit::where('status','pending')->count(),
+      'failed_deposit_count'=>Deposit::where('status','failed')->count(),
+      'completed_deposit_count'=>Deposit::where('status','completed')->count(),
+    ]
   }
 }

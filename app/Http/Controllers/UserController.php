@@ -10,6 +10,7 @@ use App\Models\WithdrawalBank;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
@@ -301,5 +302,81 @@ class UserController extends Controller
       $response['message'] = "No changes where made!";
       return redirect()->route('membership_detail')->with($response['status'], $response['message']);
     }
+  }
+
+  /**
+   * Store the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function adminStoreNewMembershipDetails(Request $request)
+  {
+    // return dd($request);
+    $this->validate($request, [
+      'first_name' => 'required|alpha|between:3,50',
+      'last_name' => 'required|alpha|between:3,50',
+      'middle_name' => 'required|alpha|between:3,50',
+      'phone' => 'required|alpha_num|size:11',
+      'dob' => 'sometrequired|before_or_equal:2015-01-01',
+      'address1' => 'required|string|between:5,150',
+      'address2' => 'required|string|between:5,150',
+      'state_code' => 'required|alpha_num|exists:states,code',
+      'lga_id' => 'required|integer|exists:lgas,id',
+      'employment_status' => 'sometime|nullable|alpha_dash|in:unemployed,employee,self-employed,worker',
+      'identification_type' => 'sometime|nullable|alpha_dash|in:international-passport,national-id,driver-license,permanent-voter-card',
+      'profile_image' => 'sometime|nullable|image|mimes:png,jpg,jpeg|max:3072',
+      'identification_image' => 'sometime|nullable|image|mimes:png,jpg,jpeg|max:3072',
+      'email' => 'required|email',
+      'password' => 'required|string|between:4,25'
+    ]);
+    $updateableAttributes = [
+      'first_name',
+      'last_name',
+      'middle_name',
+      'phone',
+      'dob',
+      'address1',
+      'address2',
+      'state_code',
+      'lga_id',
+      'employment_status',
+      'identification_type',
+      'email',
+    ];
+    $newUser = new User();
+    foreach ($updateableAttributes as $key) {
+      if ($request->has($key) && $request->{$key} != (null || "")) {
+        $newUser->{$key} = $request->{$key};
+      }
+    }
+    $newUser->password = Hash::make($request->password);
+    $newUser->save();
+
+    if ($request->hasFile('profile_image')) {
+      $profileImage = $request->file('profile_image');
+      $img_ext = $profileImage->getClientOriginalExtension();
+      $img_name = sprintf("%s.%s", $newUser->code, $img_ext);
+      $profileImage->move(public_path("images/users/profile"), $img_name);
+      if (File::exists("images/users/profile/" . $img_name)) {
+        File::delete("images/users/profile/" . $img_name);
+      }
+      $newUser->profile_image = $img_name;
+    }
+    if ($request->hasFile('identification_image')) {
+      $profileImage = $request->file('identification_image');
+      $img_ext = $profileImage->getClientOriginalExtension();
+      $img_name = sprintf("%s.%s", $newUser->code, $img_ext);
+      $profileImage->move(public_path("images/users/identification"), $img_name);
+      if (File::exists("images/users/identification/" . $img_name)) {
+        File::delete("images/users/identification/" . $img_name);
+      }
+      $newUser->identification_image = $img_name;
+    }
+
+    $newUser->update();
+    $response['status'] = "success";
+    $response['message'] = "Profile was updated Successfully!";
+    return redirect()->route('membership_detail')->with($response['status'], $response['message']);
   }
 }
