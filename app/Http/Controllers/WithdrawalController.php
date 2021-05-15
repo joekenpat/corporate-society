@@ -65,7 +65,10 @@ class WithdrawalController extends Controller
       'created_at',
       "user_id",
       'completed_at',
-    ])->with(['user:id,code,first_name,last_name,email,profileImage', 'user.withdrawalBank'])
+    ])->with([
+      'user:id,code,first_name,last_name,email,profileImage',
+       'user.withdrawalBank:id,bank_code,account_name,account_number'
+       ])
       ->where('status', $status)
       ->latest()
       ->paginate(10);

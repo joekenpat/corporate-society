@@ -108,10 +108,12 @@
                 <option value="permanent-voter-card">Permanent Voter Card</option>
               </select>
             </div>
+            @if(Auth::user()->status != 'approved')
             <div class="col-xs-12 col-md-4 pt-3">
               <p class="my-membarship-signup-text">upload ID</p>
               <input type="file" class="form-control-file" id="exampleFormControlFile1">
             </div>
+            @endif
             <div class="col-xs-12 col-md-4 pt-3">
               <p class="my-membarship-signup-text">Upload Profile Image</p>
               <input type="file" class="form-control-file" id="exampleFormControlFile1">
