@@ -71,7 +71,7 @@ class InvestmentController extends Controller
       'user_id',
       'ends_at',
       'completed_at',
-    ])->with(['user:id,code,first_name,last_name,email,profileImage'])
+    ])->with(['user:id,code,first_name,last_name,email,profile_image'])
       ->when($status, function ($query) use ($status) {
         if ($status == 'completed') {
           return $query->where('completed_at', '<>', null);

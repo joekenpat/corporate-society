@@ -66,7 +66,7 @@ class WithdrawalController extends Controller
       "user_id",
       'completed_at',
     ])->with([
-      'user:id,code,first_name,last_name,email,profileImage',
+      'user:id,code,first_name,last_name,email,profile_image',
        'user.withdrawalBank:id,bank_code,account_name,account_number'
        ])
       ->where('status', $status)

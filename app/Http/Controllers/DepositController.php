@@ -62,7 +62,7 @@ class DepositController extends Controller
       'created_at',
       'user_id',
       'completed_at',
-    ])->with(['user:id,code,first_name,last_name,email,profileImage'])
+    ])->with(['user:id,code,first_name,last_name,email,profile_image'])
       ->where('status', $status)
       ->latest()
       ->paginate(10);
