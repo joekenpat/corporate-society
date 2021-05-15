@@ -245,9 +245,12 @@ class UserController extends Controller
       'lga_id' => 'sometimes|nullable|integer|exists:lgas,id',
       'employment_status' => 'sometimes|nullable|alpha_dash|in:unemployed,employee,self-employed,worker',
       'identification_type' => 'sometimes|nullable|alpha_dash|in:international-passport,national-id,driver-license,permanent-voter-card',
-      'profile_image' => 'sometimes|nullable|file|mimes:png,jpg,jpeg|max:3072',
-      'identification_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:3072',
+      'profile_image' => 'sometimes|nullable|file|mimes:png,jpg,jpeg|max:5120',
+      'identification_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:5120',
       'email' => 'sometimes|nullable|email',
+    ], [
+      'profile_image.max' => 'Profile Image is more than 5mb',
+      'identification_image.max' => 'Identification Image is more than 5mb'
     ]);
 
     $updateableUser = auth()->user();
@@ -335,10 +338,13 @@ class UserController extends Controller
       'lga_id' => 'required|integer|exists:lgas,id',
       'employment_status' => 'sometimes|nullable|alpha_dash|in:unemployed,employee,self-employed,worker',
       'identification_type' => 'sometimes|nullable|alpha_dash|in:international-passport,national-id,driver-license,permanent-voter-card',
-      'profile_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:3072',
-      'identification_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:3072',
+      'profile_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:5120',
+      'identification_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:5120',
       'email' => 'required|email',
       'password' => 'required|string|between:4,25'
+    ], [
+      'profile_image.max' => 'Profile Image is more than 5mb',
+      'identification_image.max' => 'Identification Image is more than 5mb'
     ]);
     $updateableAttributes = [
       'first_name',

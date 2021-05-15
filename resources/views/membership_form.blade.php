@@ -130,7 +130,7 @@
               </div>
               @if(Auth::user()->status != 'approved')
               <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
-                <p class="my-membarship-signup-text">upload ID</p>
+                <p class="my-membarship-signup-text">Upload ID</p>
                 <input type="file" accept=".png, .jpg, .jpeg"
                   class="form-control-file   @error('identification_image') form-error @enderror"
                   name="identification_image">
