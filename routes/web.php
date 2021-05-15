@@ -31,6 +31,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('general', [UserController::class, 'showProfileSettingForm'])
       ->name('profile_general');
 
+    Route::post('general/update', [UserController::class, 'userUpdateProfileDetails'])
+      ->name('update_profile_general');
+
     Route::post('update/withdrawal-bank', [UserController::class, 'userUpdateWithdrawalBank'])
       ->name('update_profile_withdrawal_bank');
   });
@@ -39,6 +42,9 @@ Route::group(['middleware' => ['auth']], function () {
   Route::group(['prefix' => 'membership'], function () {
     Route::get('/detail', [UserController::class, 'showMembershipApplicationForm'])
       ->name('membership_detail')->middleware('hasPaidMembershipFee');
+
+    Route::post('/update', [UserController::class, 'userUpdateMembershipDetails'])
+      ->name('update_membership_details');
 
     Route::get('/pay-fee', [UserController::class, 'userPayMembershipFormFee'])
       ->name('initiate_membership_fee');

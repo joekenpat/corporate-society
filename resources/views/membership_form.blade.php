@@ -8,7 +8,7 @@
       lgaList.filter(x=>x.state_code ==state_code).map(y=>{
         let option = document.createElement("option");
         option.text = y.name;
-            option.value= y.name;
+            option.value= y.id;
             lgaElem.add(option);
       })
     }
@@ -21,127 +21,156 @@
           Overview
         </div>
         <div class="card-body">
-          <div class="row">
-            <div class="col-xs-12 col-md-4 pt-3">
-              <p class="my-membarship-signup-text">First name</p>
-              <input class="form-control form-control-sm @error('first_name') form-error @enderror"
-                value="{{ old('first_name')?:$userFirstName }}" type="text" placeholder="first name">
-              @error('first_name')
-              <span class="text-danger">{{ $message }}</span>
-              @enderror
-            </div>
-            <div class="col-xs-12 col-md-4 pt-3">
-              <p class="my-membarship-signup-text">Last name</p>
-              <input class="form-control form-control-sm @error('last_name') form-error @enderror"
-                value="{{ old('last_name')?:$userLastName }}" type="text" placeholder="last name">
-              @error('last_name')
-              <span class="text-danger">{{ $message }}</span>
-              @enderror
-            </div>
-            <div class="col-xs-12 col-md-4 pt-3">
-              <p class="my-membarship-signup-text">Others</p>
-              <input class="form-control form-control-sm  @error('middle_name') form-error @enderror " type="text"
-                placeholder="other names">
-              @error('middle_name')
-              <span class="text-danger">{{ $message }}</span>
-              @enderror
-            </div>
-            <div class="col-xs-12 col-md-4 pt-3">
-              <p class="my-membarship-signup-text">Email</p>
-              <input class="form-control form-control-sm  @error('email') form-error @enderror"
-                value="{{ old('email')?:$userEmail }}" type="email" placeholder="email">
-              @error('email')
-              <span class="text-danger">{{ $message }}</span>
-              @enderror
-            </div>
-            <div class="col-xs-12 col-md-4 pt-3">
-              <p class="my-membarship-signup-text">Phone number</p>
-              <input class="form-control form-control-sm  @error('phone') form-error @enderror"
-                value="{{ old('phone')?:$userPhone }}" type="phone" placeholder="Phone number">
-              @error('phone')
-              <span class="text-danger">{{ $message }}</span>
-              @enderror
-            </div>
-            <div class="col-xs-12 col-md-4 pt-3">
-              <p class="my-membarship-signup-text">Date Of Birth</p>
-              <input class="form-control form-control-sm  @error('date_of_birth') form-error @enderror"
-                value="{{ old('date_of_birth')?:$userDOB }}" type="date">
-              @error('date_of_birth')
-              <span class="text-danger">{{ $message }}</span>
-              @enderror
-            </div>
-            <div class="col-xs-12 col-md-4 pt-3">
-              <p class="my-membarship-signup-text">State</p>
-              <select class="form-control form-control-sm  @error('state') form-error @enderror"
-                onchange="selectedLgaList(this.value)">
-                <option value="">Select State</option>
-                @if(count($stateList))
-                @foreach ($stateList as $statex)
-                <option value="{{$statex->code}}">{{$statex->name}}</option>
-                @endforeach
-                @endif
-              </select>
-            </div>
-            <div class="col-xs-12 col-md-4 pt-3">
-              <p class="my-membarship-signup-text">LGA</p>
-              <select class="form-control form-control-sm  @error('lga') form-error @enderror" id="lga" name="lga">
-                <option>Select LGA</option>
-              </select>
-            </div>
-            <div class="col-xs-12 col-md-4 pt-3">
-              <p class="my-membarship-signup-text">Employment status</p>
-              <select class="form-control form-control-sm">
-                <option value="">Select</option>
-                <option value="unemployed">Unemployed</option>
-                <option value="employee">Employee</option>
-                <option value="self-employed">Self Employed</option>
-                <option value="worker">Worker</option>
-              </select>
-            </div>
-            <div class="col-xs-12 col-md-4 pt-3">
-              <p class="my-membarship-signup-text">Type of ID</p>
-              <select class="form-control form-control-sm">
-                <option>Select ID type</option>
-                <option value="international-passport">International Passport</option>
-                <option value="national-id">National ID</option>
-                <option value="driver-license">Driver License</option>
-                <option value="permanent-voter-card">Permanent Voter Card</option>
-              </select>
-            </div>
-            @if(Auth::user()->status != 'approved')
-            <div class="col-xs-12 col-md-4 pt-3">
-              <p class="my-membarship-signup-text">upload ID</p>
-              <input type="file" class="form-control-file" id="exampleFormControlFile1">
-            </div>
-            @endif
-            <div class="col-xs-12 col-md-4 pt-3">
-              <p class="my-membarship-signup-text">Upload Profile Image</p>
-              <input type="file" class="form-control-file" id="exampleFormControlFile1">
-            </div>
+          <x-auth-validation-errors class="mb-4" :errors="$errors" />
+          <form action="{{route('update_membership_details')}}" method="post">
+            <div class="row">
+              @csrf
+              <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
+                <p class="my-membarship-signup-text">First name</p>
+                <input class="form-control form-control-sm @error('first_name') form-error @enderror"
+                  value="{{ old('first_name')?:$userFirstName }}" type="text" placeholder="first name"
+                  name="first_name">
+                @error('first_name')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
+                <p class="my-membarship-signup-text">Last name</p>
+                <input class="form-control form-control-sm @error('last_name') form-error @enderror"
+                  value="{{ old('last_name')?:$userLastName }}" type="text" placeholder="last name" name="last_name">
+                @error('last_name')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
+                <p class="my-membarship-signup-text">Others</p>
+                <input class="form-control form-control-sm  @error('middle_name') form-error @enderror " type="text"
+                  placeholder="other names" name="middle_name">
+                @error('middle_name')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
+                <p class="my-membarship-signup-text">Email</p>
+                <input class="form-control form-control-sm  @error('email') form-error @enderror"
+                  value="{{ old('email')?:$userEmail }}" name="email" type="email" placeholder="email">
+                @error('email')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
+                <p class="my-membarship-signup-text">Phone number</p>
+                <input class="form-control form-control-sm  @error('phone') form-error @enderror"
+                  value="{{ old('phone')?:$userPhone }}" name="phone" type="tel" placeholder="Phone number">
+                @error('phone')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
+                <p class="my-membarship-signup-text">Date Of Birth</p>
+                <input class="form-control form-control-sm  @error('date_of_birth') form-error @enderror"
+                  value="{{ old('dob')?:$userDOB }}" type="date" max="2005-01-01" name="dob">
+                @error('dob')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
+                <p class="my-membarship-signup-text">State</p>
+                <select class="form-control form-control-sm  @error('state') form-error @enderror"
+                  onchange="selectedLgaList(this.value)" name="state">
+                  <option value="">Select State</option>
+                  @if(count($stateList))
+                  @foreach ($stateList as $statex)
+                  <option value="{{$statex->code}}">{{$statex->name}}</option>
+                  @endforeach
+                  @endif
+                </select>
+                @error('state')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
+                <p class="my-membarship-signup-text">LGA</p>
+                <select class="form-control form-control-sm  @error('lga') form-error @enderror" id="lga" name="lga">
+                  <option value="">Select LGA</option>
+                </select>
+                @error('lga')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
+                <p class="my-membarship-signup-text">Employment status</p>
+                <select class="form-control form-control-sm  @error('emplpoyment_status') form-error @enderror"
+                  name="employment_status">
+                  <option value="">Select Employment Status</option>
+                  <option {{$userEmploymentType =="unemployed"?"selected":""}} value="unemployed">Unemployed</option>
+                  <option {{$userEmploymentType =="employee"?"selected":""}} value="employee">Employee</option>
+                  <option {{$userEmploymentType =="self-employed"?"selected":""}} value="self-employed">Self Employed
+                  </option>
+                  <option {{$userEmploymentType =="worker"?"selected":""}} value="worker">Worker</option>
+                </select>
+                @error('employment_status')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
+                <p class="my-membarship-signup-text">Type of ID</p>
+                <select class="form-control form-control-sm  @error('identification_type') form-error @enderror"
+                  name="identification_type">
+                  <option value="">Select ID type</option>
+                  <option {{$userIdType =="international-passport"?"selected":""}} value="international-passport">
+                    International Passport</option>
+                  <option {{$userIdType =="national-id"?"selected":""}}value="national-id">National ID</option>
+                  <option {{$userIdType =="driver-license"?"selected":""}}value="driver-license">Driver License</option>
+                  <option {{$userIdType =="permanent-voter-card"?"selected":""}}value="permanent-voter-card">Permanent
+                    Voter Card</option>
+                </select>
+                @error('identification_type')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+              @if(Auth::user()->status != 'approved')
+              <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
+                <p class="my-membarship-signup-text">upload ID</p>
+                <input type="file" accept="png,jpg,jpeg"
+                  class="form-control-file   @error('identification_image') form-error @enderror"
+                  name="identification_image">
+                @error('identification_image')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+              @endif
+              <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
+                <p class="my-membarship-signup-text">Upload Profile Image</p>
+                <input type="file" accept="png,jpg,jpeg"
+                  class="form-control-file   @error('profile_image') form-error @enderror" name="profile_image">
+                @error('profile_image')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
 
-            <div class="col-xs-12 col-md-6 pt-3">
-              <p class="my-membarship-signup-text">Address 1</p>
-              <input class="form-control form-control-sm " type="text" value="{{ old('address1')?:$userAddress1 }}"
-                placeholder="Eg 123 lagos close">
-              @error('address1')
-              <span class="text-danger">{{ $message }}</span>
-              @enderror
-            </div>
-            <div class="col-xs-12 col-md-6 pt-3">
-              <p class="my-membarship-signup-text">Address 2 (optional)</p>
-              <input class="form-control form-control-sm " type="text" value="{{ old('address2')?:$userAddress2 }}"
-                placeholder="Eg 123 lagos close">
-              @error('address2')
-              <span class="text-danger">{{ $message }}</span>
-              @enderror
-            </div>
+              <div class="col-xs-12 col-md-6 pt-3">
+                <p class="my-membarship-signup-text">Address 1</p>
+                <input class="form-control form-control-sm   @error('address1') form-error @enderror" type="text"
+                  value="{{ old('address1')?:$userAddress1 }}" placeholder="Eg 123 lagos close" name="address1">
+                @error('address1')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+              <div class="col-xs-12 col-md-6 pt-3">
+                <p class="my-membarship-signup-text">Address 2 (optional)</p>
+                <input class="form-control form-control-sm   @error('address2') form-error @enderror" type="text"
+                  value="{{ old('address2')?:$userAddress2 }}" placeholder="Eg 123 lagos close" name="address2">
+                @error('address2')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
 
-          </div>
-          <div class="pt-5 pb-5">
-            <div>
-              <button type="button" class="btn btn-success">Submit</button>
+              <div class="p-3">
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
