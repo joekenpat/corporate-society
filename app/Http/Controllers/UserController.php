@@ -36,7 +36,7 @@ class UserController extends Controller
       'dob',
       'address1',
       'address2',
-      'state_id',
+      'state_code',
       'lga_id',
       'employment_status',
       'identification_type',
