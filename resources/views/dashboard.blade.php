@@ -12,14 +12,14 @@
   <div class="container-fluid">
     <div class="pt-3">
       <div class="row">
-        <div class="col-xs-12 col-md-12 col-lg-4 py-3 px-3">
-          <div class="overview-box">
-            <div class="overview-box-1">
+        <div class="col-12 col-md-4 pb-3 px-md-4">
+          <div class="row">
+            <div class="col-auto bg-success">
               <div class="p-3">
                 <i style="font-size: 40px; color: #ffffff;" class="mdi mdi-wallet mr-1"></i>
               </div>
             </div>
-            <div class="overview-box-2">
+            <div class="col bg-white">
               <div class="p-1 pl-3 pr-3">
                 <p class="overview-box-text-1 pt-2 p-0 m-0">WALLET</p>
                 <p class="overview-box-text-2 pt-1 p-0 m-0">LEDCER BALANCE</p>
@@ -28,14 +28,14 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-md-12 col-lg-4 py-3 px-3">
-          <div class="overview-box">
-            <div class="overview-box-1-investment">
+        <div class="col-12 col-md-4 pb-3 px-md-4">
+          <div class="row">
+            <div class="col-auto bg-info">
               <div class="p-3">
                 <i style="font-size: 40px; color: #ffffff;" class="mdi mdi-wallet mr-1"></i>
               </div>
             </div>
-            <div class="overview-box-2">
+            <div class="col bg-white">
               <div class="p-1 pl-3 pr-3">
                 <p class="overview-box-text-1 pt-2 p-0 m-0">WALLET</p>
                 <p class="overview-box-text-2 pt-1 p-0 m-0">INVESTMENT</p>
@@ -44,14 +44,14 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-md-12 col-lg-4 py-3 px-3">
-          <div class="overview-box">
-            <div class="overview-box-1-calendar">
+        <div class="col-12 col-md-4 pb-3 px-md-4">
+          <div class="row">
+            <div class="col-auto bg-danger">
               <div class="p-3">
                 <i style="font-size: 40px; color: #ffffff;" class="mdi mdi-calendar-month mr-1"></i>
               </div>
             </div>
-            <div class="overview-box-2">
+            <div class="col bg-white">
               <div class="p-1 pl-3 pr-3">
                 <p class="overview-box-text-1 pt-2 p-0 m-0">INVESTMENT</p>
                 <p class="overview-box-text-2 pt-1 p-0 m-0">{{$user_active_investment_count}}</p>
