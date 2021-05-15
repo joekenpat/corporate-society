@@ -24,7 +24,7 @@
                     @if(count($bankList))
                     @foreach ($bankList as $bankListItem)
                     <option value="{{$bankListItem->code}}"
-                      {{$withdrawalBank->bank_code == $bankListItem->code?"selected":""}}>{{$bankListItem->name}}
+                      {{($withdrawalBank->bank_code) == $bankListItem->code?"selected":""}}>{{$bankListItem->name}}
                     </option>
 
                     @endforeach

@@ -183,7 +183,7 @@ class UserController extends Controller
   {
     $user = auth()->user();
     $banks = Bank::all();
-    $withdrawalBank = $user->withdrawalBank;
+    $withdrawalBank = $user->withdrawalBank??new WithdrawalBank();
     return view('profile_setting', [
       'bankList' => $banks,
       'withdrawalBank' => $withdrawalBank
