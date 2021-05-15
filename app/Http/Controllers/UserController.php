@@ -163,7 +163,7 @@ class UserController extends Controller
       'userMiddleName' => $user->middle_name,
       'userEmail' => $user->email,
       'userPhone' => $user->phone,
-      'userDOB' => $user->dob ? $user->dob->toDateString() : '2005-01-01',
+      'userDOB' => $user->dob ? $user->dob->toDateString() : null,
       'userAddress1' => $user->address1,
       'userAddress2' => $user->address2,
       'userEmploymentType' => $user->employment_type,
