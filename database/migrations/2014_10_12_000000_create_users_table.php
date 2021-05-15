@@ -33,6 +33,8 @@ class CreateUsersTable extends Migration
       $table->string('employment_status')->nullable()->default(null);
       $table->string('profileImage')->nullable()->default(null);
       $table->string('identification_image')->nullable()->default(null);
+      $table->string('address1')->nullable()->default(null);
+      $table->string('address2')->nullable()->default(null);
       $table->timestamp('email_verified_at')->nullable();
       $table->string('password');
       $table->dateTime('dob')->nullable()->default(null);
