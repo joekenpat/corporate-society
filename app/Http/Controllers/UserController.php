@@ -8,10 +8,90 @@ use App\Models\State;
 use App\Models\User;
 use App\Models\WithdrawalBank;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
+
+  /**
+   * Display a listing of investment for admin.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function adminListMember($status)
+  {
+    $members = User::select([
+      "code",
+      "available_balance",
+      "investment_balance",
+      'first_name',
+      'last_name',
+      'middle_name',
+      'gender',
+      'phone',
+      'marital_status',
+      'disability',
+      'dob',
+      'address1',
+      'address2',
+      'state_id',
+      'lga_id',
+      'employment_status',
+      'identification_type',
+      'profile_image',
+      'identification_image',
+      'email',
+      'status',
+    ])->when($status, function ($query) use ($status) {
+      if ($status == 'pending') {
+        return $query->where('status', 'paid');
+      } else {
+        return $query->where('status', $status);
+      }
+    })
+      ->latest()
+      ->paginate(10);
+    $response['status'] = "success";
+    $response['members'] = $members;
+    return response()->json($response, Response::HTTP_OK);
+  }
+
+
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function adminUpdateMembershipApplication(Request $request)
+  {
+    $this->validate($request, [
+      'user_code' => 'required|alpha_num|exists:users,code',
+      'status' => 'required|alpha|in:declined,approved',
+    ]);
+
+    $updateableUser = User::whereCode($request->withdrawal_code)
+      ->firstOrFail();
+    $updateableAttributes = $updateableUser->getFillable();
+
+    if ($request->status == 'approved') {
+      $updateableUser->status = 'approved';
+    } elseif ($request->status == 'declined') {
+      $updateableUser->status = 'declined';
+    }
+
+    if ($updateableUser->isDirty($updateableAttributes)) {
+      $updateableUser->update();
+      $response['status'] = "success";
+      $response['message'] = "User {$request->status} Successfully!";
+      return response()->json($response, Response::HTTP_OK);
+    } else {
+      $response['status'] = "success";
+      $response['message'] = "No changes where made!";
+      return response()->json($response, Response::HTTP_OK);
+    }
+  }
 
   public function userPayMembershipFormFee()
   {
@@ -41,7 +121,6 @@ class UserController extends Controller
   {
     $paystack_client = Http::withToken(config('paystack.secretKey'))->get("https://api.paystack.co/transaction/verify/" . $request->query('trxref'));
     $paymentDetails = $paystack_client->json();
-    // return dd($paymentDetails);
     $valid_user = User::where('email', $paymentDetails['data']['customer']['email'])->firstOrFail();
     if ($paymentDetails['data']['status'] === "success") {
       if (($paymentDetails['data']['amount'] / 100) == 2000) {

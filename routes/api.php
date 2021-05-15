@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\InvestmentPackageController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WithdrawalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'withdrawal'], function () {
       Route::get('list/{status}', [WithdrawalController::class, 'adminListWithdrawal'])->where(['status' => 'pending|failed|completed']);
       Route::post('update', [WithdrawalController::class, 'adminUpdateWithdrawalRequest']);
+    });
+
+    Route::group(['prefix' => 'member'], function () {
+      Route::get('list/{status}', [UserController::class, 'adminListMember'])->where(['status' => 'pending|declined|approved']);
+      Route::post('update', [UserController::class, 'adminUpdateMembershipApplication']);
     });
   });
 });

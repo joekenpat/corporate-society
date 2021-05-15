@@ -18,6 +18,12 @@ class WithdrawalController extends Controller
    */
   public function userCreateWithdrawal()
   {
+    $user = User::whereId(auth()->user()->id)->firstOrFail();
+    if (!isset($user->withdrawalBank->bank_code) || !isset($user->withdrawalBank->account_name) || !isset($user->withdrawalBank->account_number)) {
+      $response['status'] = "info";
+      $response['message'] = "Your Withdrawal bank details is not setup, visit your profile to update it.";
+      return redirect()->route('dashboard')->with($response['status'], $response['message']);
+    }
     $maxAmount = auth()->user()->available_balance;
     return view('withdrawal_create', ['maxAmount' => $maxAmount]);
   }
@@ -59,7 +65,7 @@ class WithdrawalController extends Controller
       'created_at',
       "user_id",
       'completed_at',
-    ])->with(['user:id,code,first_name,last_name,email,profileImage'])
+    ])->with(['user:id,code,first_name,last_name,email,profileImage', 'user.withdrawalBank'])
       ->where('status', $status)
       ->latest()
       ->paginate(10);
@@ -77,8 +83,11 @@ class WithdrawalController extends Controller
   public function userStoreWithdrawal(Request $request)
   {
     $user = User::whereId(auth()->user()->id)->firstOrFail();
-    //check for missing bank details
-    //before proceeding
+    if (!isset($user->withdrawalBank->bank_code) || !isset($user->withdrawalBank->account_name) || !isset($user->withdrawalBank->account_number)) {
+      $response['status'] = "info";
+      $response['message'] = "Your Withdrawal bank details is not setup, visit your profile to update it.";
+      return redirect()->route('dashboard')->with($response['status'], $response['message']);
+    }
 
     $minAmount = 10000;
     $maxAmount = $user->available_balance;
@@ -95,7 +104,7 @@ class WithdrawalController extends Controller
     $user->update();
     $response['status'] = "success";
     $response['message'] = "Your Withdrawal of #{$request->amount} has been placed.";
-    return redirect()->route('withdrawal_history')->with($response['status'], $request['message']);
+    return redirect()->route('withdrawal_history')->with($response['status'], $response['message']);
   }
 
 
@@ -103,10 +112,9 @@ class WithdrawalController extends Controller
    * Update the specified resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request
-   * @param  \App\Models\Withdrawal  $withdrawal
    * @return \Illuminate\Http\Response
    */
-  public function adminUpdateWithdrawalRequest(Request $request, Withdrawal $withdrawal)
+  public function adminUpdateWithdrawalRequest(Request $request)
   {
     $this->validate($request, [
       'withdrawal_code' => 'required|alpha_num|exists:withdrawals,code',
@@ -117,7 +125,7 @@ class WithdrawalController extends Controller
       ->firstOrFail();
     $updateableAttributes = $updateableWithdrawal->getFillable();
 
-    if ($updateableWithdrawal != 'completed') {
+    if ($updateableWithdrawal->status != 'completed') {
       if ($request->status == 'completed') {
         $updateableWithdrawal->status = 'completed';
       } elseif ($request->status == 'failed') {

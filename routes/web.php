@@ -27,7 +27,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/dashboard', [UserController::class, 'showUserDashboard'])
     ->name('dashboard');
 
-  Route::group(['prefix' => 'profile','middleware'=>['hasPaidMembershipFee']], function () {
+  Route::group(['prefix' => 'profile', 'middleware' => ['hasPaidMembershipFee', 'hasMembershipApproved']], function () {
     Route::get('general', [UserController::class, 'showProfileSettingForm'])
       ->name('profile_general');
 
@@ -51,7 +51,7 @@ Route::group(['middleware' => ['auth']], function () {
   });
 
 
-  Route::group(['prefix' => 'withdrawal','middleware'=>['hasPaidMembershipFee']], function () {
+  Route::group(['prefix' => 'withdrawal', 'middleware' => ['hasPaidMembershipFee', 'hasMembershipApproved']], function () {
     Route::get('/create', [WithdrawalController::class, 'userCreateWithdrawal'])
       ->name('withdrawal_create');
     Route::post('/initiate', [WithdrawalController::class, 'userStoreWithdrawal'])
@@ -60,7 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
       ->name('withdrawal_history');
   });
 
-  Route::group(['prefix' => 'investment','middleware'=>['hasPaidMembershipFee']], function () {
+  Route::group(['prefix' => 'investment', 'middleware' => ['hasPaidMembershipFee', 'hasMembershipApproved']], function () {
     Route::get('/create', [InvestmentController::class, 'userCreateInvestment'])
       ->name('investment_create');
     Route::post('/initiate', [InvestmentController::class, 'userStoreInvestment'])
@@ -69,7 +69,7 @@ Route::group(['middleware' => ['auth']], function () {
       ->name('investment_history');
   });
 
-  Route::group(['prefix' => 'deposit','middleware'=>['hasPaidMembershipFee']], function () {
+  Route::group(['prefix' => 'deposit', 'middleware' => ['hasPaidMembershipFee', 'hasMembershipApproved']], function () {
     Route::get('/create', [DepositController::class, 'userCreateDeposit'])
       ->name('deposit_create');
     Route::post('/initiate', [DepositController::class, 'userStoreDeposit'])
