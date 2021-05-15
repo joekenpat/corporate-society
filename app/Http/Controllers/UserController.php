@@ -367,20 +367,20 @@ class UserController extends Controller
       $profileImage = $request->file('profile_image');
       $img_ext = $profileImage->getClientOriginalExtension();
       $img_name = sprintf("%s.%s", $newUser->code, $img_ext);
-      $profileImage->move(public_path("images/users/profile"), $img_name);
-      if (File::exists("images/users/profile/" . $img_name)) {
-        File::delete("images/users/profile/" . $img_name);
+      if (File::exists("images/profile/" . $img_name)) {
+        File::delete("images/profile/" . $img_name);
       }
+      $profileImage->move(public_path("images/profile"), $img_name);
       $newUser->profile_image = $img_name;
     }
     if ($request->hasFile('identification_image')) {
       $profileImage = $request->file('identification_image');
       $img_ext = $profileImage->getClientOriginalExtension();
       $img_name = sprintf("%s.%s", $newUser->code, $img_ext);
-      $profileImage->move(public_path("images/users/identification"), $img_name);
-      if (File::exists("images/users/identification/" . $img_name)) {
-        File::delete("images/users/identification/" . $img_name);
+      if (File::exists("images/identification/" . $img_name)) {
+        File::delete("images/identification/" . $img_name);
       }
+      $profileImage->move(public_path("images/identification"), $img_name);
       $newUser->identification_image = $img_name;
     }
 
