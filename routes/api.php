@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\InvestmentPackageController;
+use App\Http\Controllers\LgaController;
+use App\Http\Controllers\StateController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WithdrawalController;
 use Illuminate\Http\Request;
@@ -24,6 +26,9 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //   return $request->user();
 // });
+
+Route::get('state/list', [StateController::class, 'index']);
+Route::get('lga/list', [LgaController::class, 'index']);
 
 Route::group(['prefix' => 'admin'], function () {
   Route::post('login', [AdminController::class, 'login_admin']);
