@@ -10,7 +10,7 @@
         <div class="col-lg-8 text-center">
           <!-- masthead title -->
           <h1 class="text-white font-weight-bold">
-            IDEAL PEOPLE ELEME MULTI PURPOSE COOPERATIVE SOCIETY LIMITED
+            IDEAL PEOPLE MULTI PURPOSE COOPERATIVE SOCIETY LIMITED
           </h1>
           <!-- divider -->
           <div class="mx-auto bg-white my-sm-5 my-4" style="width: 300px; height: 2px;"></div>
@@ -39,7 +39,7 @@
         <div class="mx-auto bg-dark mb-5" style="width: 300px; height: 2px;"></div>
         <!-- text -->
         <p class="text-muted mb-5">
-          IDEAL PEOPLE ELEME MULTI PURPOSE COOPERATIVE SOCIETY LTD. <br> Is an organization that is born out of passion
+          IDEAL PEOPLE MULTI PURPOSE COOPERATIVE SOCIETY LTD. <br> Is an organization that is born out of passion
           and needs to impact positively on the economic growth of the nation, to reduce the rate of poverty, and to
           improve the general wellbeing of the people.
         </p>
@@ -335,7 +335,7 @@
         <div class="mx-auto bg-white mb-5" style="width: 300px; height: 2px;"></div>
         <!-- text -->
         <p class="mb-5">
-          IDEAL PEOPLE ELEME MULTI PURPOSE COOPERATIVE SOCIETY LIMITED. This organization is made up of group of persons
+          IDEAL PEOPLE MULTI PURPOSE COOPERATIVE SOCIETY LIMITED. This organization is made up of group of persons
           from different ethnicity with like minds, with the aim of bringing meaningful and gainful business ideas,
           investment packages to her members, to encourage savings, to promote agriculture, and to engage in investment
           such as production, sales of goods and services for the sole benefit of her members.

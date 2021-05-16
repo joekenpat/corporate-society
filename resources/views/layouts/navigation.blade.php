@@ -6,7 +6,7 @@
 <nav class="navbar navbar-light shadow-sm bg-white py-3 fixed-top navbar-expand-lg" id="myMenu">
   <div class="container">
     <!-- navbar brand -->
-    <a href="javascript:void(0)" class="navbar-brand">
+    <a @auth href="{{route('dashboard')}}" @else href="{{route('welcome')}}" @endauth class="navbar-brand">
       <!-- site title -->
       <x-application-logo height="40px" width="40px" />
     </a>
@@ -53,6 +53,16 @@
           <a href="{{route('register')}}" class="nav-link">Register</a>
         </li>
         @endguest
+        @auth
+        <!-- Authentication -->
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <li class="nav-item">
+            <a href="{{route('logout')}}" class="nav-link" onclick="event.preventDefault();
+            this.closest('form').submit();">{{ __('Log out') }}</a>
+          </li>
+        </form>
+        @endauth
       </ul>
     </div>
   </div>

@@ -85,8 +85,8 @@ class InvestmentPackageController extends Controller
     $this->validate($request, [
       'investment_package_id' => 'sometimes|nullable|integer|exists:investment_packages,id',
       'name' => 'sometimes|nullable|string|between:5,200',
-      'min_amount' => 'sometimes|nullable|integer|min:100000|max:200000',
-      'max_amount' => 'sometimes|nullable|integer|min:100000|max:200000',
+      'min_amount' => 'sometimes|nullable|integer|min:50000|max:200000',
+      'max_amount' => 'sometimes|nullable|integer|min:50000|max:200000',
       'duration' => 'sometimes|nullable|integer|between:1,36',
       'roi_percent'=>'sometimes|nullable|numeric|between:1,99',
       'active' => 'sometimes|nullable|boolean',

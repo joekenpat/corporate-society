@@ -46,6 +46,8 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'investment-package'], function () {
       Route::get('list', [InvestmentPackageController::class, 'adminListInvestmentPackage']);
+      Route::post('new', [InvestmentPackageController::class, 'adminStoreInvestmentPackage']);
+      Route::post('update', [InvestmentPackageController::class, 'adminUpdateInvestmentPackage']);
     });
 
     Route::group(['prefix' => 'withdrawal'], function () {

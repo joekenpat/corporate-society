@@ -7,6 +7,7 @@ use App\Models\Lga;
 use App\Models\State;
 use App\Models\User;
 use App\Models\WithdrawalBank;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
@@ -183,7 +184,7 @@ class UserController extends Controller
   {
     $user = auth()->user();
     $banks = Bank::all();
-    $withdrawalBank = $user->withdrawalBank??new WithdrawalBank();
+    $withdrawalBank = $user->withdrawalBank ?? new WithdrawalBank();
     return view('profile_setting', [
       'bankList' => $banks,
       'withdrawalBank' => $withdrawalBank
@@ -368,6 +369,7 @@ class UserController extends Controller
     }
     $newUser->password = Hash::make($request->password);
     $newUser->save();
+    event(new Registered($newUser));
 
     if ($request->hasFile('profile_image')) {
       $profileImage = $request->file('profile_image');
