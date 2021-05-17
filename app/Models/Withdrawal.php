@@ -39,7 +39,9 @@ class Withdrawal extends Model
    *
    * @var array
    */
-  protected $hidden = [];
+  protected $hidden = [
+    'user_id'
+  ];
 
   /**
    * The attributes that should be cast to native types.

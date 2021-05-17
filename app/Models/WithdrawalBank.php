@@ -27,7 +27,19 @@ class WithdrawalBank extends Model
    *
    * @var array
    */
-  protected $hidden = [];
+  protected $hidden = [
+    'user_id'
+  ];
+
+  /**
+   * The attributes that should be appended to arrays.
+   *
+   * @var array
+   */
+  protected $appends = [
+    'bank_name'
+  ];
+
 
   /**
    * The attributes that should be cast to native types.
@@ -41,5 +53,10 @@ class WithdrawalBank extends Model
   public function user()
   {
     return $this->belongsTo(User::class, 'user_id');
+  }
+
+  public function getBankNameAttribute()
+  {
+    return $this->belongsTo(Bank::class, 'bank_code', 'code')->first()->name;
   }
 }

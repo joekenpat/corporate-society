@@ -67,8 +67,8 @@ class WithdrawalController extends Controller
       'completed_at',
     ])->with([
       'user:id,code,first_name,last_name,email,profile_image',
-       'user.withdrawalBank:id,bank_code,account_name,account_number'
-       ])
+      'user.withdrawalBank:id,user_id,bank_code,account_name,account_number'
+    ])
       ->where('status', $status)
       ->latest()
       ->paginate(10);
@@ -85,6 +85,7 @@ class WithdrawalController extends Controller
    */
   public function userStoreWithdrawal(Request $request)
   {
+    // return dd($request);
     $user = User::whereId(auth()->user()->id)->firstOrFail();
     if (!isset($user->withdrawalBank->bank_code) || !isset($user->withdrawalBank->account_name) || !isset($user->withdrawalBank->account_number)) {
       $response['status'] = "info";
@@ -95,7 +96,7 @@ class WithdrawalController extends Controller
     $minAmount = 10000;
     $maxAmount = $user->available_balance;
     $this->validate($request, [
-      'amount' => "nullable|integer|min:{$minAmount}|max:{$maxAmount}",
+      'amount' => "required|integer|between:10000,{$maxAmount}",
     ]);
     Withdrawal::create([
       'user_id' => $user->id,
