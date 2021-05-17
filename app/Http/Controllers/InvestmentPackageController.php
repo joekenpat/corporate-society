@@ -59,7 +59,7 @@ class InvestmentPackageController extends Controller
       'min_amount' => 'required|integer|min:50000|max:200000',
       'max_amount' => 'required|integer|min:50000|max:200000',
       'duration' => 'required|integer|between:1,36',
-      'roi_percent'=>'required|numeric|between:1,99',
+      'roi_percent' => 'required|numeric|between:1,99',
     ]);
 
     $newInvestmentPackage = new InvestmentPackage([
@@ -67,7 +67,7 @@ class InvestmentPackageController extends Controller
       'min_amount' => $request->min_amount,
       'max_amount' => $request->max_amount,
       'duration' => $request->duration,
-      'roi_percent'=>$request->roi_percent,
+      'roi_percent' => $request->roi_percent,
       'active' => true
     ]);
     $newInvestmentPackage->save();
@@ -90,8 +90,8 @@ class InvestmentPackageController extends Controller
       'min_amount' => 'sometimes|nullable|integer|min:50000|max:200000',
       'max_amount' => 'sometimes|nullable|integer|min:50000|max:200000',
       'duration' => 'sometimes|nullable|integer|between:1,36',
-      'roi_percent'=>'sometimes|nullable|numeric|between:1,99',
-      'active' => 'sometimes|nullable|boolean',
+      'roi_percent' => 'sometimes|nullable|numeric|between:1,99',
+      'active' => 'sometimes|alpha|in:true|false',
     ]);
 
     $updateableInvestmentPackage = InvestmentPackage::whereId($request->investment_package_id)->firstOrFail();
@@ -99,7 +99,11 @@ class InvestmentPackageController extends Controller
 
     foreach ($updateableAttributes as $attribute) {
       if ($request->has($attribute) && $request->{$attribute} != (null || "")) {
-        $updateableInvestmentPackage->{$attribute} = $request->{$attribute};
+        if ($attribute == 'active') {
+          $updateableInvestmentPackage->active = filter_var($request->active, FILTER_VALIDATE_BOOL);
+        } else {
+          $updateableInvestmentPackage->{$attribute} = $request->{$attribute};
+        }
       }
     }
 
