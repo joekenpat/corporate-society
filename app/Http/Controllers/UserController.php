@@ -234,11 +234,12 @@ class UserController extends Controller
   public function userUpdateMembershipDetails(Request $request)
   {
     // return dd($request);
+    $updateableUser = auth()->user();
     $this->validate($request, [
       'first_name' => 'sometimes|nullable|alpha|between:3,50',
       'last_name' => 'sometimes|nullable|alpha|between:3,50',
       'middle_name' => 'sometimes|nullable|alpha|between:3,50',
-      'phone' => 'sometimes|nullable|alpha_num|size:11',
+      'phone' => 'sometimes|nullable|alpha_num|size:11|unique:users,phone,except,' . $updateableUser->id,
       'dob' => 'sometimes|nullable|date|before_or_equal:2015-01-01',
       'address1' => 'sometimes|nullable|string|between:5,150',
       'address2' => 'sometimes|nullable|string|between:5,150',
@@ -248,13 +249,12 @@ class UserController extends Controller
       'identification_type' => 'sometimes|nullable|alpha_dash|in:international-passport,national-id,driver-license,permanent-voter-card',
       'profile_image' => 'sometimes|nullable|file|mimes:png,jpg,jpeg|max:5120',
       'identification_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:5120',
-      'email' => 'sometimes|nullable|email',
+      'email' => 'sometimes|nullable|email|unique:users,email,except,' . $updateableUser->id,
     ], [
       'profile_image.max' => 'Profile Image is more than 5mb',
       'identification_image.max' => 'Identification Image is more than 5mb'
     ]);
 
-    $updateableUser = auth()->user();
     $updateableAttributes = [
       'first_name',
       'last_name',
@@ -331,7 +331,7 @@ class UserController extends Controller
       'first_name' => 'required|alpha|between:3,50',
       'last_name' => 'required|alpha|between:3,50',
       'middle_name' => 'required|alpha|between:3,50',
-      'phone' => 'required|alpha_num|size:11',
+      'phone' => 'required|alpha_num|size:11|unique:users',
       'dob' => 'required|before_or_equal:2015-01-01',
       'address1' => 'required|string|between:5,150',
       'address2' => 'required|string|between:5,150',
@@ -341,7 +341,7 @@ class UserController extends Controller
       'identification_type' => 'required|alpha_dash|in:international-passport,national-id,driver-license,permanent-voter-card',
       'profile_image' => 'required|image|mimes:png,jpg,jpeg|max:5120',
       'identification_image' => 'required|nullable|image|mimes:png,jpg,jpeg|max:5120',
-      'email' => 'required|email',
+      'email' => 'required|email|unique:users',
       'password' => 'required|string|between:4,25'
     ], [
       'profile_image.max' => 'Profile Image is more than 5mb',
