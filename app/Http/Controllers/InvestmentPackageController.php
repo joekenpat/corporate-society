@@ -62,14 +62,13 @@ class InvestmentPackageController extends Controller
       'roi_percent' => 'required|numeric|between:1,99',
     ]);
 
-    $newInvestmentPackage = new InvestmentPackage([
+    InvestmentPackage::create([
       'name' => $request->name,
       'min_amount' => $request->min_amount,
       'max_amount' => $request->max_amount,
       'duration' => $request->duration,
       'active' => true
     ]);
-    $newInvestmentPackage->save();
     $response['status'] = "success";
     $response['message'] = "Investment Package Created Successfully!";
     return response()->json($response, Response::HTTP_OK);
