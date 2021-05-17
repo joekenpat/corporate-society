@@ -59,16 +59,17 @@ class InvestmentPackageController extends Controller
       'min_amount' => 'required|integer|min:100000|max:200000',
       'max_amount' => 'required|integer|min:100000|max:200000',
       'duration' => 'required|integer|between:1,36',
-      'roi_percent'=>'required|numeric|between:1,99',
+      'roi_percent' => 'required|numeric|between:1,99',
     ]);
 
-    InvestmentPackage::create([
+    $newInvestmentPackage = new InvestmentPackage([
       'name' => $request->name,
       'min_amount' => $request->min_amount,
       'max_amount' => $request->max_amount,
       'duration' => $request->duration,
       'active' => true
     ]);
+    $newInvestmentPackage->save();
     $response['status'] = "success";
     $response['message'] = "Investment Package Created Successfully!";
     return response()->json($response, Response::HTTP_OK);
@@ -88,7 +89,7 @@ class InvestmentPackageController extends Controller
       'min_amount' => 'sometimes|nullable|integer|min:50000|max:200000',
       'max_amount' => 'sometimes|nullable|integer|min:50000|max:200000',
       'duration' => 'sometimes|nullable|integer|between:1,36',
-      'roi_percent'=>'sometimes|nullable|numeric|between:1,99',
+      'roi_percent' => 'sometimes|nullable|numeric|between:1,99',
       'active' => 'sometimes|nullable|boolean',
     ]);
 
