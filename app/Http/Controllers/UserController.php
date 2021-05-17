@@ -239,7 +239,7 @@ class UserController extends Controller
       'first_name' => 'sometimes|nullable|alpha|between:3,50',
       'last_name' => 'sometimes|nullable|alpha|between:3,50',
       'middle_name' => 'sometimes|nullable|alpha|between:3,50',
-      'phone' => 'sometimes|nullable|alpha_num|size:11|unique:users,phone,except,' . $updateableUser->id,
+      'phone' => 'sometimes|nullable|regex:/\d{11}/|unique:users,phone,except,' . $updateableUser->id,
       'dob' => 'sometimes|nullable|date|before_or_equal:2015-01-01',
       'address1' => 'sometimes|nullable|string|between:5,150',
       'address2' => 'sometimes|nullable|string|between:5,150',
@@ -251,6 +251,7 @@ class UserController extends Controller
       'identification_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:5120',
       'email' => 'sometimes|nullable|email|unique:users,email,except,' . $updateableUser->id,
     ], [
+      'phone.regex' => 'Phone number must be of 11 digit only',
       'profile_image.max' => 'Profile Image is more than 5mb',
       'identification_image.max' => 'Identification Image is more than 5mb'
     ]);
@@ -331,7 +332,7 @@ class UserController extends Controller
       'first_name' => 'required|alpha|between:3,50',
       'last_name' => 'required|alpha|between:3,50',
       'middle_name' => 'required|alpha|between:3,50',
-      'phone' => 'required|alpha_num|size:11|unique:users',
+      'phone' => 'required|regex:/\d{11}/|unique:users',
       'dob' => 'required|before_or_equal:2015-01-01',
       'address1' => 'required|string|between:5,150',
       'address2' => 'required|string|between:5,150',
@@ -344,6 +345,7 @@ class UserController extends Controller
       'email' => 'required|email|unique:users',
       'password' => 'required|string|between:4,25'
     ], [
+      'phone.regex' => 'Phone number must be of 11 digit only',
       'profile_image.max' => 'Profile Image is more than 5mb',
       'identification_image.max' => 'Identification Image is more than 5mb'
     ]);

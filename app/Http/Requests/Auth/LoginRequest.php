@@ -29,8 +29,20 @@ class LoginRequest extends FormRequest
   public function rules()
   {
     return [
-      'phone' => 'required|alpha_num|size:11',
+      'phone' => 'required|regex:/\d{11}/',
       'password' => 'required|string',
+    ];
+  }
+
+  /**
+   * Get the validation error messages that apply to the request.
+   *
+   * @return array
+   */
+  public function messages()
+  {
+    return [
+      'phone.regex' => 'Phone number must be of 11 digit only',
     ];
   }
 
@@ -49,7 +61,7 @@ class LoginRequest extends FormRequest
       RateLimiter::hit($this->throttleKey());
 
       throw ValidationException::withMessages([
-        'phone' => __('auth.failed'),
+        'phone' => 'Phone number or Password is incorrect',
       ]);
     }
 

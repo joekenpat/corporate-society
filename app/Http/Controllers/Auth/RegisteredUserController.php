@@ -35,10 +35,12 @@ class RegisteredUserController extends Controller
     $request->validate([
       'first_name' => 'required|alpha|max:25|min:2',
       'last_name' => 'required|alpha|max:25|min:2',
-      'phone' => 'required|numeric|digits:11|unique:users,phone',
+      'phone' => 'required|regex:/\d{11}/|unique:users,phone',
       'email' => 'required|string|email|max:255|unique:users',
       'password' => 'required|string|min:8|confirmed',
       'password_confirmation' => 'required|same:password'
+    ], [
+      'phone.regex' => 'Phone number must be of 11 digit only',
     ]);
 
     $user = User::create([
