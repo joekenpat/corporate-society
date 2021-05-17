@@ -85,7 +85,7 @@ class InvestmentPackageController extends Controller
   public function adminUpdateInvestmentPackage(Request $request)
   {
     $this->validate($request, [
-      'investment_package_id' => 'sometimes|nullable|integer|exists:investment_packages,id',
+      'investment_package_id' => 'required|integer|exists:investment_packages,id',
       'name' => 'sometimes|nullable|string|between:5,200',
       'min_amount' => 'sometimes|nullable|integer|min:50000|max:200000',
       'max_amount' => 'sometimes|nullable|integer|min:50000|max:200000',
