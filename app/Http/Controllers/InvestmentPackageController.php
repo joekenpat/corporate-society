@@ -91,7 +91,7 @@ class InvestmentPackageController extends Controller
       'max_amount' => 'sometimes|nullable|integer|min:50000|max:200000',
       'duration' => 'sometimes|nullable|integer|between:1,36',
       'roi_percent' => 'sometimes|nullable|numeric|between:1,99',
-      'active' => 'sometimes|in:true,false',
+      'active' => 'sometimes|in:true,false,1,0',
     ]);
 
     $updateableInvestmentPackage = InvestmentPackage::whereId($request->investment_package_id)->firstOrFail();
