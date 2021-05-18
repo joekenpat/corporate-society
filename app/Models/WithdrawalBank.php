@@ -55,8 +55,13 @@ class WithdrawalBank extends Model
     return $this->belongsTo(User::class, 'user_id');
   }
 
+  public function bank()
+  {
+    return $this->belongsTo(Bank::class, 'bank_code', 'code');
+  }
+
   public function getBankNameAttribute()
   {
-    return $this->belongsTo(Bank::class, 'bank_code', 'code')->first()->name;
+    return $this->bank()->first() ? $this->bank()->first()->name : null;
   }
 }

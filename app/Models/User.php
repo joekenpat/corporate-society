@@ -92,12 +92,12 @@ class User extends Authenticatable
 
   public function getStateNameAttribute()
   {
-    return $this->state()->first()->name;
+    return $this->state()->first() ? $this->state()->first()->name : null;
   }
 
   public function getLgaNameAttribute()
   {
-    return $this->lga()->first()->name;
+    return $this->lga()->first() ? $this->lga()->first()->name : null;
   }
 
   // public function getLedgerBalanceAttribute()
