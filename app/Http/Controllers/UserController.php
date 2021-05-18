@@ -238,14 +238,14 @@ class UserController extends Controller
   {
     $updateableUser = auth()->user();
     if ($updateableUser->status != 'approved') {
-      $validator_fields = [
+      $validator_rules = [
         'first_name' => 'required|alpha|between:3,50',
         'last_name' => 'required|alpha|between:3,50',
         'middle_name' => 'required|alpha|between:3,50',
         'phone' => 'required|regex:/\d{11}/|unique:users,phone,except,' . $updateableUser->id,
         'dob' => 'required|date|before_or_equal:2015-01-01',
         'address1' => 'required|string|between:5,150',
-        'address2' => 'required|string|between:5,150',
+        'address2' => 'sometimes|nullable|string|between:5,150',
         'state_code' => 'required|alpha_num|exists:states,code',
         'lga_id' => 'required|integer|exists:lgas,id',
         'employment_status' => 'required|alpha_dash|in:unemployed,employee,self-employed,worker',
@@ -255,7 +255,7 @@ class UserController extends Controller
         'email' => 'required|email|unique:users,email,except,' . $updateableUser->id,
       ];
     } else {
-      $validator_fields = [
+      $validator_rules = [
         'first_name' => 'sometimes|nullable|alpha|between:3,50',
         'last_name' => 'sometimes|nullable|alpha|between:3,50',
         'middle_name' => 'sometimes|nullable|alpha|between:3,50',
@@ -272,7 +272,7 @@ class UserController extends Controller
         'email' => 'sometimes|nullable|email|unique:users,email,except,' . $updateableUser->id,
       ];
     }
-    $this->validate($request, $validator_fields, [
+    $this->validate($request, $validator_rules, [
       'phone.regex' => 'Phone number must be of 11 digit only',
       'profile_image.max' => 'Profile Image is more than 5mb',
       'identification_image.max' => 'Identification Image is more than 5mb'
