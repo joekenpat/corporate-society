@@ -4,6 +4,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{asset("apple-touch-icon.png")}}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{asset("images/misc/favicon-32x32.png")}}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{asset("images/misc/favicon-16x16.png")}}">
+  <link rel='shortcut icon' type='image/x-icon' href="{{asset("images/misc/favicon.ico")}}">
+
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>{{ config('app.name', 'Laravel') }}</title>
@@ -16,8 +21,7 @@
     integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
   <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-  @stack('topStyles')
-
+  @stack(' topStyles')
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}" defer></script>
   @stack('topScripts')
