@@ -25,6 +25,7 @@ class UserController extends Controller
   public function adminListMember($status)
   {
     $members = User::select([
+      "id",
       "code",
       "available_balance",
       "investment_balance",
