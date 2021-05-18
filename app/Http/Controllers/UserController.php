@@ -372,6 +372,7 @@ class UserController extends Controller
       }
     }
     $newUser->password = Hash::make($request->password);
+    $newUser->status = 'approved';
     $newUser->save();
     event(new Registered($newUser));
 
