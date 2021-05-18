@@ -1,7 +1,7 @@
 <x-app-layout>
   <div class="container-fluid pt-3 pb-3">
     <!-- ################################ -->
-    <span style="font-weight: bold;">Withdraw</span><span style="font-size: 0.7em;" class="ml-2">History</span>
+    <span style="font-weight: bold;">Investment</span><span style="font-size: 0.7em;" class="ml-2">History</span>
     <!-- ################################ -->
     <div class="">
       <div class="pt-3">

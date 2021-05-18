@@ -159,6 +159,7 @@ class UserController extends Controller
     $state = State::all();
     $lga = Lga::all();
     return view('membership_form', [
+      'userCode' => $user->code,
       'userFirstName' => $user->first_name,
       'userLastName' => $user->last_name,
       'userMiddleName' => $user->middle_name,
@@ -220,7 +221,8 @@ class UserController extends Controller
     return view('dashboard', [
       'user_available_balance' => $available_balance,
       'user_investment_balance' => $investment_balance,
-      'user_active_investment_count' => $investment_count
+      'user_active_investment_count' => $investment_count,
+      'userCode' => $user->code,
     ]);
   }
 

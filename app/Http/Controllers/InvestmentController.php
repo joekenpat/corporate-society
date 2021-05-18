@@ -106,7 +106,7 @@ class InvestmentController extends Controller
       'user_id' => $user->id,
       'package_name' => $investmentPackage->name,
       'amount' => $request->amount,
-      'roi' => $request->amount * $investmentPackage->roi_percent,
+      'roi' => $request->amount * ($investmentPackage->roi_percent/100),
       'ends_at' => now()->addMonths($investmentPackage->duration),
     ]);
     $user->available_balance -= $request->amount;

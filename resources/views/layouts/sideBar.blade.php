@@ -6,17 +6,15 @@
   <div class="card side-bar-card">
     <div class="pt-5 p-3">
       <div class="pb-1 p-0 text-center">
-        <div class="row">
-          <div class="col-4">
-            <img
-              src="{{auth()->user()->profile_image!=(null||"")?asset('images/profile/'.auth()->user()->profile_image):asset('images/misc/default_avatar.png')}}"
-              style="height: 60px; width: 60px; border-radius: 50px;">
-          </div>
-          <div class="col-4 p-0">
-            <p class="pt-3" style="font-weight: bold; color: #ffffff; font-size: 0.6em;">{{ $userFullName }}</p>
-            <p style="font-weight: bold; color: #ffffff; font-size: 0.5em;margin-top: -18px; ">{{$userEmail}}</p>
-          </div>
-        </div>
+        <img
+          src="{{auth()->user()->profile_image!=(null||"")?asset('images/profile/'.auth()->user()->profile_image):asset('images/misc/default_avatar.png')}}"
+          style="height: 60px; width: 60px; border-radius: 50px;">
+      </div>
+      <div class="">
+        <p class="pt-3 mb-0" style="font-weight: bold; color: #ffffff; font-size: 0.9em;">
+          <span class=" badge badge-success ">{{ $userCode }}</span> </p>
+        <p style="font-weight: bold; color: #ffffff; font-size: 0.9em;">{{ $userFullName }}</p>
+        <p style="font-weight: bold; color: #ffffff; font-size: 0.7em;margin-top: -18px; ">{{$userEmail}}</p>
       </div>
       <div class="m-0 p-0 pt-3">
         <hr class="p-0 " style=" background-color: rgb(47, 151, 47); margin-top: -10px ">
