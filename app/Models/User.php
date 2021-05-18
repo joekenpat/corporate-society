@@ -72,7 +72,7 @@ class User extends Authenticatable
    * @var array
    */
   protected $appends = [
-    // "ledger_balance",
+    "full_name", "state_name", "lga_name"
   ];
 
   /**
@@ -88,6 +88,16 @@ class User extends Authenticatable
   public function getFullNameAttribute()
   {
     return $this->last_name . ' ' . $this->first_name;
+  }
+
+  public function getStateNameAttribute()
+  {
+    return $this->state()->first()->name;
+  }
+
+  public function getLgaNameAttribute()
+  {
+    return $this->lga()->first()->name;
   }
 
   // public function getLedgerBalanceAttribute()
@@ -144,5 +154,15 @@ class User extends Authenticatable
   public function withdrawalBank()
   {
     return $this->hasOne(WithdrawalBank::class, 'user_id');
+  }
+
+  public function state()
+  {
+    return $this->belongsTo(State::class, 'state_code', 'code');
+  }
+
+  public function lga()
+  {
+    return $this->belongsTo(Lga::class, 'lga_id');
   }
 }
