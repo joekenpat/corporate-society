@@ -38,7 +38,7 @@
       @include('layouts.sideBar',[
       'userFullName'=>auth()->user()->full_name,
       'userEmail'=>auth()->user()->email,
-      'userCode' => auth()->user()->code,
+      'userPaddedId' => auth()->user()->padded_id,
       ])
       @include('layouts.mobileSideBar')
       <div class="col-xs-12 col-lg-10 pt-3">

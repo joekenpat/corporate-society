@@ -12,7 +12,7 @@
       </div>
       <div class="">
         <p class="pt-3 mb-0" style="font-weight: bold; color: #ffffff; font-size: 0.9em;">
-          <span class=" badge badge-success ">{{ $userCode }}</span> </p>
+          <span class=" badge badge-success ">{{ $userPaddedId }}</span> </p>
         <p style="font-weight: bold; color: #ffffff; font-size: 0.9em;">{{ $userFullName }}</p>
         <p style="font-weight: bold; color: #ffffff; font-size: 0.7em;margin-top: -18px; ">{{$userEmail}}</p>
       </div>

@@ -56,8 +56,8 @@ class InvestmentPackageController extends Controller
   {
     $this->validate($request, [
       'name' => 'required|string|between:5,200',
-      'min_amount' => 'required|integer|min:50000|max:200000',
-      'max_amount' => 'required|integer|min:50000|max:200000',
+      'min_amount' => 'required|integer|min:50000|max:2000000',
+      'max_amount' => 'required|integer|min:50000|max:2000000',
       'duration' => 'required|integer|between:1,36',
       'roi_percent' => 'required|numeric|between:1,99',
     ]);
@@ -87,8 +87,8 @@ class InvestmentPackageController extends Controller
     $this->validate($request, [
       'investment_package_id' => 'required|integer|exists:investment_packages,id',
       'name' => 'sometimes|nullable|string|between:5,200',
-      'min_amount' => 'sometimes|nullable|integer|min:50000|max:200000',
-      'max_amount' => 'sometimes|nullable|integer|min:50000|max:200000',
+      'min_amount' => 'sometimes|nullable|integer|min:50000|max:2000000',
+      'max_amount' => 'sometimes|nullable|integer|min:50000|max:2000000',
       'duration' => 'sometimes|nullable|integer|between:1,36',
       'roi_percent' => 'sometimes|nullable|numeric|between:1,99',
       'active' => 'sometimes|in:true,false,1,0',

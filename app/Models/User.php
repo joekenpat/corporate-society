@@ -72,7 +72,7 @@ class User extends Authenticatable
    * @var array
    */
   protected $appends = [
-    "full_name", "state_name", "lga_name"
+    "full_name", "state_name", "lga_name", "padded_id"
   ];
 
   /**
@@ -164,5 +164,10 @@ class User extends Authenticatable
   public function lga()
   {
     return $this->belongsTo(Lga::class, 'lga_id');
+  }
+
+  public function getPaddedIdAttribute()
+  {
+    return str_pad($this->id, 5, '0', STR_PAD_LEFT);
   }
 }
