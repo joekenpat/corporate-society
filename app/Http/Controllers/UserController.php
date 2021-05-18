@@ -236,24 +236,43 @@ class UserController extends Controller
    */
   public function userUpdateMembershipDetails(Request $request)
   {
-    // return dd($request);
     $updateableUser = auth()->user();
-    $this->validate($request, [
-      'first_name' => 'sometimes|nullable|alpha|between:3,50',
-      'last_name' => 'sometimes|nullable|alpha|between:3,50',
-      'middle_name' => 'sometimes|nullable|alpha|between:3,50',
-      'phone' => 'sometimes|nullable|regex:/\d{11}/|unique:users,phone,except,' . $updateableUser->id,
-      'dob' => 'sometimes|nullable|date|before_or_equal:2015-01-01',
-      'address1' => 'sometimes|nullable|string|between:5,150',
-      'address2' => 'sometimes|nullable|string|between:5,150',
-      'state_code' => 'sometimes|nullable|alpha_num|exists:states,code',
-      'lga_id' => 'sometimes|nullable|integer|exists:lgas,id',
-      'employment_status' => 'sometimes|nullable|alpha_dash|in:unemployed,employee,self-employed,worker',
-      'identification_type' => 'sometimes|nullable|alpha_dash|in:international-passport,national-id,driver-license,permanent-voter-card',
-      'profile_image' => 'sometimes|nullable|file|mimes:png,jpg,jpeg|max:5120',
-      'identification_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:5120',
-      'email' => 'sometimes|nullable|email|unique:users,email,except,' . $updateableUser->id,
-    ], [
+    if ($updateableUser->status != 'approved') {
+      $validator_fields = [
+        'first_name' => 'required|alpha|between:3,50',
+        'last_name' => 'required|alpha|between:3,50',
+        'middle_name' => 'required|alpha|between:3,50',
+        'phone' => 'required|regex:/\d{11}/|unique:users,phone,except,' . $updateableUser->id,
+        'dob' => 'required|date|before_or_equal:2015-01-01',
+        'address1' => 'required|string|between:5,150',
+        'address2' => 'required|string|between:5,150',
+        'state_code' => 'required|alpha_num|exists:states,code',
+        'lga_id' => 'required|integer|exists:lgas,id',
+        'employment_status' => 'required|alpha_dash|in:unemployed,employee,self-employed,worker',
+        'identification_type' => 'required|alpha_dash|in:international-passport,national-id,driver-license,permanent-voter-card',
+        'profile_image' => 'required|file|mimes:png,jpg,jpeg|max:5120',
+        'identification_image' => 'required|image|mimes:png,jpg,jpeg|max:5120',
+        'email' => 'required|email|unique:users,email,except,' . $updateableUser->id,
+      ];
+    } else {
+      $validator_fields = [
+        'first_name' => 'sometimes|nullable|alpha|between:3,50',
+        'last_name' => 'sometimes|nullable|alpha|between:3,50',
+        'middle_name' => 'sometimes|nullable|alpha|between:3,50',
+        'phone' => 'sometimes|nullable|regex:/\d{11}/|unique:users,phone,except,' . $updateableUser->id,
+        'dob' => 'sometimes|nullable|date|before_or_equal:2015-01-01',
+        'address1' => 'sometimes|nullable|string|between:5,150',
+        'address2' => 'sometimes|nullable|string|between:5,150',
+        'state_code' => 'sometimes|nullable|alpha_num|exists:states,code',
+        'lga_id' => 'sometimes|nullable|integer|exists:lgas,id',
+        'employment_status' => 'sometimes|nullable|alpha_dash|in:unemployed,employee,self-employed,worker',
+        'identification_type' => 'sometimes|nullable|alpha_dash|in:international-passport,national-id,driver-license,permanent-voter-card',
+        'profile_image' => 'sometimes|nullable|file|mimes:png,jpg,jpeg|max:5120',
+        'identification_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:5120',
+        'email' => 'sometimes|nullable|email|unique:users,email,except,' . $updateableUser->id,
+      ];
+    }
+    $this->validate($request, $validator_fields, [
       'phone.regex' => 'Phone number must be of 11 digit only',
       'profile_image.max' => 'Profile Image is more than 5mb',
       'identification_image.max' => 'Identification Image is more than 5mb'
