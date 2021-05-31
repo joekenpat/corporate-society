@@ -13,6 +13,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -97,7 +98,64 @@ class UserController extends Controller
     }
   }
 
-  public function userPayMembershipFormFee()
+  public function userPayMembershipFormFeeViaFlutterwave()
+  {
+    $user = User::whereId(auth()->user()->id)->firstOrFail();
+    $data = [
+      "tx_ref" => Str::uuid(),
+      "amount" => 1500,
+      "currency" => "NGN",
+      "redirect_url" => route('membership_fee_validate_payment_flutterwave'),
+      "payment_options" => ["card"],
+      "meta" => [
+        "user_code" => $user->code,
+      ],
+      "customer" => [
+        "email" => $user->email,
+        "phone_number" => $user->phone,
+        "name" => $user->full_name,
+      ],
+      "customizations" => [
+        "title" => "Registration Fee",
+        "description" => "One time Member Registration Fee",
+        "logo" => asset('images/misc/android-chrome-512x512.png'),
+      ],
+    ];
+
+    $flutterwave = Http::withToken(config('flutterwave.secretKey'))
+      ->post('https://api.flutterwave.com/v3/payments', $data)->json();
+    return redirect()->away($flutterwave['data']['link']);
+  }
+
+
+
+  /**
+   * Obtain Flutterwave payment information
+   * @return void
+   */
+  public function handleMembershipFeeFlutterwavePaymentGatewayCallback(Request $request)
+  {
+    $trnx_id = $request->transaction_id;
+    $flutterwave_client = Http::withToken(config('flutterwave.secretKey'))
+      ->acceptJson()->get("https://api.flutterwave.com/v3/transactions/{$trnx_id}/verify");
+    $paymentDetails = $flutterwave_client->json();
+    $valid_user = User::where('email', $paymentDetails['data']['customer']['email'])->firstOrFail();
+    if ($paymentDetails['data']['status'] === "successful") {
+      if ($paymentDetails['data']['charged_amount'] == 1500) {
+        $valid_user->status = 'paid';
+        $valid_user->update();
+      }
+      $response['status'] = 'success';
+      $response['message'] = "Your membership fee payment was successfull.";
+      return redirect()->route('membership_detail')->with($response['status'], $response['message']);
+    } else {
+      $response['status'] = 'error';
+      $response['message'] = "Your membership fee payment was not successfull.";
+      return redirect()->route('dashboard')->with($response['status'], $response['message']);
+    }
+  }
+
+  public function userPayMembershipFormFeeViaPaystack()
   {
     $user = User::whereId(auth()->user()->id)->firstOrFail();
     $paystack = Http::withToken(config('paystack.secretKey'))
@@ -121,7 +179,7 @@ class UserController extends Controller
    * Obtain Paystack payment information
    * @return void
    */
-  public function handleMembershipFeePaymentGatewayCallback(Request $request)
+  public function handleMembershipFeePaystackPaymentGatewayCallback(Request $request)
   {
     $paystack_client = Http::withToken(config('paystack.secretKey'))->get("https://api.paystack.co/transaction/verify/" . $request->query('trxref'));
     $paymentDetails = $paystack_client->json();
@@ -242,7 +300,7 @@ class UserController extends Controller
         'first_name' => 'required|alpha|between:3,50',
         'last_name' => 'required|alpha|between:3,50',
         'middle_name' => 'required|alpha|between:3,50',
-        'phone' => 'required|regex:/\d{11}/|unique:users,phone,except,' . $updateableUser->id,
+        'phone' => 'required|regex:/\d{11}/|unique:users,phone,' . $updateableUser->id,
         'dob' => 'required|date|before_or_equal:2015-01-01',
         'address1' => 'required|string|between:5,150',
         'address2' => 'sometimes|nullable|string|between:5,150',
@@ -252,7 +310,7 @@ class UserController extends Controller
         'identification_type' => 'required|alpha_dash|in:international-passport,national-id,driver-license,permanent-voter-card',
         'profile_image' => 'required|file|mimes:png,jpg,jpeg|max:5120',
         'identification_image' => 'required|image|mimes:png,jpg,jpeg|max:5120',
-        'email' => 'required|email|unique:users,email,except,' . $updateableUser->id,
+        'email' => 'required|email|unique:users,email,' . $updateableUser->id,
       ];
     } else {
       $validator_rules = [
@@ -326,7 +384,7 @@ class UserController extends Controller
     $response['status'] = "success";
     $response['message'] = "Profile was updated Successfully!";
     if ($updateableUser->status == 'pending') {
-      return redirect()->route('initiate_membership_fee');
+      return redirect()->route('initiate_membership_fee_flutterwave');
     } else {
       return redirect()->route('membership_detail')->with($response['status'], $response['message']);
     }

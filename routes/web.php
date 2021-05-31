@@ -46,11 +46,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/update', [UserController::class, 'userUpdateMembershipDetails'])
       ->name('update_membership_details');
 
-    Route::get('/pay-fee', [UserController::class, 'userPayMembershipFormFee'])
-      ->name('initiate_membership_fee');
+    Route::get('/pay-fee/paystack', [UserController::class, 'userPayMembershipFormFeeViaPaystack'])
+      ->name('initiate_membership_fee_paystack');
 
-    Route::get('/validate-payment', [UserController::class, 'handleMembershipFeePaymentGatewayCallback'])
-      ->name('membership_fee_validate_payment');
+    Route::get('/pay-fee/flutterwave', [UserController::class, 'userPayMembershipFormFeeViaFlutterwave'])
+      ->name('initiate_membership_fee_flutterwave');
+
+    Route::get('/validate-payment/paystack', [UserController::class, 'handleMembershipFeePaystackPaymentGatewayCallback'])
+      ->name('membership_fee_validate_payment_paystack');
+
+    Route::get('/validate-payment/flutterwave', [UserController::class, 'handleMembershipFeeFlutterwavePaymentGatewayCallback'])
+      ->name('membership_fee_validate_payment_flutterwave');
 
     Route::get('/payment-failed', [UserController::class, 'handleMembershipFeePaymentFailed'])
       ->name('membership_fee_payment_failed');

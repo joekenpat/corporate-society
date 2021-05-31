@@ -19,7 +19,7 @@ class HasPaidMembershipFee
   {
     if (Auth::check() && Auth::user()->status == 'pending') {
       $response['status'] = "info";
-      $paymentRoute = route('initiate_membership_fee');
+      $paymentRoute = route('initiate_membership_fee_flutterwave');
       $response['message'] = "You need to pay your membership fee of ₦1,500 to activate your account, <a href='{$paymentRoute}'>Click Here To Pay Now</a>";
       return redirect()->route('dashboard')->with($response['status'], $response['message']);
     }

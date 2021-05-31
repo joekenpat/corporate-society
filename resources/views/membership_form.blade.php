@@ -44,7 +44,7 @@
               <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
                 <p class="my-membarship-signup-text">Others</p>
                 <input class="form-control form-control-sm  @error('middle_name') form-error @enderror " type="text"
-                  placeholder="other names" name="middle_name">
+                value="{{ old('middle_name')?:$userMiddleName }}" placeholder="other names" name="middle_name">
                 @error('middle_name')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -90,7 +90,7 @@
               </div>
               <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
                 <p class="my-membarship-signup-text">LGA</p>
-                <select class="form-control form-control-sm  @error('lga_id') form-error @enderror" id="lga" name="lga">
+                <select class="form-control form-control-sm  @error('lga_id') form-error @enderror" id="lga" name="lga_id">
                   <option value="">Select LGA</option>
                 </select>
                 @error('lga_id')
