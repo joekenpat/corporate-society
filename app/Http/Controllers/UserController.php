@@ -139,7 +139,7 @@ class UserController extends Controller
     $flutterwave_client = Http::withToken(config('flutterwave.secretKey'))
       ->acceptJson()->get("https://api.flutterwave.com/v3/transactions/{$trnx_id}/verify");
     $paymentDetails = $flutterwave_client->json();
-    $valid_user = User::where('email', $paymentDetails['data']['customer']['email'])->firstOrFail();
+    $valid_user = User::where('phone', $paymentDetails['data']['customer']['phone_number'])->firstOrFail();
     if ($paymentDetails['data']['status'] === "successful") {
       if ($paymentDetails['data']['charged_amount'] == 1500) {
         $valid_user->status = 'paid';
