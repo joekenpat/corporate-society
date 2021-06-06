@@ -4,7 +4,7 @@
     -->
 <div class="col-xs-12 col-lg-2 d-none d-lg-block">
   <div class="card side-bar-card">
-    <div class="pt-5 p-3">
+    <div class="pt-5 p-3 mb-5">
       <div class="pb-1 p-0 text-center">
         <img
           src="{{auth()->user()->profile_image!=(null||"")?asset('images/profile/'.auth()->user()->profile_image):asset('images/misc/default_avatar.png')}}"

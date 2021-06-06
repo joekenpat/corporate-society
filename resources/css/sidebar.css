@@ -4,6 +4,7 @@
   position: fixed;
   width: 17vw;
   background-color: #000000;
+  overflow-y: auto;
   z-index: inherit;
 }
 .side-card-body {

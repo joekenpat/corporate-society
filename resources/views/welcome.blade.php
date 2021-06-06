@@ -335,7 +335,7 @@
         <div class="mx-auto bg-white mb-5" style="width: 300px; height: 2px;"></div>
         <!-- text -->
         <p class="mb-5">
-          IDEAL PEOPLE MULTI PURPOSE COOPERATIVE SOCIETY LIMITED. This organization is made up of group of persons
+          IDEAL PEOPLE ELEME MULTI PURPOSE COOPERATIVE SOCIETY LIMITED. This organization is made up of group of persons
           from different ethnicity with like minds, with the aim of bringing meaningful and gainful business ideas,
           investment packages to her members, to encourage savings, to promote agriculture, and to engage in investment
           such as production, sales of goods and services for the sole benefit of her members.
@@ -371,7 +371,7 @@
             +1 (555) 123-4567
           </div>
           <div class="col-sm-6">
-            contact@yourwebsite.com
+            support@Idealpeopleofficial.com
           </div>
         </div>
       </div>
@@ -382,7 +382,7 @@
   <footer class="py-5">
     <div class="container">
       <p class="text-muted text-center mb-0">
-        Copyright © 2020 - Landing Page
+        Copyright © 2021 - {{config('app.url')}}
       </p>
     </div>
   </footer>

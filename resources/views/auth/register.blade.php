@@ -78,12 +78,24 @@
         <span class="text-danger">{{ $message }}</span>
         @enderror
       </div>
+      <!-- Operating Policy -->
+      <div class="block mt-4">
+        <label for="operating_policy" class="inline-flex items-center">
+          <input id="operating_policy" type="checkbox"
+            class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            name="operating_policy">
+          <span class="ml-2 text-sm text-gray-600">Yes, i accept the <b><a
+                href="{{route('operating_policy')}}">Operating Policy</a></b></span>
+        </label>
+        @error('operating_policy')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
+      </div>
 
       <div class="flex items-center justify-end mt-4">
         <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
           {{ __('Already registered?') }}
         </a>
-
         <x-button class="ml-4">
           {{ __('Register') }}
         </x-button>

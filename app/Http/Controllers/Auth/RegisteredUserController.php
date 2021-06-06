@@ -38,7 +38,8 @@ class RegisteredUserController extends Controller
       'phone' => 'required|regex:/\d{11}/|unique:users,phone',
       'email' => 'required|string|email|max:255|unique:users',
       'password' => 'required|string|min:8|confirmed',
-      'password_confirmation' => 'required|same:password'
+      'password_confirmation' => 'required|same:password',
+      'operating_policy'=>'accepted',
     ], [
       'phone.regex' => 'Phone number must be of 11 digit only',
     ]);

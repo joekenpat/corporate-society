@@ -24,22 +24,22 @@
       <ul class="navbar-nav ml-auto">
         <!-- link -->
         <li class="nav-item">
-          <a href="#home" class="nav-link">Home</a>
+          <a href="{{route('welcome')}}#home" class="nav-link">Home</a>
         </li>
 
         <!-- link -->
         <li class="nav-item">
-          <a href="#packages" class="nav-link">Packages</a>
+          <a href="{{route('welcome')}}#packages" class="nav-link">Packages</a>
         </li>
 
         <!-- link -->
         <li class="nav-item">
-          <a href="#about" class="nav-link">About</a>
+          <a href="{{route('about')}}" class="nav-link">About</a>
         </li>
 
         <!-- link -->
         <li class="nav-item">
-          <a href="#contact" class="nav-link">Contact</a>
+          <a href="{{route('welcome')}}#contact" class="nav-link">Contact</a>
         </li>
 
         @guest

@@ -21,6 +21,13 @@ Route::get('/', function () {
   return view('welcome');
 })->name('welcome');
 
+Route::get('/about', function () {
+  return view('about');
+})->name('about');
+
+Route::get('/operating-policy', function () {
+  return view('operating_policy');
+})->name('operating_policy');
 
 Route::group(['middleware' => ['auth']], function () {
 
