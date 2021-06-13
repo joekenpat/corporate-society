@@ -62,23 +62,26 @@
         <!-- text -->
         <p class="mb-5">
           <b>Financial investment:</b> Members can earn 10% ROI monthly when they make a fix deposit.
-          Property acquisition: We present members with the opportunity to acquire any property (house, car, motor
-          cycle, tricycle etc.) of their choice at half the market price. Make deposit of half the market value of the
-          property and it will become yours after some months.
+        </p>
+        <p class="mb-5">
+          <b> Property acquisition:</b> We present members with the opportunity to acquire any property (house, car,
+          motor cycle, tricycle etc.) of their choice at half the market price. Make deposit of half the market value of
+          the property and it will become yours after some months.
         </p>
         <p class="mb-5">
           <b>Agricultural investment:</b> Earn good return of 35% ROI after 6months on agricultural package. Members can
-          invest
-          a minimum of N50,000 in livestock or cash crop packages.
-          Education: Upfront payment of 3 terms (A session) paid 3 months before resumption and have the remaining fees
-          paid free in a timely manner for a tenor of 3 years.
+          invest a minimum of N50,000 in livestock or cash crop packages.
         </p>
+        <p class="mb-5"><b>Education</b>Education Upfront payment of 3 terms (A session) paid 3 months before resumption
+          and have
+          the remaining fees paid free in a timely manner for a tenor of 3 years.</p>
         <p class="mb-5">
           <b>Skill acquisition:</b> Acquire any kind of skill by depositing 50% of the fees 3 months before the
-          commencement
-          date and get the training fees paid in full.
-          Business/ startup capital: A member who desires to start a business can make monthly savings for 6 months and
-          thereafter get additional 50% of the total savings.
+          commencement date and get the training fees paid in full.
+        </p>
+        <p class="mb-5">
+          <b>Business/ startup capital:</b> A member who desires to start a business can make monthly savings for 6
+          months and thereafter get additional 50% of the total savings.
         </p>
       </div>
     </div>

@@ -149,28 +149,14 @@
             <div class="card-body">
               <!-- card title -->
               <h6>
-                FAMILY PLAN PACKAGE
+                BUSINESS / STARTUP CAPITAL
               </h6>
               <!-- card collapse toggle -->
               <a href="#card_3" data-toggle="collapse" class="d-block text-success mb-2">more details</a>
 
               <!-- collapse -->
               <div class="pl-4 collapse" id="card_3">
-                <!-- list -->
-                <ol class="text-muted">
-                  <li>
-                    Traditional Marriage Savings Package
-                  </li>
-                  <li>
-                    White Wedding Savings Package
-                  </li>
-                  <li>
-                    Child Dedication Savings Package
-                  </li>
-                  <li>
-                    Birthday Savings Package
-                  </li>
-                </ol>
+
               </div>
 
             </div>
@@ -277,7 +263,7 @@
             <div class="card-body">
               <!-- card title -->
               <h6>
-                HEALTH AND EDUCATION PACKAGE
+                EDUCATION PACKAGE
               </h6>
               <!-- card collapse toggle -->
               <a href="#card_5" data-toggle="collapse" class="d-block text-success mb-2">more details</a>
@@ -368,10 +354,14 @@
         </p>
         <div class="row">
           <div class="col-sm-6">
-            +1 (555) 123-4567
+            <a href="tel:+2347049186928">+234-70-4918-6928</a>
+            <br/>
+            <a href="tel:+2348098408609">+234-80-9840-8609</a>
+            <br/>
+            <a href="tel:+2348062894699">+234-80-6289-4699</a>
           </div>
           <div class="col-sm-6">
-            support@Idealpeopleofficial.com
+            <a href="mailto:info@idealpeoplecorp.com">info@idealpeoplecorp.com</a>
           </div>
         </div>
       </div>
