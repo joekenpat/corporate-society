@@ -60,242 +60,109 @@
     <div class="container">
 
       <!-- title -->
-      <h2 class="font-weight-bold text-center mb-3">OUR PACKAGES</h2>
+      <h2 class="font-weight-bold text-center mb-3">WHAT WE OFFER</h2>
       <!-- divider -->
       <div class="mx-auto bg-dark mb-5" style="width: 300px; height: 2px;"></div>
 
       <!-- row -->
-      <div class="row mt-5">
+      <div class="row mt-5 ">
         <!-- card  -->
         <div class="col-lg-4 col-md-6 my-4">
-          <div class="card shadow-sm border-0">
+          <div class="card h-100 shadow-sm border-0">
             <!-- image -->
             <img src="{{ asset('images/misc/13.jpg') }}" alt="" class="img-fluid card-img-top">
             <!-- card body -->
             <div class="card-body">
               <!-- card title -->
-              <h6>
+              <h6 class="font-weight-bold">
                 FINANCIAL INVESTMENT PACKAGE
               </h6>
-              <!-- card collapse toggle -->
-              <a href="#card_1" data-toggle="collapse" class="d-block text-success mb-2">more details</a>
-
-              <!-- collapse -->
-              <div class="pl-4 collapse" id="card_1">
-                <!-- list -->
-                <ol class="text-muted">
-                  <li>
-                    Normal Savings Package
-                  </li>
-                  <li>
-                    Investment Savings Package
-                  </li>
-                  <li>
-                    Fix Deposit Package
-                  </li>
-                  <li>
-                    Corporate Savings Package
-                  </li>
-                </ol>
-              </div>
-
+              Members can earn 10% ROI monthly when they make a fix deposit.
             </div>
           </div>
         </div>
 
         <!-- card  -->
         <div class="col-lg-4 col-md-6 my-4">
-          <div class="card shadow-sm border-0">
+          <div class="card h-100 shadow-sm border-0">
             <!-- image -->
-            <img src="{{ asset('images/misc/7.jpg') }}" alt="" class="img-fluid card-img-top">
+            <img src="{{ asset('images/misc/property_aq.jpg') }}" alt="" class="img-fluid card-img-top">
             <!-- card body -->
             <div class="card-body">
               <!-- card title -->
-              <h6>
+              <h6 class="font-weight-bold">
                 PROPERTY ACQUISITION PACKAGE
               </h6>
-              <!-- card collapse toggle -->
-              <a href="#card_2" data-toggle="collapse" class="d-block text-success mb-2">more details</a>
-
-              <!-- collapse -->
-              <div class="pl-4 collapse" id="card_2">
-                <!-- list -->
-                <ol class="text-muted">
-                  <li>
-                    Land Purchase Savings Package
-                  </li>
-                  <li>
-                    Car Purchase Savings Package
-                  </li>
-                  <li>
-                    Keke Napep Purchase Savings Package
-                  </li>
-                  <li>
-                    Motorcycle Purchase Savings Package
-                  </li>
-                </ol>
-              </div>
-
+              We present members with the opportunity to acquire any property (house, car, motor cycle, tricycle etc.)
+              of their choice at 30% the market price. Make deposit of 70% the market value of the property and it
+              will become yours after 2months.
             </div>
           </div>
         </div>
 
         <!-- card  -->
         <div class="col-lg-4 col-md-6 my-4">
-          <div class="card shadow-sm border-0">
+          <div class="card h-100 shadow-sm border-0">
             <!-- image -->
-            <img src="{{ asset('images/misc/10.jpg') }}" alt="" class="img-fluid card-img-top">
+            <img src="{{ asset('images/misc/startup_pk.jpeg') }}" alt="" class="img-fluid card-img-top">
             <!-- card body -->
             <div class="card-body">
               <!-- card title -->
-              <h6>
+              <h6 class="font-weight-bold">
                 BUSINESS / STARTUP CAPITAL
               </h6>
-              <!-- card collapse toggle -->
-              <a href="#card_3" data-toggle="collapse" class="d-block text-success mb-2">more details</a>
-
-              <!-- collapse -->
-              <div class="pl-4 collapse" id="card_3">
-
-              </div>
-
+              A member who desires to start a business can make monthly savings for 6 months and thereafter get
+              additional 30% of the total savings.
             </div>
           </div>
         </div>
 
         <!-- card  -->
         <div class="col-lg-4 col-md-6 my-4">
-          <div class="card shadow-sm border-0">
+          <div class="card h-100 shadow-sm border-0">
             <!-- image -->
             <img src="{{ asset('images/misc/8.jpg') }}" alt="" class="img-fluid card-img-top">
             <!-- card body -->
             <div class="card-body">
               <!-- card title -->
-              <h6>
+              <h6 class="font-weight-bold">
                 AGRICULTURAL INVESTMENT PACKAGE
               </h6>
-              <!-- card collapse toggle -->
-              <a href="#card_4" data-toggle="collapse" class="d-block text-success mb-2">more details</a>
-
-              <!-- collapse -->
-              <div class="collapse mt-3" id="card_4">
-                <!-- list -->
-                <ul class="nav nav-tabs">
-                  <li class="nav-item">
-                    <a href="#live_stock" data-toggle="tab" class="nav-link active text-muted">Live Stocks</a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a href="#cash_crops" data-toggle="tab" class="nav-link text-muted">Cash Crops</a>
-                  </li>
-                </ul>
-
-                <div class="tab-content">
-                  <div class="tab-pane active py-3" id="live_stock">
-                    <ol class="text-muted pl-4">
-                      <li>
-                        Fish Rearing Package
-                      </li>
-                      <li>
-                        Poultry Farm Package
-                      </li>
-                      <li>
-                        Pig Rearing Package
-                      </li>
-                      <li>
-                        Snail Rearing Package
-                      </li>
-                      <li>
-                        Goat Rearing Package
-                      </li>
-                      <li>
-                        Grass Cutter Rearing Package. etc
-                      </li>
-                    </ol>
-                  </div>
-
-                  <div class="tab-pane fade py-3" id="cash_crops">
-                    <ol class="text-muted pl-4">
-                      <li>
-                        Yam
-                      </li>
-                      <li>
-                        Potato
-                      </li>
-                      <li>
-                        Maize
-                      </li>
-                      <li>
-                        Cassava
-                      </li>
-                      <li>
-                        Mellon
-                      </li>
-                      <li>
-                        Tomato
-                      </li>
-                      <li>
-                        Onion
-                      </li>
-                      <li>
-                        Pepper
-                      </li>
-                      <li>
-                        Vegetables. etc
-                      </li>
-                    </ol>
-                  </div>
-                </div>
-
-
-              </div>
-
+              Earn good return of 35% ROI after 6months on agricultural package. Members can invest a minimum of N50,000
+              in livestock or cash crop packages.
             </div>
           </div>
         </div>
 
         <!-- card  -->
         <div class="col-lg-4 col-md-6 my-4">
-          <div class="card shadow-sm border-0">
+          <div class="card h-100 shadow-sm border-0">
             <!-- image -->
             <img src="{{ asset('images/misc/12.jpg') }}" alt="" class="img-fluid card-img-top">
             <!-- card body -->
             <div class="card-body">
               <!-- card title -->
-              <h6>
+              <h6 class="font-weight-bold">
                 EDUCATION PACKAGE
               </h6>
-              <!-- card collapse toggle -->
-              <a href="#card_5" data-toggle="collapse" class="d-block text-success mb-2">more details</a>
-
-              <!-- collapse -->
-              <div class="pl-4 collapse" id="card_5">
-
-              </div>
-
+              Upfront payment of 2 terms fees and get one term fees free for a tenor of 3 months which is a term.
             </div>
           </div>
         </div>
 
         <!-- card  -->
         <div class="col-lg-4 col-md-6 my-4">
-          <div class="card shadow-sm border-0">
+          <div class="card h-100 shadow-sm border-0">
             <!-- image -->
             <img src="{{ asset('images/misc/11.jpg') }}" alt="" class="img-fluid card-img-top">
             <!-- card body -->
             <div class="card-body">
               <!-- card title -->
-              <h6>
+              <h6 class="font-weight-bold">
                 SKILL ACQUISITION PACKAGE
               </h6>
-              <!-- card collapse toggle -->
-              <a href="#card_6" data-toggle="collapse" class="d-block text-success mb-2">more details</a>
-
-              <!-- collapse -->
-              <div class="pl-4 collapse" id="card_6">
-
-              </div>
-
+              Acquire any kind of skill by depositing 70% of the fees 2 months before the commencement date and get the
+              training fees paid in full.
             </div>
           </div>
         </div>
@@ -355,9 +222,9 @@
         <div class="row">
           <div class="col-sm-6">
             <a href="tel:+2347049186928">+234-70-4918-6928</a>
-            <br/>
+            <br />
             <a href="tel:+2348098408609">+234-80-9840-8609</a>
-            <br/>
+            <br />
             <a href="tel:+2348062894699">+234-80-6289-4699</a>
           </div>
           <div class="col-sm-6">

@@ -7,6 +7,7 @@ use App\Models\Deposit;
 use App\Models\Investment;
 use App\Models\User;
 use App\Models\Withdrawal;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -71,5 +72,70 @@ class AdminController extends Controller
     $response['status'] = "success";
     $response['table_stats'] = $stats;
     return response()->json($response, Response::HTTP_OK);
+  }
+
+  /**
+   * Store the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function adminStoreNewAdminDetails(Request $request)
+  {
+    // return dd($request);
+    $this->validate($request, [
+      'first_name' => 'required|alpha|between:3,50',
+      'last_name' => 'required|alpha|between:3,50',
+      'email' => 'required|email|unique:admin',
+      'password' => 'required|string|between:4,25'
+    ],);
+    $updateableAttributes = [
+      'first_name',
+      'last_name',
+      'email',
+    ];
+    $newUser = new Admin();
+    foreach ($updateableAttributes as $key) {
+      if ($request->has($key) && $request->{$key} != (null || "")) {
+        $newUser->{$key} = $request->{$key};
+      }
+    }
+    $newUser->password = Hash::make($request->password);
+    $newUser->status = 'approved';
+    $newUser->save();
+    event(new Registered($newUser));
+
+    $response['status'] = "success";
+    $response['message'] = "New Admin Created added Successfully!";
+    return response()->json($response, Response::HTTP_OK);
+  }
+
+  public function update_password(Request $request)
+  {
+    $this->validate($request, [
+      'current_password' => 'required|string',
+      'new_password' => 'required|string',
+      'retype_new_password' => 'required|string|same:new_password',
+    ]);
+
+    $admin = Admin::find(Auth('admin')->id());
+    $credentials = [
+      "email" => $admin->email,
+      'password' => $request->input('current_password'),
+    ];
+
+    if (password_verify($request->input('current_password'), $admin->password)) {
+      $admin->password = Hash::make($request->input('new_password'));
+      $admin->update();
+      $response['status'] = 'success';
+      $response['message'] = 'Password Change Successfull';
+      $response['token_type']="Bearer";
+      $response['token'] = $admin->createToken(config('app.name') . '_PAK', ['admin'])->accessToken;
+      return response()->json($response, Response::HTTP_OK);
+    } else {
+      $response['message'] = 'Invalid Credentials';
+      $response['errors'] = ['current_password' => ['Current Password is not correct']];
+      return response()->json($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
   }
 }

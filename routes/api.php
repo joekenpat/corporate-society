@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin'], function () {
   Route::post('login', [AdminController::class, 'login_admin']);
   Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('profile', [AdminController::class, 'profile']);
+    Route::get('password-change', [AdminController::class, 'update_password']);
     Route::get('table-stats', [AdminController::class, 'adminDashboardStatus']);
 
     Route::group(['prefix' => 'deposit'], function () {
@@ -59,6 +60,9 @@ Route::group(['prefix' => 'admin'], function () {
       Route::post('new', [UserController::class, 'adminStoreNewMembershipDetails']);
       Route::post('update', [UserController::class, 'adminUpdateMembershipApplication']);
       Route::get('list/{status}', [UserController::class, 'adminListMember'])->where(['status' => 'pending|declined|approved']);
+    });
+    Route::group(['prefix' => 'account'], function () {
+      Route::post('new', [AdminController::class, 'adminStoreNewAdminDetails']);
     });
   });
 });
