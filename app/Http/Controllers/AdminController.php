@@ -87,7 +87,8 @@ class AdminController extends Controller
       'first_name' => 'required|alpha|between:3,50',
       'last_name' => 'required|alpha|between:3,50',
       'email' => 'required|email|unique:admin',
-      'password' => 'required|string|between:4,25'
+      'password' => 'required|string|between:4,25',
+      'password_confirmation'=>'required|same:password'
     ],);
     $updateableAttributes = [
       'first_name',
@@ -115,7 +116,7 @@ class AdminController extends Controller
     $this->validate($request, [
       'current_password' => 'required|string',
       'new_password' => 'required|string',
-      'retype_new_password' => 'required|string|same:new_password',
+      'new_password_confirmation' => 'required|string|same:new_password',
     ]);
 
     $admin = Admin::find(Auth('admin')->id());
