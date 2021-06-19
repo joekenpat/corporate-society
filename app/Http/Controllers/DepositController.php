@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
-use Unicodeveloper\Paystack\Paystack;
+use Illuminate\Support\Str;
 
 class DepositController extends Controller
 {
@@ -92,43 +92,44 @@ class DepositController extends Controller
     ]);
     $response['status'] = "success";
     $response['message'] = "Your Deposit of #{$request->amount} has been placed.";
-    $paystack = Http::withToken(config('paystack.secretKey'))
-      ->post('https://api.paystack.co/transaction/initialize', [
-        'email' => $user->email,
-        'amount' => $request->amount *= 100,
-        'quantity' => 1,
-        'currency' => 'NGN',
-        'channels' => ['card'],
-        'reference' => $newDeposit->code,
-        'callback_url' => route('deposit_validate_payment'),
-        'metadata' => [
-          'cancel_action' => route('mark_pending_deposit_as_failed', ['deposit_code' => $newDeposit->code]),
-        ]
-      ])->json();
-    return redirect()->away($paystack['data']['authorization_url']);
-    // $paystack = new Paystack();
-    // $request->email = $user->email;
-    // $request->amount *= 100;
-    // $request->quantity = 1;
-    // $request->currency = 'NGN';
-    // $request->reference = $newDeposit->code;
-    // $request->key = config('paystack.secretKey');
-    // $request->callback_url = route('deposit_validate_payment');
-    // return $paystack->getAuthorizationUrl()->redirectNow();
-    // return redirect()->route('deposit_history');
+    $data = [
+      "tx_ref" => $newDeposit->code,
+      "amount" => $request->amount,
+      "currency" => "NGN",
+      "redirect_url" => route('deposit_validate_payment'),
+      "payment_options" => ["card"],
+      "meta" => [
+        "user_code" => $user->code,
+      ],
+      "customer" => [
+        "email" => $user->email,
+        "phone_number" => $user->phone,
+        "name" => $user->full_name,
+      ],
+      "customizations" => [
+        "title" => "₦{$request->amount} Deposit",
+        "description" => "₦{$request->amount} Account Deposit",
+        "logo" => asset('images/misc/android-chrome-512x512.png'),
+      ],
+    ];
+    $flutterwave = Http::withToken(config('flutterwave.secretKey'))
+      ->post('https://api.flutterwave.com/v3/payments', $data)->json();
+    return redirect()->away($flutterwave['data']['link']);
   }
 
   /**
-   * Obtain Paystack payment information
+   * Obtain Flutterwave payment information
    * @return void
    */
   public function handleDepositPaymentGatewayCallback(Request $request)
   {
-    $paystack_client = Http::withToken(config('paystack.secretKey'))->get("https://api.paystack.co/transaction/verify/" . $request->query('trxref'));
-    $paymentDetails = $paystack_client->json();
+    $trnx_id = $request->transaction_id;
+    $flutterwave_client = Http::withToken(config('flutterwave.secretKey'))
+      ->acceptJson()->get("https://api.flutterwave.com/v3/transactions/{$trnx_id}/verify");
+    $paymentDetails = $flutterwave_client->json();
     $valid_deposit = Deposit::where('code', $paymentDetails['data']['reference'])->firstOrFail();
     if ($paymentDetails['data']['status'] === "success") {
-      if (($paymentDetails['data']['amount'] / 100) == $valid_deposit->amount) {
+      if (($paymentDetails['data']['charged_amount']) == $valid_deposit->amount) {
         if ($valid_deposit->status == 'pending' && $valid_deposit->completed_at == null) {
           $valid_deposit->status = 'completed';
           $valid_deposit->completed_at = now();
@@ -140,15 +141,15 @@ class DepositController extends Controller
       } else {
         $valid_deposit->status = 'completed';
         $valid_deposit->completed_at = now();
-        $valid_deposit->amount = ($paymentDetails['data']['amount'] / 100);
+        $valid_deposit->amount = ($paymentDetails['data']['charged_amount']);
         $valid_deposit->update();
         $user = User::whereId($valid_deposit->user_id)->firstOrFail();
-        $user->available_balance += ($paymentDetails['data']['amount'] / 100);
+        $user->available_balance += ($paymentDetails['data']['charged_amount');
         $user->update();
       }
       $response['status'] = 'success';
       $response['message'] = "Your deposit of ₦{$valid_deposit->amount} was successfull.";
-    } elseif ($paymentDetails['data']['status'] === "failed") {
+    } else{
       $valid_deposit->status = 'failed';
       $valid_deposit->completed_at = now();
       $valid_deposit->update();
