@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
     'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     'hasPaidMembershipFee' => \App\Http\Middleware\HasPaidMembershipFee::class,
     'hasMembershipApproved' => \App\Http\Middleware\HasMembershipApproved::class,
+    'sanctum.abilities' => \App\Http\Middleware\SanctumAbilitiesCheck::class,
   ];
 }

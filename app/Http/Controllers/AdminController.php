@@ -44,10 +44,11 @@ class AdminController extends Controller
       ];
       return response()->json($response, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
+    $admin->tokens()->delete();
 
     $response['status'] = "success";
     $response['message'] = "login successfull!";
-    $response['token'] = $admin->createToken('admin')->plainTextToken;
+    $response['token'] = $admin->createToken(config('app.name') . '_PAK', ["{$admin->role}-admin"])->plainTextToken;
     return response()->json($response, Response::HTTP_OK);
   }
 
@@ -136,10 +137,11 @@ class AdminController extends Controller
     if (password_verify($request->input('current_password'), $admin->password)) {
       $admin->password = Hash::make($request->input('new_password'));
       $admin->update();
+      $admin->tokens()->delete();
       $response['status'] = 'success';
       $response['message'] = 'Password Change Successfull';
       $response['token_type'] = "Bearer";
-      $response['token'] = $admin->createToken(config('app.name') . '_PAK', ['admin'])->accessToken;
+      $response['token'] = $admin->createToken(config('app.name') . '_PAK', ["admin:{$admin->role}"])->plainTextToken;
       return response()->json($response, Response::HTTP_OK);
     } else {
       $response['message'] = 'Invalid Credentials';
@@ -151,7 +153,7 @@ class AdminController extends Controller
   public function isSuperAdmin()
   {
     $response['status'] = "success";
-    $response['is_super_admin'] = auth('admin')->user()->role =='super';
+    $response['is_super_admin'] = auth()->user()->tokenCan('super-admin');
     return response()->json($response, Response::HTTP_OK);
   }
 
@@ -171,7 +173,7 @@ class AdminController extends Controller
 
   public function adminListSubAdmin()
   {
-    $sub_admins = Admin::where('id', '<>', auth('admin')->user()->id)
+    $sub_admins = Admin::where('id', '<>', auth()->user()->id)
       ->paginate(10);
     $response['status'] = "success";
     $response['admins'] = $sub_admins;

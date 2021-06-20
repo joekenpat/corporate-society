@@ -32,7 +32,7 @@ Route::get('lga/list', [LgaController::class, 'index']);
 
 Route::group(['prefix' => 'admin'], function () {
   Route::post('login', [AdminController::class, 'login_admin']);
-  Route::group(['middleware' => ['auth:sanctum']], function () {
+  Route::group(['middleware' => ['auth:sanctum', 'sanctum.abilities:super-admin,sub-admin']], function () {
     Route::get('profile', [AdminController::class, 'profile']);
     Route::get('is-super-admin', [AdminController::class, 'isSuperAdmin']);
     Route::get('password-change', [AdminController::class, 'update_password']);
@@ -66,7 +66,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'account'], function () {
       Route::get('list', [AdminController::class, 'adminListSubAdmin']);
       Route::post('new', [AdminController::class, 'adminStoreNewAdminDetails']);
-      Route::get('/{admin_id}/set-status/{status}', [AdminController::class, 'adminToggleSubAdminStatus']);
+      Route::get('/{admin_id}/set-status/{status}', [AdminController::class, 'adminToggleSubAdminStatus'])
+        ->withoutMiddleware(['sanctum.abilities:sub-admin']);
     });
   });
 });
