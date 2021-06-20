@@ -21,6 +21,7 @@ class Admin extends Model
     'last_name',
     'email',
     'password',
+    'role',
     'status',
   ];
 
@@ -32,6 +33,7 @@ class Admin extends Model
    */
   protected $hidden = [
     'password',
+    'role',
   ];
 
   /**

@@ -28,6 +28,14 @@ class AdminController extends Controller
 
     $admin = Admin::where('email', $request->email)->firstOrFail();
 
+    if ($admin->status == 'disabled') {
+      $response['status'] = "error";
+      $response['message'] = "login Failed!";
+      $response['errors'] = [
+        'email' => ['This Account has been Disabled!'],
+      ];
+      return response()->json($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
     if (!$admin || !Hash::check($request->password, $admin->password)) {
       $response['status'] = "error";
       $response['message'] = "login Failed!";
@@ -88,7 +96,7 @@ class AdminController extends Controller
       'last_name' => 'required|alpha|between:3,50',
       'email' => 'required|email|unique:admin',
       'password' => 'required|string|between:4,25',
-      'password_confirmation'=>'required|same:password'
+      'password_confirmation' => 'required|same:password'
     ],);
     $updateableAttributes = [
       'first_name',
@@ -102,7 +110,7 @@ class AdminController extends Controller
       }
     }
     $newUser->password = Hash::make($request->password);
-    $newUser->status = 'approved';
+    $newUser->status = 'enabled';
     $newUser->save();
     event(new Registered($newUser));
 
@@ -130,7 +138,7 @@ class AdminController extends Controller
       $admin->update();
       $response['status'] = 'success';
       $response['message'] = 'Password Change Successfull';
-      $response['token_type']="Bearer";
+      $response['token_type'] = "Bearer";
       $response['token'] = $admin->createToken(config('app.name') . '_PAK', ['admin'])->accessToken;
       return response()->json($response, Response::HTTP_OK);
     } else {
@@ -138,5 +146,35 @@ class AdminController extends Controller
       $response['errors'] = ['current_password' => ['Current Password is not correct']];
       return response()->json($response, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
+  }
+
+  public function isSuperAdmin()
+  {
+    $response['status'] = "success";
+    $response['is_super_admin'] = auth('admin')->user()->role =='super';
+    return response()->json($response, Response::HTTP_OK);
+  }
+
+  public function adminToggleSubAdminStatus($admin_id, $status)
+  {
+    $editAdmin = Admin::where('id', $admin_id)->firstOrFail();
+    $editAdmin->status = $status;
+    $response['status'] = "success";
+    if ($editAdmin->isDirty()) {
+      $editAdmin->update();
+      $response['message'] = "Sub Admin: {$editAdmin->first_name} set as: {$status}!";
+    } else {
+      $response['message'] = "Sub Admin: {$editAdmin->first_name} set as: {$status}!";
+    }
+    return response()->json($response, Response::HTTP_OK);
+  }
+
+  public function adminListSubAdmin()
+  {
+    $sub_admins = Admin::where('id', '<>', auth('admin')->user()->id)
+      ->paginate(10);
+    $response['status'] = "success";
+    $response['admins'] = $sub_admins;
+    return response()->json($response, Response::HTTP_OK);
   }
 }

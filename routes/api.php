@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin'], function () {
   Route::post('login', [AdminController::class, 'login_admin']);
   Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('profile', [AdminController::class, 'profile']);
+    Route::get('is-super-admin', [AdminController::class, 'isSuperAdmin']);
     Route::get('password-change', [AdminController::class, 'update_password']);
     Route::get('table-stats', [AdminController::class, 'adminDashboardStatus']);
 
@@ -61,8 +62,11 @@ Route::group(['prefix' => 'admin'], function () {
       Route::post('update', [UserController::class, 'adminUpdateMembershipApplication']);
       Route::get('list/{status}', [UserController::class, 'adminListMember'])->where(['status' => 'pending|declined|approved']);
     });
+
     Route::group(['prefix' => 'account'], function () {
+      Route::get('list', [AdminController::class, 'adminListSubAdmin']);
       Route::post('new', [AdminController::class, 'adminStoreNewAdminDetails']);
+      Route::get('/{admin_id}/set-status/{status}', [AdminController::class, 'adminToggleSubAdminStatus']);
     });
   });
 });
