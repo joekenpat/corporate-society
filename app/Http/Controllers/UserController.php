@@ -135,23 +135,29 @@ class UserController extends Controller
    */
   public function handleMembershipFeeFlutterwavePaymentGatewayCallback(Request $request)
   {
-    $trnx_id = $request->transaction_id;
-    $flutterwave_client = Http::withToken(config('flutterwave.secretKey'))
-      ->acceptJson()->get("https://api.flutterwave.com/v3/transactions/{$trnx_id}/verify");
-    $paymentDetails = $flutterwave_client->json();
-    $valid_user = User::where('phone', $paymentDetails['data']['customer']['phone_number'])->firstOrFail();
-    if ($paymentDetails['data']['status'] === "successful") {
-      if ($paymentDetails['data']['charged_amount'] == 1500) {
-        $valid_user->status = 'paid';
-        $valid_user->update();
+    if($request->has('transaction_id')){
+      $trnx_id = $request->transaction_id;
+      $flutterwave_client = Http::withToken(config('flutterwave.secretKey'))
+        ->acceptJson()->get("https://api.flutterwave.com/v3/transactions/{$trnx_id}/verify");
+      $paymentDetails = $flutterwave_client->json();
+      $valid_user = User::where('phone', $paymentDetails['data']['customer']['phone_number'])->firstOrFail();
+      if ($paymentDetails['data']['status'] === "successful") {
+        if ($paymentDetails['data']['charged_amount'] == 1500) {
+          $valid_user->status = 'paid';
+          $valid_user->update();
+        }
+        $response['status'] = 'success';
+        $response['message'] = "Your membership fee payment was successfull.";
+        return redirect()->route('membership_detail')->with($response['status'], $response['message']);
+      } else {
+        $response['status'] = 'error';
+        $response['message'] = "Your membership fee payment was not successfull.";
+        return redirect()->route('dashboard')->with($response['status'], $response['message']);
       }
-      $response['status'] = 'success';
-      $response['message'] = "Your membership fee payment was successfull.";
-      return redirect()->route('membership_detail')->with($response['status'], $response['message']);
-    } else {
+    }else{
       $response['status'] = 'error';
-      $response['message'] = "Your membership fee payment was not successfull.";
-      return redirect()->route('dashboard')->with($response['status'], $response['message']);
+        $response['message'] = "Your membership fee payment was not successfull.";
+        return redirect()->route('dashboard')->with($response['status'], $response['message']);
     }
   }
 

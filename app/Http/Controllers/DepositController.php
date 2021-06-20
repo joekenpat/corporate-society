@@ -107,8 +107,8 @@ class DepositController extends Controller
         "name" => $user->full_name,
       ],
       "customizations" => [
-        "title" => "₦{$request->amount} Deposit",
-        "description" => "₦{$request->amount} Account Deposit",
+        "title" => "N{$request->amount} Deposit",
+        "description" => "N{$request->amount} Account Deposit",
         "logo" => asset('images/misc/android-chrome-512x512.png'),
       ],
     ];
@@ -123,33 +123,43 @@ class DepositController extends Controller
    */
   public function handleDepositPaymentGatewayCallback(Request $request)
   {
-    $trnx_id = $request->transaction_id;
-    $flutterwave_client = Http::withToken(config('flutterwave.secretKey'))
-      ->acceptJson()->get("https://api.flutterwave.com/v3/transactions/{$trnx_id}/verify");
-    $paymentDetails = $flutterwave_client->json();
-    $valid_deposit = Deposit::where('code', $paymentDetails['data']['reference'])->firstOrFail();
-    if ($paymentDetails['data']['status'] === "success") {
-      if (($paymentDetails['data']['charged_amount']) == $valid_deposit->amount) {
-        if ($valid_deposit->status == 'pending' && $valid_deposit->completed_at == null) {
+    if ($request->has('transaction_id')) {
+      $trnx_id = $request->transaction_id;
+      $flutterwave_client = Http::withToken(config('flutterwave.secretKey'))
+        ->acceptJson()->get("https://api.flutterwave.com/v3/transactions/{$trnx_id}/verify");
+      $paymentDetails = $flutterwave_client->json();
+      return dd($paymentDetails);
+      $valid_deposit = Deposit::where('code', $paymentDetails['data']['reference'])->firstOrFail();
+      if ($paymentDetails['data']['status'] === "success") {
+        if (($paymentDetails['data']['charged_amount']) == $valid_deposit->amount) {
+          if ($valid_deposit->status == 'pending' && $valid_deposit->completed_at == null) {
+            $valid_deposit->status = 'completed';
+            $valid_deposit->completed_at = now();
+            $valid_deposit->update();
+            $user = User::whereId($valid_deposit->user_id)->firstOrFail();
+            $user->available_balance += $valid_deposit->amount;
+            $user->update();
+          }
+        } else {
           $valid_deposit->status = 'completed';
           $valid_deposit->completed_at = now();
+          $valid_deposit->amount = ($paymentDetails['data']['charged_amount']);
           $valid_deposit->update();
           $user = User::whereId($valid_deposit->user_id)->firstOrFail();
-          $user->available_balance += $valid_deposit->amount;
+          $user->available_balance += ($paymentDetails['data']['charged_amount']);
           $user->update();
         }
+        $response['status'] = 'success';
+        $response['message'] = "Your deposit of ₦{$valid_deposit->amount} was successfull.";
       } else {
-        $valid_deposit->status = 'completed';
+        $valid_deposit->status = 'failed';
         $valid_deposit->completed_at = now();
-        $valid_deposit->amount = ($paymentDetails['data']['charged_amount']);
         $valid_deposit->update();
-        $user = User::whereId($valid_deposit->user_id)->firstOrFail();
-        $user->available_balance += ($paymentDetails['data']['charged_amount');
-        $user->update();
+        $response['status'] = 'error';
+        $response['message'] = "Your deposit of ₦{$valid_deposit->amount} failed.";
       }
-      $response['status'] = 'success';
-      $response['message'] = "Your deposit of ₦{$valid_deposit->amount} was successfull.";
-    } else{
+    } else {
+      $valid_deposit = Deposit::where('code', $request->tx_ref)->firstOrFail();
       $valid_deposit->status = 'failed';
       $valid_deposit->completed_at = now();
       $valid_deposit->update();
