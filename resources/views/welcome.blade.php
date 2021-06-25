@@ -91,11 +91,11 @@
             <div class="card-body">
               <!-- card title -->
               <h6 class="font-weight-bold">
-                PROPERTY ACQUISITION PACKAGE
+                PROPERTY ACQUISITION / LEASE PACKAGE
               </h6>
-              We present members with the opportunity to acquire any property (house, car, motor cycle, tricycle etc.)
-              of their choice at 30% the market price. Make deposit of 70% the market value of the property and it
-              will become yours after 2months.
+              TO ACQUIRE OR LEASE ANY PROPERTY OF YOUR CHOICE, ( LAND, HOUSE, CAR, MOTOR CYCLE, TRICYCLE, ETC.) MAKE
+              DEPOSIT OF 70% THE MARKET PRICE OF THE PROPERTY WITHIN A STIPULATED DURATION AND GET 30% FREE AFTER 2
+              MONTHS.
             </div>
           </div>
         </div>
@@ -109,10 +109,10 @@
             <div class="card-body">
               <!-- card title -->
               <h6 class="font-weight-bold">
-                BUSINESS / STARTUP CAPITAL
+                BUSINESS STARTUP CAPITAL
               </h6>
-              A member who desires to start a business can make monthly savings for 6 months and thereafter get
-              additional 30% of the total savings.
+              TO RAISE CAPITAL FOR YOUR DESIRED BUSINESS, SAVE 70% OF THE BUSINESS CAPITAL WITHIN A STIPULATED DURATION
+              AND GET 30% ADDED UP AFTER 2 MONTHS.
             </div>
           </div>
         </div>
@@ -126,10 +126,10 @@
             <div class="card-body">
               <!-- card title -->
               <h6 class="font-weight-bold">
-                AGRICULTURAL INVESTMENT PACKAGE
+                AGRICULTURAL PACKAGE
               </h6>
-              Earn good return of 35% ROI after 6months on agricultural package. Members can invest a minimum of N50,000
-              in livestock or cash crop packages.
+              TO ENCOURAGE AGRICULTURAL INVESTORS, WE PROVIDE MEMBERS WITH THE OPPORTUNITY TO EARN GOOD RETURNS OF 35%
+              ROI ON ALL AGRICULTURAL PACKAGES AFTER 6MONTHS.
             </div>
           </div>
         </div>
@@ -145,7 +145,8 @@
               <h6 class="font-weight-bold">
                 EDUCATION PACKAGE
               </h6>
-              Upfront payment of 2 terms fees and get one term fees free for a tenor of 3 months which is a term.
+              TO PROMOTE EDUCATION, WE PROVIDE STUDENTS WITH THE OPPORTUNITY TO MAKE UPFRONT PAYMENT OF 2 TERM SCHOOL
+              FEES AND GET 1TERM FEES FREE.
             </div>
           </div>
         </div>
