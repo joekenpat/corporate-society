@@ -93,9 +93,9 @@
               <h6 class="font-weight-bold">
                 PROPERTY ACQUISITION / LEASE PACKAGE
               </h6>
-              TO ACQUIRE OR LEASE ANY PROPERTY OF YOUR CHOICE, ( LAND, HOUSE, CAR, MOTOR CYCLE, TRICYCLE, ETC.) MAKE
-              DEPOSIT OF 70% THE MARKET PRICE OF THE PROPERTY WITHIN A STIPULATED DURATION AND GET 30% FREE AFTER 2
-              MONTHS.
+              To acquire or lease any property of your choice, ( land, house, car, motor cycle, tricycle, etc.) make
+              deposit of 70% the market price of the property within a stipulated duration and get 30% free after 2
+              months.
               <br>(Minimum investment is 50k)
             </div>
           </div>
@@ -112,8 +112,8 @@
               <h6 class="font-weight-bold">
                 BUSINESS STARTUP CAPITAL
               </h6>
-              TO RAISE CAPITAL FOR YOUR DESIRED BUSINESS, SAVE 70% OF THE BUSINESS CAPITAL WITHIN A STIPULATED DURATION
-              AND GET 30% ADDED UP AFTER 2 MONTHS.
+              To raise capital for your desired business, save 70% of the business capital within a stipulated duration
+              and get 30% added up after 2 months.
               <br>(Minimum investment is 50k)
             </div>
           </div>
@@ -130,8 +130,8 @@
               <h6 class="font-weight-bold">
                 AGRICULTURAL PACKAGE
               </h6>
-              TO ENCOURAGE AGRICULTURAL INVESTORS, WE PROVIDE MEMBERS WITH THE OPPORTUNITY TO EARN GOOD RETURNS OF 35%
-              ROI ON ALL AGRICULTURAL PACKAGES AFTER 6MONTHS.
+              To encourage agricultural investors, we provide members with the opportunity to earn good returns of 35%
+              ROI on all agricultural packages after 6months.
               <br>(Minimum investment is 50k)
             </div>
           </div>
@@ -141,15 +141,15 @@
         <div class="col-lg-4 col-md-6 my-4">
           <div class="card h-100 shadow-sm border-0">
             <!-- image -->
-            <img src="{{ asset('images/misc/12.jpg') }}" alt="" class="img-fluid card-img-top">
+            <img src="{{ asset('images/misc/ipecs_education_package.jpeg') }}" alt="" class="img-fluid card-img-top">
             <!-- card body -->
             <div class="card-body">
               <!-- card title -->
               <h6 class="font-weight-bold">
                 EDUCATION PACKAGE
               </h6>
-              TO PROMOTE EDUCATION, WE PROVIDE STUDENTS WITH THE OPPORTUNITY TO MAKE UPFRONT PAYMENT OF 2 TERM SCHOOL
-              FEES AND GET 1TERM FEES FREE.
+              To promote education, we provide students with the opportunity to make upfront payment of 2nd term school
+              fees and get 1st term fees free.
               <br>(Minimum investment is 50k)
             </div>
           </div>
