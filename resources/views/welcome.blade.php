@@ -96,6 +96,7 @@
               TO ACQUIRE OR LEASE ANY PROPERTY OF YOUR CHOICE, ( LAND, HOUSE, CAR, MOTOR CYCLE, TRICYCLE, ETC.) MAKE
               DEPOSIT OF 70% THE MARKET PRICE OF THE PROPERTY WITHIN A STIPULATED DURATION AND GET 30% FREE AFTER 2
               MONTHS.
+              <br>(Minimum investment is 50k)
             </div>
           </div>
         </div>
@@ -113,6 +114,7 @@
               </h6>
               TO RAISE CAPITAL FOR YOUR DESIRED BUSINESS, SAVE 70% OF THE BUSINESS CAPITAL WITHIN A STIPULATED DURATION
               AND GET 30% ADDED UP AFTER 2 MONTHS.
+              <br>(Minimum investment is 50k)
             </div>
           </div>
         </div>
@@ -130,6 +132,7 @@
               </h6>
               TO ENCOURAGE AGRICULTURAL INVESTORS, WE PROVIDE MEMBERS WITH THE OPPORTUNITY TO EARN GOOD RETURNS OF 35%
               ROI ON ALL AGRICULTURAL PACKAGES AFTER 6MONTHS.
+              <br>(Minimum investment is 50k)
             </div>
           </div>
         </div>
@@ -147,6 +150,7 @@
               </h6>
               TO PROMOTE EDUCATION, WE PROVIDE STUDENTS WITH THE OPPORTUNITY TO MAKE UPFRONT PAYMENT OF 2 TERM SCHOOL
               FEES AND GET 1TERM FEES FREE.
+              <br>(Minimum investment is 50k)
             </div>
           </div>
         </div>
