@@ -369,13 +369,13 @@ class UserController extends Controller
       $updateableUser->update();
     }
     if ($request->hasFile('identification_image')) {
-      $profileImage = $request->file('identification_image');
-      $img_ext = $profileImage->getClientOriginalExtension();
+      $identificationImage = $request->file('identification_image');
+      $img_ext = $identificationImage->getClientOriginalExtension();
       $img_name = sprintf("%s.%s", $updateableUser->code, $img_ext);
       if (File::exists("images/identification/" . $img_name)) {
         File::delete("images/identification/" . $img_name);
       }
-      $profileImage->move(public_path("images/identification"), $img_name);
+      $identificationImage->move(public_path("images/identification"), $img_name);
       $updateableUser->identification_image = $img_name;
       $updateableUser->update();
     }

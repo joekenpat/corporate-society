@@ -82,7 +82,7 @@ class DepositController extends Controller
   {
     $user = User::whereId(auth()->user()->id)->firstOrFail();
     $this->validate($request, [
-      'amount' => "nullable|integer|min:50000|max:2000000",
+      'amount' => "nullable|integer|min:50|max:50000000",
     ]);
     $newDeposit = Deposit::create([
       'user_id' => $user->id,

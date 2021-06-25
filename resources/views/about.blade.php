@@ -25,28 +25,15 @@
           community of people whose interest is to create synergy in resources, engage in investment and trading
           activities, in other to reduce the rate of poverty and improve the wellbeing of its members.
         </p>
-      </div>
-      <div class="col-lg-8 mx-auto text-center">
-        <!-- title -->
-        <h2 class="font-weight-bold mb-2">VISION</h2>
-        <!-- divider -->
-        <div class="mx-auto bg-dark mb-3" style="width: 300px; height: 2px;"></div>
-        <!-- text -->
         <p class="mb-5">
           To be a top-notch cooperative society that provide superior services, add value to businesses and improve the
           financial state of her members with integrity, transparency, professionalism and corporate governance.
         </p>
-      </div>
-      <div class="col-lg-8 mx-auto text-center">
-        <!-- title -->
-        <h2 class="font-weight-bold mb-2">MISION</h2>
-        <!-- divider -->
-        <div class="mx-auto bg-dark mb-3" style="width: 300px; height: 2px;"></div>
-        <!-- text -->
         <p class="mb-5">
           We seek to help businesses grow by creating a pool of fund for investment and as well engage in other
           socio-economic activities that will improve the welfare of members.
         </p>
+        <a href="{{asset('docs/constitution.docx')}}" class="btn btn-success py-3 px-5">Download Our Constitution</a>
       </div>
     </div>
   </section>
