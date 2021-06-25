@@ -3,6 +3,7 @@
 /public/images/profile
 /public/images/identification
 /public/storage
+/public/docs
 /storage/*.key
 /vendor
 .env
