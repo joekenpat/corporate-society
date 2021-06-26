@@ -33,7 +33,7 @@
           We seek to help businesses grow by creating a pool of fund for investment and as well engage in other
           socio-economic activities that will improve the welfare of members.
         </p>
-        <a href="{{asset('docs/constitution.docx')}}" class="btn btn-success py-3 px-5">Download Our Constitution</a>
+        <a href="{{asset('docs/constitution.pdf')}}" class="btn btn-success py-3 px-5">Download Our Constitution</a>
       </div>
     </div>
   </section>

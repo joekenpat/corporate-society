@@ -23,8 +23,6 @@ class DepositController extends Controller
     return view('deposit_create');
   }
 
-
-
   /**
    * Display a listing of user deposits
    *
@@ -46,7 +44,6 @@ class DepositController extends Controller
       'deposits' => $deposits
     ]);
   }
-
 
   /**
    * Display a listing of deposits for admin
@@ -70,7 +67,6 @@ class DepositController extends Controller
     $response['deposits'] = $deposits;
     return response()->json($response, Response::HTTP_OK);
   }
-
 
   /**
    * Store a new withdrawal resource in storage.
