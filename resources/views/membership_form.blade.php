@@ -50,6 +50,18 @@
                 @enderror
               </div>
               <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
+                <p class="my-membarship-signup-text">Gender</p>
+                <select class="form-control form-control-sm  @error('gender') form-error @enderror"
+                  onchange="selectedLgaList(this.value)" name="gender">
+                  <option value="">Select Gender</option>
+                  <option {{$userGender =="M"?"selected":""}} value="M">Male</option>
+                  <option {{$userGender =="F"?"selected":""}} value="F">Female</option>
+                </select>
+                @error('gender')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4 pt-3">
                 <p class="my-membarship-signup-text">Email</p>
                 <input class="form-control form-control-sm  @error('email') form-error @enderror"
                   value="{{ old('email')?:$userEmail }}" name="email" type="email" placeholder="email">

@@ -135,7 +135,7 @@ class UserController extends Controller
    */
   public function handleMembershipFeeFlutterwavePaymentGatewayCallback(Request $request)
   {
-    if($request->has('transaction_id')){
+    if ($request->has('transaction_id')) {
       $trnx_id = $request->transaction_id;
       $flutterwave_client = Http::withToken(config('flutterwave.secretKey'))
         ->acceptJson()->get("https://api.flutterwave.com/v3/transactions/{$trnx_id}/verify");
@@ -154,10 +154,10 @@ class UserController extends Controller
         $response['message'] = "Your membership fee payment was not successfull.";
         return redirect()->route('dashboard')->with($response['status'], $response['message']);
       }
-    }else{
+    } else {
       $response['status'] = 'error';
-        $response['message'] = "Your membership fee payment was not successfull.";
-        return redirect()->route('dashboard')->with($response['status'], $response['message']);
+      $response['message'] = "Your membership fee payment was not successfull.";
+      return redirect()->route('dashboard')->with($response['status'], $response['message']);
     }
   }
 
@@ -228,6 +228,7 @@ class UserController extends Controller
       'userFirstName' => $user->first_name,
       'userLastName' => $user->last_name,
       'userMiddleName' => $user->middle_name,
+      'userGender'=>$user->gender,
       'userEmail' => $user->email,
       'userPhone' => $user->phone,
       'userDOB' => $user->dob ? $user->dob->toDateString() : null,
@@ -305,6 +306,7 @@ class UserController extends Controller
       $validator_rules = [
         'first_name' => 'required|alpha|between:3,50',
         'last_name' => 'required|alpha|between:3,50',
+        'gender' => 'required|alpha|in:M,F',
         'middle_name' => 'required|alpha|between:3,50',
         'phone' => 'required|regex:/\d{11}/|unique:users,phone,' . $updateableUser->id,
         'dob' => 'required|date|before_or_equal:2015-01-01',
@@ -323,7 +325,8 @@ class UserController extends Controller
         'first_name' => 'sometimes|nullable|alpha|between:3,50',
         'last_name' => 'sometimes|nullable|alpha|between:3,50',
         'middle_name' => 'sometimes|nullable|alpha|between:3,50',
-        'phone' => 'sometimes|nullable|regex:/\d{11}/|unique:users,phone,except,' . $updateableUser->id,
+        'gender' => 'sometimes|alpha|in:M,F',
+        'phone' => 'sometimes|nullable|regex:/\d{11}/|unique:users,phone,' . $updateableUser->id,
         'dob' => 'sometimes|nullable|date|before_or_equal:2015-01-01',
         'address1' => 'sometimes|nullable|string|between:5,150',
         'address2' => 'sometimes|nullable|string|between:5,150',
@@ -333,13 +336,15 @@ class UserController extends Controller
         'identification_type' => 'sometimes|nullable|alpha_dash|in:international-passport,national-id,driver-license,permanent-voter-card',
         'profile_image' => 'sometimes|nullable|file|mimes:png,jpg,jpeg|max:5120',
         'identification_image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:5120',
-        'email' => 'sometimes|nullable|email|unique:users,email,except,' . $updateableUser->id,
+        'email' => 'sometimes|nullable|email|unique:users,email,' . $updateableUser->id,
       ];
     }
     $this->validate($request, $validator_rules, [
       'phone.regex' => 'Phone number must be of 11 digit only',
       'profile_image.max' => 'Profile Image is more than 5mb',
-      'identification_image.max' => 'Identification Image is more than 5mb'
+      'identification_image.max' => 'Identification Image is more than 5mb',
+      'gender.in'=>'Gender must either be Male or Female'
+
     ]);
 
     $updateableAttributes = [
@@ -348,6 +353,7 @@ class UserController extends Controller
       'middle_name',
       'phone',
       'dob',
+      'gender',
       'address1',
       'address2',
       'state_code',
