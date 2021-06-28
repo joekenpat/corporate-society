@@ -59,7 +59,7 @@
       <p class="side-link-text">
         <a href="{{route('withdrawal_history')}}">
           <i style="font-size: 20px;" class="mdi mdi-trending-up mr-1"></i>
-          Withdraw History
+          Withdrawal History
         </a>
       </p>
       <p class="side-link-text">

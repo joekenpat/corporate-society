@@ -22,9 +22,11 @@ class InvestmentController extends Controller
     $investmentPackages = InvestmentPackage::select([
       'id', 'name', 'min_amount', 'max_amount', 'duration', 'roi_percent'
     ])->whereActive(true)->get();
+    $minAmount = $investmentPackages->min('min_amount');
     return view('investment_create', [
       'investmentPackages' => $investmentPackages,
       'maxAmount' => $maxAmount,
+      'minAmount'=>$minAmount,
     ]);
   }
 

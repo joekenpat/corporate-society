@@ -28,7 +28,7 @@
                 @endforeach
                 @else
                 <tr>
-                  <td colspan="4" class="text-center">No Withdraw Yet</td>
+                  <td colspan="4" class="text-center">No withdrawal yet</td>
                 </tr>
                 @endif
                 <tbody>

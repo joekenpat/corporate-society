@@ -44,7 +44,7 @@
   </a>
   <a href="{{route('withdrawal_history')}}">
     <span class="mdi mdi-trending-up mr-1"></span>
-    Withdraw History
+    Withdrawal History
   </a>
   <a href="{{route('profile_general')}}">
     <span class="mdi mdi-account mr-1"></span>

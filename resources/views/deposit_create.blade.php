@@ -15,7 +15,7 @@
               <div class="col-xs-12 col-md-6">
                 <form action="{{route('deposit_initiate')}}" method="post">
                   @csrf
-                  <input class="form-control form-control-lg" name="amount" type="number" min="50000" max="5000000">
+                  <input class="form-control form-control-lg" name="amount" type="number" min="50" max="50000000">
                   <div class="pt-5 pb-5">
                     <button type="submit" class="btn btn-success">Deposit</button>
                     <button type="reset" class="btn btn-secondary">Cancel</button>
