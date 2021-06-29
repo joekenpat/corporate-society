@@ -10,10 +10,10 @@
       durationElem.innerHTML = packageList.find(x=>x.id ==investment_package_id).duration    }
     const checkMinAmount = (value)=>{
       if(min_amount > {{$maxAmount}}){
-        document.getElementById('amount_error').innerHTML=`You do not have upto the minimum amount ₦${min_amount}, you need to deposit ₦${(min_amount - {{$maxAmount}})} more into your account.`
+        document.getElementById('amount_error').innerHTML=`You do not have upto the minimum amount ₦${min_amount}, you need to deposit ₦${(min_amount - {{$maxAmount}})} or more into your account.`
         document.getElementById('smBtn').setAttribute('disabled','true')
       }else if(value > {{$maxAmount}}){
-        document.getElementById('amount_error').innerHTML=`You do not have upto the selected amount ₦${value}, you need to deposit  ₦${(value - {{$maxAmount}})} more into your account.`
+        document.getElementById('amount_error').innerHTML=`You do not have upto the selected amount ₦${value}, you need to deposit  ₦${(value - {{$maxAmount}})} or more into your account.`
         document.getElementById('smBtn').setAttribute('disabled','true')
       }else{
         document.getElementById('amount_error').innerHTML='';

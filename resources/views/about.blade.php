@@ -15,7 +15,7 @@
         <div class="mx-auto bg-dark mb-3" style="width: 300px; height: 2px;"></div>
         <!-- text -->
         <p class="mb-5">
-          IDEAL PEOPLE ELEME MULTI PURPOSE COOPERATIVE SOCIETY LIMITED. This organization is made up of group of persons
+          IDEAL PEOPLE MULTI PURPOSE COOPERATIVE SOCIETY LIMITED. This organization is made up of group of persons
           from different ethnicity with like minds, with the aim of bringing meaningful and gainful business ideas,
           investment packages to her members, to encourage savings, to promote agriculture, and to engage in investment
           such as production, sales of goods and services for the sole benefit of her members.
