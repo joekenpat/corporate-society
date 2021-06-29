@@ -148,8 +148,8 @@
               <h6 class="font-weight-bold">
                 EDUCATION PACKAGE
               </h6>
-              To promote education, we provide students with the opportunity to make upfront payment of 2nd term school
-              fees and get 1st term fees free.
+              To promote education, we provide students with the opportunity to make upfront payment of 2 term school
+              fees and get 1 term fees free.
               <br>(Minimum investment is 50k)
             </div>
           </div>
