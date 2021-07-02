@@ -43,7 +43,7 @@
                     @enderror
                   </span>
                   <div class="pt-5 pb-5">
-                    <button type="submit" class="btn btn-success">Withdraw</button>
+                    <button  id="smBtn"  type="submit" class="btn btn-success">Withdraw</button>
                     <button type="reset" class="btn btn-secondary">Cancel</button>
                   </div>
                 </form>
