@@ -4,11 +4,11 @@
     const min_amount = 50
     const max_amount = {{$maxAmount}}
     const checkMinAmount = (value)=>{
-      if(value < min_mount){
-        document.getElementById('amount_error').innerHTML=`You need to increase the amount to the minimum ₦${min_amount}.`
+      if(value < 50){
+        document.getElementById('amount_error').innerHTML=`You need to increase the amount to the minimum ₦${50}.`
         document.getElementById('smBtn').setAttribute('disabled','true')
       }else if(value > max_amount){
-        document.getElementById('amount_error').innerHTML=`You do not have upto the selected amount ₦${value}, you need ₦${(value - max_amount)} in your available balance.`
+        document.getElementById('amount_error').innerHTML=`You do not have upto the selected amount ₦${value}, you need ₦${(value - {{$maxAmount}})} in your available balance.`
         document.getElementById('smBtn').setAttribute('disabled','true')
       }else{
         document.getElementById('amount_error').innerHTML='';
