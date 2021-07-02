@@ -1,7 +1,7 @@
 <x-app-layout>
   @push('bottomScripts')
   <script>
-    const min_amount = 10000
+    const min_amount = 50
     const max_amount = {{$maxAmount}}
     const checkMinAmount = (value)=>{
       if(value < min_mount){
@@ -35,7 +35,7 @@
                 <form action="{{route('withdrawal_initiate')}}" method="post">
                   @csrf
                   <input class="form-control form-control-lg @error('amount') form-error @enderror" type="number"
-                    name="amount" value="{{ old('amount') }}" min="10000" max="{{$maxAmount}}"
+                    name="amount" value="{{ old('amount') }}" min="50" max="{{$maxAmount}}"
                     oninput="checkMinAmount(this.value)">
                   <span id="amount_error" class="text-danger">
                     @error('amount')

@@ -98,15 +98,15 @@ class WithdrawalController extends Controller
       return redirect()->route('dashboard')->with($response['status'], $response['message']);
     }
 
-    $minAmount = 10000;
+    $minAmount = 50;
     $maxAmount = $user->available_balance;
-    if ($user->available_balance < 10000) {
+    if ($user->available_balance < 50) {
       $response['status'] = "info";
       $response['message'] = "You do not have suffient available balance to withdraw.";
       return redirect()->route('dashboard')->with($response['status'], $response['message']);
     }
     $this->validate($request, [
-      'amount' => "required|integer|min:10000",
+      'amount' => "required|integer|min:50",
     ]);
     if ($user->available_balance < $request->amount) {
       $response['status'] = "info";
