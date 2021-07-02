@@ -24,7 +24,12 @@ class WithdrawalController extends Controller
       $response['message'] = "Your Withdrawal bank details is not setup, visit your profile to update it.";
       return redirect()->route('dashboard')->with($response['status'], $response['message']);
     }
-    $maxAmount = auth()->user()->available_balance;
+    if ($user->available_balance < 10000) {
+      $response['status'] = "info";
+      $response['message'] = "You do not have suffient available balance to withdraw.";
+      return redirect()->route('dashboard')->with($response['status'], $response['message']);
+    }
+    $maxAmount = $user->available_balance;
     return view('withdrawal_create', ['maxAmount' => $maxAmount]);
   }
 
@@ -95,9 +100,19 @@ class WithdrawalController extends Controller
 
     $minAmount = 10000;
     $maxAmount = $user->available_balance;
+    if ($user->available_balance < 10000) {
+      $response['status'] = "info";
+      $response['message'] = "You do not have suffient available balance to withdraw.";
+      return redirect()->route('dashboard')->with($response['status'], $response['message']);
+    }
     $this->validate($request, [
-      'amount' => "required|integer|between:10000,{$maxAmount}",
+      'amount' => "required|integer|min:10000",
     ]);
+    if ($user->available_balance < $request->amount) {
+      $response['status'] = "info";
+      $response['message'] = "You do not have suffient available balance for the amount you selected. Please select an amount within your available balance";
+      return redirect()->route('dashboard')->with($response['status'], $response['message']);
+    }
     Withdrawal::create([
       'user_id' => $user->id,
       'amount' => $request->amount,
