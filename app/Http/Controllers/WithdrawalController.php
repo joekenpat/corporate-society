@@ -24,7 +24,7 @@ class WithdrawalController extends Controller
       $response['message'] = "Your Withdrawal bank details is not setup, visit your profile to update it.";
       return redirect()->route('dashboard')->with($response['status'], $response['message']);
     }
-    if ($user->available_balance < 10000) {
+    if ($user->available_balance < 50) {
       $response['status'] = "info";
       $response['message'] = "You do not have suffient available balance to withdraw.";
       return redirect()->route('dashboard')->with($response['status'], $response['message']);
