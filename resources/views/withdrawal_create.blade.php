@@ -1,11 +1,11 @@
 <x-app-layout>
   @push('bottomScripts')
   <script>
-    const min_amount = 50
+    const min_amount = 100
     const max_amount = {{$maxAmount}}
     const checkMinAmount = (value)=>{
-      if(value < 50){
-        document.getElementById('amount_error').innerHTML=`You need to increase the amount to the minimum ₦${50}.`
+      if(value < 100){
+        document.getElementById('amount_error').innerHTML=`You need to increase the amount to the minimum ₦${100}.`
         document.getElementById('smBtn').setAttribute('disabled','true')
       }else if(value > max_amount){
         document.getElementById('amount_error').innerHTML=`You do not have upto the selected amount ₦${value}, you need ₦${(value - {{$maxAmount}})} in your available balance.`
@@ -35,7 +35,7 @@
                 <form action="{{route('withdrawal_initiate')}}" method="post">
                   @csrf
                   <input class="form-control form-control-lg @error('amount') form-error @enderror" type="number"
-                    name="amount" value="{{ old('amount') }}" min="50" max="{{$maxAmount}}"
+                    name="amount" value="{{ old('amount') }}" min="100" max="{{$maxAmount}}"
                     oninput="checkMinAmount(this.value)">
                   <span id="amount_error" class="text-danger">
                     @error('amount')
