@@ -3,6 +3,7 @@
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WithdrawalBankController;
 use App\Http\Controllers\WithdrawalController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,8 @@ Route::get('/operating-policy', function () {
   return view('operating_policy');
 })->name('operating_policy');
 
+Route::match(['POST', 'GET'], '/flutterwave-payout/callback/{code}')->name('withdrawal_payout_callback')->whereAlphaNumeric(['code']);
+
 Route::group(['middleware' => ['auth']], function () {
 
   Route::get('/dashboard', [UserController::class, 'showUserDashboard'])
@@ -41,7 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('general/update', [UserController::class, 'userUpdateProfileDetails'])
       ->name('update_profile_general');
 
-    Route::post('update/withdrawal-bank', [UserController::class, 'userUpdateWithdrawalBank'])
+    Route::post('update/withdrawal-bank', [WithdrawalBankController::class, 'userStoreBankDetails'])
       ->name('update_profile_withdrawal_bank');
   });
 

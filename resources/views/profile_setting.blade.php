@@ -1,5 +1,37 @@
 <x-app-layout>
+  @push('bottomScripts')
+  <script>
+    const checkValidAccount = ()=>{
+    let bank_code = document.getElementById('bank').value
+    let account_number = document.getElementById('account_number').value
 
+    if(bank_code !== "" && account_number.length === 10){
+      $.ajax({
+        type: "POST",
+        url: "/api/verify/bank-account",
+        data: {account_number:account_number,bank: bank_code},
+        success: function(res){
+          if(res.status === 'success'){
+            document.getElementById('account_name').value=res.data.account_name
+            document.getElementById('account_name_error').innerHTML=''
+            document.getElementById('smBtn').removeAttribute('disabled')
+          }else{
+            document.getElementById('account_name_error').innerHTML=res.message
+            document.getElementById('smBtn').setAttribute('disabled','true')
+          }
+        },
+        error: function(error){
+          document.getElementById('account_name').innerHTML=''
+          document.getElementById('account_name_error').innerHTML='Error Retrieving Account Details.'
+          document.getElementById('smBtn').setAttribute('disabled','true')
+        }
+      })
+    }else{
+      document.getElementById('smBtn').setAttribute('disabled','true')
+    }
+  }
+  </script>
+  @endpush
   <div class="container-fluid pt-3 pb-3">
     <!-- ################################ -->
     <span style="font-weight: bold;">My Profile</span>
@@ -17,9 +49,9 @@
               @csrf
               <div class="row">
                 <div class="col-xs-12 col-md-6">
-                  <label class="pb-3" for="bank_name" style="font-size: 0.8em; font-weight: bold;">Bank Name</label>
-                  <select class="form-control form-control-sm @error('bank_code') form-error @enderror"
-                    name="bank_code">
+                  <label class="pb-3" for="bank" style="font-size: 0.8em; font-weight: bold;">Bank Name</label>
+                  <select class="form-control form-control-sm @error('bank') form-error @enderror" name="bank"
+                    id="bank">
                     <option value="">Select Bank</option>
                     @if(count($bankList))
                     @foreach ($bankList as $bankListItem)
@@ -30,7 +62,7 @@
                     @endforeach
                     @endif
                   </select>
-                  @error('bank_code')
+                  @error('bank')
                   <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
@@ -38,8 +70,9 @@
                   <label class="pb-3" for="account_number" style="font-size: 0.8em; font-weight: bold;">Account
                     Number</label>
                   <input class="form-control form-control-sm @error('account_number') form-error @enderror" type="text"
-                    name="account_number" value="{{ old('account_number')?:($withdrawalBank->account_number??"") }}"
-                    placeholder="Account Number">
+                    name="account_number" id="account_number"
+                    value="{{ old('account_number')?:($withdrawalBank->account_number??"") }}"
+                    placeholder="Account Number" oninput="checkValidAccount()">
                   @error('account_number')
                   <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -47,16 +80,17 @@
                 <div class="col-xs-12 col-md-6">
                   <label class="pt-3" for="account_name" style="font-size: 0.8em; font-weight: bold;">Account
                     Name</label>
-                  <input class="form-control form-control-sm @error('account_name') form-error @enderror" type="text"
-                    name="account_name" value="{{ old('account_name')?:($withdrawalBank->account_name??"") }}"
-                    placeholder="Account Name">
-                  @error('account_name')
-                  <span class="text-danger">{{ $message }}</span>
-                  @enderror
+                  <input class="form-control form-control-sm" type="text" name="account_name" id="account_name" readonly
+                    value="{{ $withdrawalBank->account_name }}" placeholder="Account Name" required>
+                  <span id="account_name_error" class="text-danger">
+                    @error('amount')
+                    {{ $message }}
+                    @enderror
+                  </span>
                 </div>
               </div>
               <div class="pt-3" style="float: right;">
-                <button type="submit" class="btn btn-success">Save</button>
+                <button id="smBtn" type="submit" class="btn btn-success">Save</button>
               </div>
             </form>
           </div>

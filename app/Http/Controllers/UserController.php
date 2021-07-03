@@ -258,26 +258,6 @@ class UserController extends Controller
     ]);
   }
 
-  public function userUpdateWithdrawalBank(Request $request)
-  {
-    $this->validate($request, [
-      'bank_code' => 'sometimes|nullable|alpha_num|max:10|exists:banks,code',
-      'account_name' => 'sometimes|nullable|string',
-      'account_number' => 'sometimes|nullable|digits:10',
-    ]);
-
-    WithdrawalBank::updateOrCreate(
-      ['user_id' => auth()->user()->id],
-      [
-        'bank_code' => $request->bank_code,
-        'account_name' => $request->account_name,
-        'account_number' => $request->account_number,
-      ]
-    );
-
-    return redirect()->route('profile_general');
-  }
-
   public function showUserDashboard()
   {
     $user = auth()->user();

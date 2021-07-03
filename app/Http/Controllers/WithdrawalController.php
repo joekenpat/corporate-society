@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Withdrawal;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class WithdrawalController extends Controller
 {
@@ -113,11 +115,15 @@ class WithdrawalController extends Controller
       $response['message'] = "You do not have suffient available balance for the amount you selected. Please select an amount within your available balance";
       return redirect()->route('dashboard')->with($response['status'], $response['message']);
     }
+    $userBank = $user->withdrawalBank();
     Withdrawal::create([
       'user_id' => $user->id,
       'amount' => $request->amount,
       'status' => 'pending',
       'completed_at' => null,
+      'bank_code' => $userBank->bank_code,
+      'account_name' => $userBank->account_name,
+      'account_number' => $userBank->account_number,
     ]);
     $user->available_balance -= $request->amount;
     $user->update();
@@ -146,7 +152,28 @@ class WithdrawalController extends Controller
 
     if ($updateableWithdrawal->status != 'completed') {
       if ($request->status == 'completed') {
-        $updateableWithdrawal->status = 'completed';
+        $flutterwave = Http::withToken(config('flutterwave.secretKey'))
+          ->post('https://api.flutterwave.com/v3/transfers', [
+            'account_number' => $updateableWithdrawal->account_number,
+            'account_bank' => $updateableWithdrawal->bank_code,
+            'amount' => intval($updateableWithdrawal->amount),
+            'reference' => $updateableWithdrawal->code,
+            'narration' => config('app.name') . " Withdrawal: {$updateableWithdrawal->code}",
+            'currency' => "NGN",
+            'beneficiary_name' => $updateableWithdrawal->user->full_name,
+            'callback_url' => route('withdrawal_payout_callback', ['code' => $updateableWithdrawal->code]),
+            'meta' => [
+              'first_name' => $updateableWithdrawal->user->first_name,
+              'last_name' => $updateableWithdrawal->user->last_name,
+              'email' => $updateableWithdrawal->user->email,
+              'phone' => $updateableWithdrawal->user->phone,
+            ]
+
+          ])->json();
+        Log::info($flutterwave);
+        if ($flutterwave['status'] == 'success') {
+          $updateableWithdrawal->status = 'completed';
+        }
       } elseif ($request->status == 'failed') {
         $updateableWithdrawal->status = 'failed';
         $investor = User::whereId($updateableWithdrawal->user_id)->firstOrFail();
@@ -165,5 +192,21 @@ class WithdrawalController extends Controller
         return response()->json($response, Response::HTTP_OK);
       }
     }
+  }
+
+
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function flutterwaveWithdrawalCallback(Request $request, $code)
+  {
+    Log::info("Withdrawal Callback initiated for: " . $code);
+    Log::info($request);
+    $response['status'] = "success";
+    $response['message'] = "Callback Received";
+    return response()->json($response, Response::HTTP_OK);
   }
 }

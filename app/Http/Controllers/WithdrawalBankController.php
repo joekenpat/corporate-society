@@ -6,6 +6,8 @@ use App\Models\Bank;
 use App\Models\WithdrawalBank;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Validation\ValidationException;
 
 class WithdrawalBankController extends Controller
 {
@@ -24,6 +26,21 @@ class WithdrawalBankController extends Controller
     $response['status'] = "success";
     $response['bank_details'] = $bankDetails;
     return response()->json($response, Response::HTTP_OK);
+  }
+
+  public function verifyAccountDetails(Request $request)
+  {
+    $this->validate($request, [
+      'bank' => 'required|string|exists:banks,code',
+      'account_number' => "required|string|digits:10",
+    ]);
+
+    $flutterwave = Http::withToken(config('flutterwave.secretKey'))
+      ->post('https://api.flutterwave.com/v3/accounts/resolve', [
+        'account_number' => $request->account_number,
+        'account_bank' => $request->bank,
+      ])->json();
+    return $flutterwave;
   }
 
   /**
@@ -51,20 +68,32 @@ class WithdrawalBankController extends Controller
   public function userStoreBankDetails(Request $request)
   {
     $this->validate($request, [
-      'bank_code' => 'required|alpha|exists:banks,code',
-      'account_name' => 'required|string|between:5,200',
-      'account_number' => "required|numeric|size:10",
+      'bank' => 'required|string|exists:banks,code',
+      'account_number' => "required|digits:10",
     ]);
 
-    WithdrawalBank::create([
-      'bank_code' => $request->bank_code,
-      'account_name' => $request->account_name,
-      'account_number' => $request->account_number,
-      'user_id' => auth()->user()->id,
-    ]);
-    $response['status'] = "success";
-    $response['message'] = "Bank Details Added Successfully!";
-    return response()->json($response, Response::HTTP_OK);
+    $flutterwave = Http::withToken(config('flutterwave.secretKey'))
+      ->post('https://api.flutterwave.com/v3/accounts/resolve', [
+        'account_number' => $request->account_number,
+        'account_bank' => $request->bank,
+      ])->json();
+    if ($flutterwave['status'] == 'success') {
+      WithdrawalBank::updateOrCreate(
+        [
+          'user_id' => auth()->user()->id,
+        ],
+        [
+          'bank_code' => $request->bank,
+          'account_name' => $flutterwave['data']['account_name'],
+          'account_number' => $request->account_number,
+        ]
+      );
+      $response['status'] = "success";
+      $response['message'] = "Bank Details Added Successfully!";
+      return redirect()->route('profile_general')->with($response['status'], $response['message']);
+    } else {
+      throw ValidationException::withMessages(['account_number' => 'Account Number is invalid']);
+    }
   }
 
   /**

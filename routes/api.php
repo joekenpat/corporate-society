@@ -7,6 +7,7 @@ use App\Http\Controllers\InvestmentPackageController;
 use App\Http\Controllers\LgaController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WithdrawalBankController;
 use App\Http\Controllers\WithdrawalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('state/list', [StateController::class, 'index']);
 Route::get('lga/list', [LgaController::class, 'index']);
+Route::post('/verify/bank-account', [WithdrawalBankController::class, 'verifyAccountDetails']);
 
 Route::group(['prefix' => 'admin'], function () {
   Route::post('login', [AdminController::class, 'login_admin']);
